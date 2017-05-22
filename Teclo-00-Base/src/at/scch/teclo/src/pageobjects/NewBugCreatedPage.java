@@ -25,5 +25,11 @@ public class NewBugCreatedPage {
 	    return PageFactory.initElements(driver, NewBugCreatedPage.class);
 	    
 	}
+	
+	public MyBugsPage goToMyBugsPage() {
+		driver.findElement(By.linkText("My Bugs")).click();
+		
+		return PageFactory.initElements(driver, MyBugsPage.class);
+	}
 
 }
