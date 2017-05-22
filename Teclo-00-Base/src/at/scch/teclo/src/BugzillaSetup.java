@@ -23,14 +23,16 @@ public class BugzillaSetup {
 	}
 	
 	public static WebDriver getWebDriver() {
-		if (driver == null) {
-			setUp();
-		}
+		// tear down old driver
+		tearDown();
+		
+		// set up new driver
+		setUp();
 		
 		return driver;
 	}
 	
-	public static void setUp() {
+	private static void setUp() {
 		
 		String os = System.getProperty("os.name");
 		
@@ -46,8 +48,9 @@ public class BugzillaSetup {
 	    
 	}
 	
-	public static void tearDown() {
-		driver.quit();
+	private static void tearDown() {
+		if (driver != null)
+			driver.quit();
 	}
 	
 }

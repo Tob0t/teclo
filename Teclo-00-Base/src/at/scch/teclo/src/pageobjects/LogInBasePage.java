@@ -30,8 +30,6 @@ private final WebDriver driver;
 	    // sending Keys.TAB somehow triggers an change event for the Bugzilla_password_top element and makes it visible
 	    driver.findElement(By.id("Bugzilla_login_top")).sendKeys(Keys.TAB);    
 	    
-//	    driver.findElement(By.id("Bugzilla_password_top")).click();
-//	    driver.findElement(By.id("Bugzilla_password_top")).clear();
 	    driver.findElement(By.id("Bugzilla_password_top")).sendKeys(password);
 	    driver.findElement(By.id("log_in_top")).click();
 	    
