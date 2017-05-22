@@ -7,17 +7,17 @@ import org.openqa.selenium.support.PageFactory;
 
 import at.scch.teclo.src.BugzillaSetup;
 
-public class LoginBasePage {
+public class LogInBasePage {
 	
 private final WebDriver driver;
 	
-	public LoginBasePage(WebDriver driver){
+	public LogInBasePage(WebDriver driver){
 		this.driver = driver;
 	}
 	
-	public static LoginBasePage navigateTo(WebDriver driver){
+	public static LogInBasePage navigateTo(WebDriver driver){
 		driver.get(BugzillaSetup.getBaseURL() + "/");
-		return PageFactory.initElements(driver, LoginBasePage.class);
+		return PageFactory.initElements(driver, LogInBasePage.class);
 	}
 	
 	public LoggedInBasePage logIn(String username, String password){

@@ -9,7 +9,7 @@ import at.scch.teclo.src.BugzillaSetup;
 import at.scch.teclo.src.pageobjects.LogInErrorPage;
 import at.scch.teclo.src.pageobjects.LoggedInBasePage;
 import at.scch.teclo.src.pageobjects.LoggedOutBasePage;
-import at.scch.teclo.src.pageobjects.LoginBasePage;
+import at.scch.teclo.src.pageobjects.LogInBasePage;
 
 public class LoginLogoutTest {
   private WebDriver driver;
@@ -24,7 +24,7 @@ public class LoginLogoutTest {
   @Test
   public void testLoginLogout() throws Exception {
 	  
-	  LoginBasePage logInBasePage = LoginBasePage.navigateTo(driver);
+	  LogInBasePage logInBasePage = LogInBasePage.navigateTo(driver);
 	  LoggedInBasePage loggedInBasePage = logInBasePage.logIn("admin", "admin");
 	  loggedInBasePage.checkLogInStatus();
 	  
