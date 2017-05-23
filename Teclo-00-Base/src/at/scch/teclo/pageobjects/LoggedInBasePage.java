@@ -45,6 +45,12 @@ public class LoggedInBasePage {
 	    return PageFactory.initElements(driver, CreateNewBugPage.class);
 	}
 	
+	public MyBugsPage navigateToMyBugsPage() {
+		driver.findElement(By.linkText("My Bugs")).click();
+		
+		return PageFactory.initElements(driver, MyBugsPage.class);
+	}
+	
 	private boolean isElementPresent(By by) {
 	    try {
 	      driver.findElement(by);

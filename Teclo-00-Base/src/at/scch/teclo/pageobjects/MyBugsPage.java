@@ -4,12 +4,17 @@ import static org.junit.Assert.assertEquals;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class MyBugsPage {
 
 	private StringBuffer verificationErrors = new StringBuffer();
 	private final WebDriver driver;
+	
+	@FindBy(css="span.bz_result_count")
+	private WebElement amountOfBugs;
 	
 	public MyBugsPage(WebDriver driver){
 		this.driver = driver;
@@ -46,6 +51,15 @@ public class MyBugsPage {
 	      }
 		
 		return PageFactory.initElements(driver, MyBugsPage.class);
+	}
+	
+	public int getAmountOfBugs(){
+		return Integer.parseInt(amountOfBugs.getText().replaceAll("[^0-9]", ""));
+	}
+	
+	public EditBugPage selectBug(String bugId){
+		driver.findElement(By.linkText(bugId)).click();
+	    return PageFactory.initElements(driver, EditBugPage.class);
 	}
 	
 }

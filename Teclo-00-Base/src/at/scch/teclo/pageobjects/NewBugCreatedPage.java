@@ -26,7 +26,7 @@ public class NewBugCreatedPage {
 	    
 	}
 	
-	public MyBugsPage goToMyBugsPage() {
+	public MyBugsPage navigateToMyBugsPage() {
 		driver.findElement(By.linkText("My Bugs")).click();
 		
 		return PageFactory.initElements(driver, MyBugsPage.class);

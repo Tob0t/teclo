@@ -34,7 +34,7 @@ public class EditBugTest {
 
   @Test
   public void testEditBug() throws Exception {
-	  MyBugsPage myBugsPage = newBugCreatedPage.goToMyBugsPage();
+	  MyBugsPage myBugsPage = newBugCreatedPage.navigateToMyBugsPage();
 	  
 	  EditBugPage editBugPage = myBugsPage.goToEditBug();
 	  
