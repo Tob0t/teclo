@@ -8,7 +8,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 
 @RunWith(Suite.class)
-@SuiteClasses({LoginLogoutTest.class, CreateNewBugTest.class, EditBugTest.class})
+@SuiteClasses({LoginLogoutTest.class, CreateNewBugTest.class, EditBugTest.class, ChangeBugStateTest.class})
 public class AllTests {
 		
 
