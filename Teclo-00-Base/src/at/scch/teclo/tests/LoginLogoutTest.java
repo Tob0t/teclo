@@ -19,7 +19,6 @@ public class LoginLogoutTest {
   @Before
   public void setUp() throws Exception {
     driver = BugzillaSetup.getWebDriver();
-    
   }
   
   @Test

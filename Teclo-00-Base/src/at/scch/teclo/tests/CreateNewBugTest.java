@@ -8,6 +8,7 @@ import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.CreateNewBugPage;
 import at.scch.teclo.pageobjects.LogInBasePage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
+import at.scch.teclo.pageobjects.LoggedOutBasePage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
 
 public class CreateNewBugTest {
@@ -21,8 +22,7 @@ public class CreateNewBugTest {
     driver = BugzillaSetup.getWebDriver();
     
     // precondition: logged in
-    LogInBasePage logInBasePage = LogInBasePage.navigateTo(driver);
-    loggedInBasePage = logInBasePage.logIn("admin", "admin");
+    loggedInBasePage = BugzillaSetup.LogIn();
   }
 
   @Test
@@ -36,7 +36,11 @@ public class CreateNewBugTest {
 
   @After
   public void tearDown() throws Exception {
-    String verificationErrorString = verificationErrors.toString();
+	
+	// postcondition: logout
+	BugzillaSetup.LogOut(loggedInBasePage);
+
+	String verificationErrorString = verificationErrors.toString();
     if (!"".equals(verificationErrorString)) {
       fail(verificationErrorString);
     }

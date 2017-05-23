@@ -9,6 +9,7 @@ import at.scch.teclo.pageobjects.CreateNewBugPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.LogInBasePage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
+import at.scch.teclo.pageobjects.LoggedOutBasePage;
 import at.scch.teclo.pageobjects.MyBugsPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
 
@@ -17,21 +18,17 @@ public class EditBugTest {
   private StringBuffer verificationErrors = new StringBuffer();
 
   private NewBugCreatedPage newBugCreatedPage;
+  private LoggedInBasePage loggedInBasePage;
   
   @Before
   public void setUp() throws Exception {
 	  driver = BugzillaSetup.getWebDriver();
 	  
-	  // precondition: logged in && bug inserted
-	  LogInBasePage logInBasePage = LogInBasePage.navigateTo(driver);
+	  // precondition: logged in
+	  loggedInBasePage = BugzillaSetup.LogIn();
 	  
-	  LoggedInBasePage loggedInBasePage = logInBasePage.logIn("admin", "admin");
-	  
-	  CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
-	    
-	  newBugCreatedPage = createNewBugPage.createNewBug("ExampleBug01", "This is an example description for ExampleBug01");
-	  
-	  
+	  // precondition: bug inserted
+	  newBugCreatedPage = BugzillaSetup.CreateExampleBug(loggedInBasePage);
 	  
   }
 
@@ -48,6 +45,9 @@ public class EditBugTest {
 
   @After
   public void tearDown() throws Exception {
+	// postcondition: logout
+	BugzillaSetup.LogOut(loggedInBasePage);
+		
     String verificationErrorString = verificationErrors.toString();
     if (!"".equals(verificationErrorString)) {
       fail(verificationErrorString);
