@@ -16,6 +16,9 @@ public class MyBugsPage {
 	@FindBy(css="span.bz_result_count")
 	private WebElement amountOfBugs;
 	
+	@FindBy(xpath="//div[@id='bugzilla-body']/table/tbody/tr[2]/td[8]")
+	private WebElement firstBugSummary;
+	
 	public MyBugsPage(WebDriver driver){
 		this.driver = driver;
 	}
@@ -55,6 +58,10 @@ public class MyBugsPage {
 	
 	public int getAmountOfBugs(){
 		return Integer.parseInt(amountOfBugs.getText().replaceAll("[^0-9]", ""));
+	}
+	
+	public String getSummaryOfFirstBug(){
+		return firstBugSummary.getText();
 	}
 	
 	public EditBugPage selectBug(String bugId){

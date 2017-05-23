@@ -6,12 +6,21 @@ import static org.junit.Assert.assertTrue;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class LoggedInBasePage {
 
 	private StringBuffer verificationErrors = new StringBuffer();
 	private final WebDriver driver;
+	
+	@FindBy(id="quicksearch_top")
+	private WebElement quickSearch;
+	
+	@FindBy(id="find_top")
+	private WebElement quickFindButton;
+	
 	
 	public LoggedInBasePage(WebDriver driver){
 		this.driver = driver;
@@ -50,6 +59,15 @@ public class LoggedInBasePage {
 		
 		return PageFactory.initElements(driver, MyBugsPage.class);
 	}
+	
+	public MyBugsPage searchFor(String searchTerm){
+		quickSearch.clear();
+		quickSearch.sendKeys(searchTerm);
+		quickFindButton.click();
+		
+		return PageFactory.initElements(driver, MyBugsPage.class);
+	}
+	
 	
 	private boolean isElementPresent(By by) {
 	    try {
