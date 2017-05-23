@@ -60,6 +60,10 @@ public class MyBugsPage {
 		return Integer.parseInt(amountOfBugs.getText().replaceAll("[^0-9]", ""));
 	}
 	
+	public String getAmountOfBugsText(){
+		return amountOfBugs.getText();
+	}
+	
 	public String getSummaryOfFirstBug(){
 		return firstBugSummary.getText();
 	}

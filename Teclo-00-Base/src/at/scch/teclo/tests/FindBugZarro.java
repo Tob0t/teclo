@@ -1,8 +1,8 @@
 package at.scch.teclo.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,7 +14,8 @@ import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.MyBugsPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
 
-public class FingBugSuccess {
+public class FindBugZarro {
+	
 	private WebDriver driver;
 	private StringBuffer verificationErrors = new StringBuffer();
 
@@ -29,25 +30,19 @@ public class FingBugSuccess {
 		loggedInBasePage = BugzillaSetup.LogIn();
 
 		// precondition: bug inserted
-		newBugCreatedPage = BugzillaSetup.CreateExampleBug(loggedInBasePage);
+		//newBugCreatedPage = BugzillaSetup.CreateExampleBug(loggedInBasePage);
 	}
 
 	@Test
 	public void testChangeBugState() throws Exception {
-		MyBugsPage myBugsPage = loggedInBasePage.searchFor("ExampleBug01");
+		MyBugsPage myBugsPage = loggedInBasePage.searchFor("EaxmpleBug01");
 		
 	    try {
-	      assertTrue("Less bug founds, than the minimum required amount",0 < myBugsPage.getAmountOfBugs());
+	      assertEquals("Zarro Boogs found.",myBugsPage.getAmountOfBugsText());
 	    } catch (Error e) {
 	      verificationErrors.append(e.toString());
 	    }
-	    
-	    try {
-	      assertEquals("ExampleBug01", myBugsPage.getSummaryOfFirstBug());
-	    } catch (Error e) {
-	      verificationErrors.append(e.toString());
-	    }
-		
+
 	}
 
 	@After
@@ -58,5 +53,6 @@ public class FingBugSuccess {
 			fail(verificationErrorString);
 		}
 	}
+
 
 }
