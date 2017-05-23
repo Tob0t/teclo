@@ -1,4 +1,4 @@
-package at.scch.teclo.src.pageobjects;
+package at.scch.teclo.pageobjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

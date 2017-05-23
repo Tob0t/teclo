@@ -1,15 +1,16 @@
-package at.scch.teclo.src.tests;
+package at.scch.teclo.tests;
 
 import org.junit.Test;
 
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.openqa.selenium.*;
-import at.scch.teclo.src.BugzillaSetup;
-import at.scch.teclo.src.pageobjects.LogInErrorPage;
-import at.scch.teclo.src.pageobjects.LoggedInBasePage;
-import at.scch.teclo.src.pageobjects.LoggedOutBasePage;
-import at.scch.teclo.src.pageobjects.LogInBasePage;
+
+import at.scch.teclo.BugzillaSetup;
+import at.scch.teclo.pageobjects.LogInBasePage;
+import at.scch.teclo.pageobjects.LogInErrorPage;
+import at.scch.teclo.pageobjects.LoggedInBasePage;
+import at.scch.teclo.pageobjects.LoggedOutBasePage;
 
 public class LoginLogoutTest {
   private WebDriver driver;
@@ -31,7 +32,7 @@ public class LoginLogoutTest {
 	  LoggedOutBasePage loggedOutBasePage = loggedInBasePage.logOut();
 	  loggedOutBasePage.checkLogOutStatus();
 	  
-	  LogInErrorPage logInErrorPage = loggedOutBasePage.logInWithWrongUsernameAndWrongPassword("wrong", "wrong");
+	  LogInErrorPage logInErrorPage = loggedOutBasePage.logInWithWrongUsernameAndWrongPassword("wrongUsername", "wrongPassword");
 	  logInErrorPage.checkLogInErrorStatus();
   
   }

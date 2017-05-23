@@ -1,4 +1,4 @@
-package at.scch.teclo.src.pageobjects;
+package at.scch.teclo.pageobjects;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

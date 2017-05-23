@@ -1,4 +1,4 @@
-package at.scch.teclo.src.tests;
+package at.scch.teclo.tests;
 
 
 

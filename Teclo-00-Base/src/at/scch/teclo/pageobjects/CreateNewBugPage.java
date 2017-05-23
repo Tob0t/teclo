@@ -1,11 +1,11 @@
-package at.scch.teclo.src.pageobjects;
+package at.scch.teclo.pageobjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-import at.scch.teclo.src.BugzillaSetup;
+import at.scch.teclo.BugzillaSetup;
 
 public class CreateNewBugPage {
 	

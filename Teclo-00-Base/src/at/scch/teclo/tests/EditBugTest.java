@@ -1,15 +1,16 @@
-package at.scch.teclo.src.tests;
+package at.scch.teclo.tests;
 
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.openqa.selenium.*;
-import at.scch.teclo.src.BugzillaSetup;
-import at.scch.teclo.src.pageobjects.CreateNewBugPage;
-import at.scch.teclo.src.pageobjects.EditBugPage;
-import at.scch.teclo.src.pageobjects.LogInBasePage;
-import at.scch.teclo.src.pageobjects.LoggedInBasePage;
-import at.scch.teclo.src.pageobjects.MyBugsPage;
-import at.scch.teclo.src.pageobjects.NewBugCreatedPage;
+
+import at.scch.teclo.BugzillaSetup;
+import at.scch.teclo.pageobjects.CreateNewBugPage;
+import at.scch.teclo.pageobjects.EditBugPage;
+import at.scch.teclo.pageobjects.LogInBasePage;
+import at.scch.teclo.pageobjects.LoggedInBasePage;
+import at.scch.teclo.pageobjects.MyBugsPage;
+import at.scch.teclo.pageobjects.NewBugCreatedPage;
 
 public class EditBugTest {
   private WebDriver driver;
