@@ -6,11 +6,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-public class SearchPage {
+public class SpecificSearchPage {
 	private WebDriver driver;
-	
-	private String specificURL = "?format=specific";
-	private String advancedURL = "?format=advanced";
 	
 	@FindBy(id="bug_status")
 	private WebElement bugState;
@@ -21,22 +18,8 @@ public class SearchPage {
 	@FindBy(id="search")
 	private WebElement searchButton;
 	
-	public SearchPage(WebDriver driver){
+	public SpecificSearchPage(WebDriver driver){
 		this.driver = driver;
-	}
-	
-	public SearchPage navigateToSpecificSearchPage() {
-		// Type in exact URL to avoid state conflicts
-		driver.get(driver.getCurrentUrl() + specificURL);
-		
-		return PageFactory.initElements(driver, SearchPage.class);
-	}
-	
-	public SearchPage navigateToAdvancedSearchPage() {
-		// Type in exact URL to avoid state conflicts
-		driver.get(driver.getCurrentUrl() + advancedURL);
-		
-		return PageFactory.initElements(driver, SearchPage.class);
 	}
 	
 	public void selectBugState(String bugStateString){

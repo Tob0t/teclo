@@ -72,10 +72,10 @@ public class LoggedInBasePage {
 		return PageFactory.initElements(driver, MyBugsPage.class);
 	}
 	
-	public SearchPage navigateToSearchPage() {
+	public SearchBasePage navigateToSearchPage() {
 		SearchLink.click();
 		
-		return PageFactory.initElements(driver, SearchPage.class);
+		return PageFactory.initElements(driver, SearchBasePage.class);
 	}
 	
 	public MyBugsPage searchFor(String searchTerm){
