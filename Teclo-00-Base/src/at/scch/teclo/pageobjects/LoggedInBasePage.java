@@ -21,6 +21,18 @@ public class LoggedInBasePage {
 	@FindBy(id="find_top")
 	private WebElement quickFindButton;
 	
+	@FindBy(linkText="Log out")
+	private WebElement LogoutLink;
+	
+	@FindBy(linkText="New")
+	private WebElement NewLink;
+	
+	@FindBy(linkText="My Bugs")
+	private WebElement MyBugsLink;
+	
+	@FindBy(linkText="Search")
+	private WebElement SearchLink;
+	
 	
 	public LoggedInBasePage(WebDriver driver){
 		this.driver = driver;
@@ -43,21 +55,27 @@ public class LoggedInBasePage {
 	}
 	
 	public LoggedOutBasePage logOut(){
-		driver.findElement(By.linkText("Log out")).click();
+		LogoutLink.click();
 		
 		return PageFactory.initElements(driver, LoggedOutBasePage.class);
 	}
 	
 	public CreateNewBugPage navigateToCreateNewBugPage() {
-		driver.findElement(By.linkText("New")).click();
+		NewLink.click();
 	    
 	    return PageFactory.initElements(driver, CreateNewBugPage.class);
 	}
 	
 	public MyBugsPage navigateToMyBugsPage() {
-		driver.findElement(By.linkText("My Bugs")).click();
+		MyBugsLink.click();
 		
 		return PageFactory.initElements(driver, MyBugsPage.class);
+	}
+	
+	public SearchPage navigateToSearchPage() {
+		SearchLink.click();
+		
+		return PageFactory.initElements(driver, SearchPage.class);
 	}
 	
 	public MyBugsPage searchFor(String searchTerm){

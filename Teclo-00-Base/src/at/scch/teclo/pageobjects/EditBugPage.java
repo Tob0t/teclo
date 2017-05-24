@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
+import at.scch.teclo.Helper;
+
 public class EditBugPage {
 
 private final WebDriver driver;
@@ -38,7 +40,7 @@ private final WebDriver driver;
 	}
 	
 	public String getCurrentBugState(){
-		return getSelectedOptionValue(bugState);
+		return Helper.getSelectedOptionValue(bugState);
 	}
 	
 	public void changeBugState(String bugStateString){
@@ -67,16 +69,6 @@ private final WebDriver driver;
 	}
 	
 	
-	/***
-	 * Helper method to read the selected option
-	 * @param web element
-	 * @return selected option as string
-	 */
-	private String getSelectedOptionValue(WebElement element) {
-		Select select = new Select(element);
-		WebElement selectedElement = select.getFirstSelectedOption();
-		String selectedOption = selectedElement.getAttribute("value");
-		return selectedOption;
-	}
+	
 	
 }

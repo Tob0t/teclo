@@ -13,9 +13,10 @@ import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.MyBugsPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
+import at.scch.teclo.pageobjects.SearchPage;
 
-public class FindBugZarro {
-	
+public class FindSpecificSearchTest {
+
 	private WebDriver driver;
 	private StringBuffer verificationErrors = new StringBuffer();
 
@@ -30,19 +31,29 @@ public class FindBugZarro {
 		loggedInBasePage = BugzillaSetup.LogIn();
 
 		// precondition: bug inserted
-		newBugCreatedPage = BugzillaSetup.CreateExampleBug(loggedInBasePage);
+		//newBugCreatedPage = BugzillaSetup.CreateExampleBug(loggedInBasePage);
 	}
 
 	@Test
 	public void testChangeBugState() throws Exception {
-		MyBugsPage myBugsPage = loggedInBasePage.searchFor("EaxmpleBug01");
+		SearchPage searchPage = loggedInBasePage.navigateToSearchPage();
+		searchPage = searchPage.navigateToSpecificSearchPage();
+		
+		searchPage.selectBugState("Open");
+		MyBugsPage myBugsPage = searchPage.searchFor("ExampleBug*");
 		
 	    try {
-	      assertEquals("Zarro Boogs found.",myBugsPage.getAmountOfBugsText());
+	      assertTrue("Less bug founds, than the minimum required amount",0 < myBugsPage.getAmountOfBugs());
 	    } catch (Error e) {
 	      verificationErrors.append(e.toString());
 	    }
-
+	    
+	    try {
+	      assertEquals("ExampleBug01", myBugsPage.getSummaryOfFirstBug());
+	    } catch (Error e) {
+	      verificationErrors.append(e.toString());
+	    }
+		
 	}
 
 	@After
@@ -53,6 +64,4 @@ public class FindBugZarro {
 			fail(verificationErrorString);
 		}
 	}
-
-
 }
