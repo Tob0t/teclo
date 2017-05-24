@@ -13,7 +13,8 @@ import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.MyBugsPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
-import at.scch.teclo.pageobjects.SearchPage;
+import at.scch.teclo.pageobjects.SearchBasePage;
+import at.scch.teclo.pageobjects.SpecificSearchPage;
 
 public class FindSpecificSearchTest {
 
@@ -31,22 +32,18 @@ public class FindSpecificSearchTest {
 		loggedInBasePage = BugzillaSetup.LogIn();
 
 		// precondition: bug inserted
-		//newBugCreatedPage = BugzillaSetup.CreateExampleBug(loggedInBasePage);
+		newBugCreatedPage = BugzillaSetup.CreateExampleBug(loggedInBasePage);
 	}
 
 	@Test
 	public void testChangeBugState() throws Exception {
-		SearchPage searchPage = loggedInBasePage.navigateToSearchPage();
-		searchPage = searchPage.navigateToSpecificSearchPage();
+		SearchBasePage searchPage = loggedInBasePage.navigateToSearchPage();
+		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 		
-		searchPage.selectBugState("Open");
-		MyBugsPage myBugsPage = searchPage.searchFor("ExampleBug*");
+		specificSearchPage.selectBugState("Open");
+		MyBugsPage myBugsPage = specificSearchPage.searchFor("ExampleBug*");
 		
-	    try {
-	      assertTrue("Less bug founds, than the minimum required amount",0 < myBugsPage.getAmountOfBugs());
-	    } catch (Error e) {
-	      verificationErrors.append(e.toString());
-	    }
+	    assertTrue("Bug not found!",0 < myBugsPage.getAmountOfBugs());
 	    
 	    try {
 	      assertEquals("ExampleBug01", myBugsPage.getSummaryOfFirstBug());

@@ -19,6 +19,9 @@ public class MyBugsPage {
 	@FindBy(xpath="//div[@id='bugzilla-body']/table/tbody/tr[2]/td[8]")
 	private WebElement firstBugSummary;
 	
+	@FindBy(xpath="//div[@id='bugzilla-body']/table/tbody/tr[2]/td[6]")
+	private WebElement firstBugState;
+	
 	public MyBugsPage(WebDriver driver){
 		this.driver = driver;
 	}
@@ -57,6 +60,13 @@ public class MyBugsPage {
 	}
 	
 	public int getAmountOfBugs(){
+		// Special Case if 0 or 1 bug is found
+		if(amountOfBugs.getText().contentEquals("Zarro Boogs found.")){
+			return 0;
+		} else if(amountOfBugs.getText().contentEquals("One bug found.")){
+			return 1;
+		}
+		
 		return Integer.parseInt(amountOfBugs.getText().replaceAll("[^0-9]", ""));
 	}
 	
@@ -66,6 +76,10 @@ public class MyBugsPage {
 	
 	public String getSummaryOfFirstBug(){
 		return firstBugSummary.getText();
+	}
+	
+	public String getStateOfFirstBug(){
+		return firstBugState.getText();
 	}
 	
 	public EditBugPage selectBug(String bugId){

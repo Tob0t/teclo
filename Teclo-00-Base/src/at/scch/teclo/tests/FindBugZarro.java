@@ -37,12 +37,7 @@ public class FindBugZarro {
 	public void testChangeBugState() throws Exception {
 		MyBugsPage myBugsPage = loggedInBasePage.searchFor("EaxmpleBug01");
 		
-	    try {
-	      assertEquals("Zarro Boogs found.",myBugsPage.getAmountOfBugsText());
-	    } catch (Error e) {
-	      verificationErrors.append(e.toString());
-	    }
-
+	    assertEquals("Zarro Boogs found.",myBugsPage.getAmountOfBugsText());
 	}
 
 	@After

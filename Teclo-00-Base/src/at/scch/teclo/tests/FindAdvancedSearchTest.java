@@ -1,8 +1,8 @@
 package at.scch.teclo.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
@@ -10,11 +10,13 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
 import at.scch.teclo.BugzillaSetup;
+import at.scch.teclo.pageobjects.AdvancedSearchPage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.MyBugsPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
+import at.scch.teclo.pageobjects.SearchBasePage;
 
-public class FingBugSuccess {
+public class FindAdvancedSearchTest {
 	private WebDriver driver;
 	private StringBuffer verificationErrors = new StringBuffer();
 
@@ -30,13 +32,31 @@ public class FingBugSuccess {
 
 		// precondition: bug inserted
 		newBugCreatedPage = BugzillaSetup.CreateExampleBug(loggedInBasePage);
+		
+		// precondition: bug changed to RESOLVED
+		newBugCreatedPage.changeBugState("RESOLVED");
+		newBugCreatedPage = newBugCreatedPage.commitBug();
 	}
 
 	@Test
 	public void testChangeBugState() throws Exception {
-		MyBugsPage myBugsPage = loggedInBasePage.searchFor("ExampleBug01");
+		SearchBasePage searchPage = loggedInBasePage.navigateToSearchPage();
+		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 		
-	    assertTrue("Less bug founds, than the minimum required amount",0 < myBugsPage.getAmountOfBugs());
+		advancedSearchPage.deselectBugState("NEW");
+		advancedSearchPage.deselectBugState("ASSIGNED");
+		advancedSearchPage.deselectBugState("REOPENED");
+		
+		advancedSearchPage.selectBugState("RESOLVED");
+		MyBugsPage myBugsPage = advancedSearchPage.search();
+		
+	    assertTrue("Bug not found!",0 < myBugsPage.getAmountOfBugs());	    
+	    
+	    try {
+	    	assertEquals("RESO", myBugsPage.getStateOfFirstBug());
+	    } catch (Error e) {
+	      verificationErrors.append(e.toString());
+	    }
 	    
 	    try {
 	      assertEquals("ExampleBug01", myBugsPage.getSummaryOfFirstBug());
