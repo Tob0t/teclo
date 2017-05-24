@@ -17,6 +17,9 @@ public class NewBugCreatedPage {
 	@FindBy(id="bug_status")
 	private WebElement bugState;
 	
+	@FindBy(id="priority")
+	private WebElement priority;
+	
 	@FindBy(id="commit")
 	private WebElement commitButton;
 	
@@ -43,6 +46,10 @@ public class NewBugCreatedPage {
 	
 	public void changeBugState(String bugStateString){
 		new Select(bugState).selectByVisibleText(bugStateString);
+	}
+	
+	public void changePriority(String priorityString){
+		new Select(priority).selectByVisibleText(priorityString);
 	}
 	
 	public NewBugCreatedPage commitBug(){

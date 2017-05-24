@@ -22,6 +22,9 @@ public class MyBugsPage {
 	@FindBy(xpath="//div[@id='bugzilla-body']/table/tbody/tr[2]/td[6]")
 	private WebElement firstBugState;
 	
+	@FindBy(xpath="//div[@id='bugzilla-body']/table/tbody/tr[2]/td[3]")
+	private WebElement firstBugPriority;
+	
 	public MyBugsPage(WebDriver driver){
 		this.driver = driver;
 	}
@@ -80,6 +83,10 @@ public class MyBugsPage {
 	
 	public String getStateOfFirstBug(){
 		return firstBugState.getText();
+	}
+	
+	public String getPriorityOfFirstBug(){
+		return firstBugPriority.getText();
 	}
 	
 	public EditBugPage selectBug(String bugId){

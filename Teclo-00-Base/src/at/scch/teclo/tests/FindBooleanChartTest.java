@@ -16,7 +16,7 @@ import at.scch.teclo.pageobjects.MyBugsPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 
-public class FindAdvancedSearchTest {
+public class FindBooleanChartTest {
 	private WebDriver driver;
 	private StringBuffer verificationErrors = new StringBuffer();
 
@@ -33,8 +33,8 @@ public class FindAdvancedSearchTest {
 		// precondition: bug inserted
 		newBugCreatedPage = BugzillaSetup.CreateExampleBug(loggedInBasePage);
 		
-		// precondition: bug changed to RESOLVED
-		newBugCreatedPage.changeBugState("RESOLVED");
+		// precondition: bug changed to Priority P3
+		newBugCreatedPage.changePriority("P3");
 		newBugCreatedPage = newBugCreatedPage.commitBug();
 	}
 
@@ -43,17 +43,13 @@ public class FindAdvancedSearchTest {
 		SearchBasePage searchPage = loggedInBasePage.navigateToSearchPage();
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 		
-		advancedSearchPage.deselectBugState("NEW");
-		advancedSearchPage.deselectBugState("ASSIGNED");
-		advancedSearchPage.deselectBugState("REOPENED");
-		
-		advancedSearchPage.selectBugState("RESOLVED");
+		advancedSearchPage.fillBooleanChart("Priority", "is equal to", "P3");
 		MyBugsPage myBugsPage = advancedSearchPage.search();
 		
 	    assertTrue("Bug not found!",0 < myBugsPage.getAmountOfBugs());	    
 	    
 	    try {
-	    	assertEquals("RESO", myBugsPage.getStateOfFirstBug());
+	    	assertEquals("P3", myBugsPage.getPriorityOfFirstBug());
 	    } catch (Error e) {
 	      verificationErrors.append(e.toString());
 	    }
@@ -68,8 +64,9 @@ public class FindAdvancedSearchTest {
 
 	@After
 	public void tearDown() throws Exception {
+		
 		// TODO:
-		// postcondition: change bug back to state NEW
+		// postcondition: change bug back to Priority P5
 		
 		driver.quit();
 		String verificationErrorString = verificationErrors.toString();

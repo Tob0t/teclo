@@ -15,6 +15,15 @@ public class AdvancedSearchPage {
 	@FindBy(id="Search")
 	private WebElement searchButton;
 	
+	@FindBy(name="field0-0-0")
+	private WebElement booleanChartField;
+	
+	@FindBy(name="type0-0-0")
+	private WebElement booleanChartType;
+	
+	@FindBy(name="value0-0-0")
+	private WebElement booleanChartValue;
+	
 	public AdvancedSearchPage(WebDriver driver){
 		this.driver = driver;
 	}
@@ -27,9 +36,15 @@ public class AdvancedSearchPage {
 		new Select(bugState).selectByVisibleText(bugStateString);
 	}
 	
+	public void fillBooleanChart(String chartField, String chartType, String chartValue){
+		new Select(booleanChartField).selectByVisibleText(chartField);
+		new Select(booleanChartType).selectByVisibleText(chartType);
+		booleanChartValue.clear();
+		booleanChartValue.sendKeys(chartValue);
+	}
+	
 	public MyBugsPage search(){
-		searchButton.click();
-		
+		searchButton.click();	
 		return PageFactory.initElements(driver, MyBugsPage.class);
 	}
 
