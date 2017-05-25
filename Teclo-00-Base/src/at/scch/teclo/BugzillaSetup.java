@@ -8,14 +8,18 @@ import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import at.scch.teclo.pageobjects.AdvancedSearchPage;
 import at.scch.teclo.pageobjects.CreateNewBugPage;
 import at.scch.teclo.pageobjects.LogInBasePage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.LoggedOutBasePage;
+import at.scch.teclo.pageobjects.MyBugsPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
+import at.scch.teclo.pageobjects.SearchBasePage;
 
 /**
  * @author fabianbouchal
@@ -24,6 +28,8 @@ public class BugzillaSetup {
 
 	private static WebDriver driver;
 	private static String BASE_URL="";
+	public static String ExampleBugSummary = "ExampleBug01";
+	public static String ExampleBugDescription = "This is an example description for ExampleBug01";
 	
 	private static LoggedInBasePage loggedInBasePage;
 
@@ -44,7 +50,7 @@ public class BugzillaSetup {
 		}
 
 		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 	}
 	
@@ -103,9 +109,20 @@ public class BugzillaSetup {
 	 * Helper method to log in the admin
 	 * @return LoggedIn page
 	 */
-	public static LoggedInBasePage LogIn(){
+	public static LoggedInBasePage login(){
 		LogInBasePage logInBasePage = LogInBasePage.navigateTo(driver);
-	    loggedInBasePage = logInBasePage.logIn("admin", "admin");
+		
+		// change the waiting time 0 seconds if the element is not found
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+		
+		// check if the log out button is existing
+		if(!(driver.findElements(By.linkText("Log out")).size()>0)){
+			loggedInBasePage = logInBasePage.logIn("admin", "admin");
+		}
+		
+		// change the waiting time back to 10 seconds
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
 	    return loggedInBasePage;
 	}
 	
@@ -113,7 +130,7 @@ public class BugzillaSetup {
 	 * Helper method to log out the current user
 	 * @param loggedInBasePage
 	 */
-	public static void LogOut(LoggedInBasePage loggedInBasePage){
+	public static void logOut(LoggedInBasePage loggedInBasePage){
 		LoggedOutBasePage loggedOutBasePage = loggedInBasePage.logOut();
 	}
 	
@@ -122,10 +139,24 @@ public class BugzillaSetup {
 	 * @param loggedInBasePage
 	 * @return newBug created page
 	 */
-	public static NewBugCreatedPage CreateExampleBug(LoggedInBasePage loggedInBasePage){
-		 CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
-		 NewBugCreatedPage newBugCreatedPage = createNewBugPage.createNewBug("ExampleBug01", "This is an example description for ExampleBug01");
-		 return newBugCreatedPage;
+	public static int getExampleBug(LoggedInBasePage loggedInBasePage){
+		int bugID = 0;
+		// Search first if there is a bug already existing
+		SearchBasePage searchBasePage = loggedInBasePage.navigateToSearchBasePage();
+		AdvancedSearchPage advancedSearchPage = searchBasePage.navigateToAdvancedSearchPage();
+		advancedSearchPage.deselectBugState("ASSIGNED");
+		advancedSearchPage.deselectBugState("REOPENED");
+		MyBugsPage myBugsPage = advancedSearchPage.searchFor(ExampleBugSummary, ExampleBugDescription);
+		
+		// if the bug is existing just return the ID of the first found bug
+		if(myBugsPage.getAmountOfBugs()>1){
+			bugID = myBugsPage.getIDOfFirstBug();
+		} else{ // else create a new bug and return the ID
+			CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
+			NewBugCreatedPage newBugCreatedPage = createNewBugPage.createNewBug(ExampleBugSummary, ExampleBugDescription);
+			bugID = newBugCreatedPage.getBugID();
+		}
+		return bugID;
 	}
 
 	

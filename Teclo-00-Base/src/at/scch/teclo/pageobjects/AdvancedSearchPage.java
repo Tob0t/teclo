@@ -12,6 +12,12 @@ public class AdvancedSearchPage {
 	@FindBy(id="bug_status")
 	private WebElement bugState;
 	
+	@FindBy(id="short_desc")
+	private WebElement summaryTextBox;
+	
+	@FindBy(id="longdesc")
+	private WebElement commentTextBox;
+	
 	@FindBy(id="Search")
 	private WebElement searchButton;
 	
@@ -26,6 +32,14 @@ public class AdvancedSearchPage {
 	
 	public AdvancedSearchPage(WebDriver driver){
 		this.driver = driver;
+	}
+	
+	public MyBugsPage searchFor(String summaryString, String commentString){
+		summaryTextBox.clear();
+		summaryTextBox.sendKeys(summaryString);
+		commentTextBox.clear();
+		commentTextBox.sendKeys(commentString);
+		return search();
 	}
 	
 	public void deselectBugState(String bugStateString){

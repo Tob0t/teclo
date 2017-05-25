@@ -22,7 +22,7 @@ public class CreateNewBugTest {
     driver = BugzillaSetup.getWebDriver();
     
     // precondition: logged in
-    loggedInBasePage = BugzillaSetup.LogIn();
+    loggedInBasePage = BugzillaSetup.login();
   }
 
   @Test
@@ -36,10 +36,6 @@ public class CreateNewBugTest {
 
   @After
   public void tearDown() throws Exception {
-	
-	// postcondition: logout
-	BugzillaSetup.LogOut(loggedInBasePage);
-
 	String verificationErrorString = verificationErrors.toString();
     if (!"".equals(verificationErrorString)) {
       fail(verificationErrorString);

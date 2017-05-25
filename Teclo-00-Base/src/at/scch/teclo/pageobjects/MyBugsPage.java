@@ -16,6 +16,9 @@ public class MyBugsPage {
 	@FindBy(css="span.bz_result_count")
 	private WebElement amountOfBugs;
 	
+	@FindBy(xpath="//div[@id='bugzilla-body']/table/tbody/tr[2]/td[1]")
+	private WebElement firstBugID;
+	
 	@FindBy(xpath="//div[@id='bugzilla-body']/table/tbody/tr[2]/td[8]")
 	private WebElement firstBugSummary;
 	
@@ -38,9 +41,9 @@ public class MyBugsPage {
 		this.driver = driver;
 	}
 	
-	public EditBugPage goToEditBug(){
+	public EditBugPage goToEditBug(int currentBugID){
 
-		driver.findElement(By.linkText("1")).click();
+		driver.findElement(By.linkText(String.valueOf(currentBugID))).click();
 	    
 	    return PageFactory.initElements(driver, EditBugPage.class);
 	}
@@ -86,6 +89,10 @@ public class MyBugsPage {
 		return amountOfBugs.getText();
 	}
 	
+	public int getIDOfFirstBug(){
+		return Integer.parseInt(firstBugID.getText());
+	}
+	
 	public String getSummaryOfFirstBug(){
 		return firstBugSummary.getText();
 	}
@@ -98,8 +105,8 @@ public class MyBugsPage {
 		return firstBugPriority.getText();
 	}
 	
-	public EditBugPage selectBug(String bugId){
-		driver.findElement(By.linkText(bugId)).click();
+	public EditBugPage selectBug(int bugID){
+		driver.findElement(By.linkText(String.valueOf(bugID))).click();
 	    return PageFactory.initElements(driver, EditBugPage.class);
 	}
 	

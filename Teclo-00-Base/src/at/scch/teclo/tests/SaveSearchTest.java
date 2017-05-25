@@ -18,7 +18,7 @@ public class SaveSearchTest {
 	private WebDriver driver;
 	private StringBuffer verificationErrors = new StringBuffer();
 
-	private NewBugCreatedPage newBugCreatedPage;
+	private int currentBugID;
 	private LoggedInBasePage loggedInBasePage;
 	private MyBugsPage myBugsPage;
 
@@ -27,14 +27,14 @@ public class SaveSearchTest {
 		driver = BugzillaSetup.getWebDriver();
 
 		// precondition: logged in
-		loggedInBasePage = BugzillaSetup.LogIn();
+		loggedInBasePage = BugzillaSetup.login();
 
 		// precondition: bug inserted
-		newBugCreatedPage = BugzillaSetup.CreateExampleBug(loggedInBasePage);
+		currentBugID = BugzillaSetup.getExampleBug(loggedInBasePage);
 	}
 
 	@Test
-	public void testChangeBugState() throws Exception {
+	public void testSaveSearch() throws Exception {
 		myBugsPage = loggedInBasePage.searchFor("ExampleBug01");
 		
 	    assertTrue("Less bug founds, than the minimum required amount",0 < myBugsPage.getAmountOfBugs());
@@ -66,7 +66,6 @@ public class SaveSearchTest {
 		// post condition: forget saved search
 		myBugsPage.forgetSavedSearch("ExampleSearch01");
 		
-		driver.quit();
 		String verificationErrorString = verificationErrors.toString();
 		if (!"".equals(verificationErrorString)) {
 			fail(verificationErrorString);

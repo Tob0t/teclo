@@ -8,7 +8,10 @@ import org.junit.runners.Suite.SuiteClasses;
 
 
 @RunWith(Suite.class)
-@SuiteClasses({LoginLogoutTest.class, CreateNewBugTest.class, EditBugTest.class, ChangeBugStateTest.class})
+@SuiteClasses({LoginLogoutTest.class, CreateNewBugTest.class, EditBugTest.class,
+	ChangeBugStateTest.class, FindBugSuccessTest.class, FindBugZarroTest.class,
+	FindSpecificSearchTest.class, FindAdvancedSearchTest.class, FindBooleanChartTest.class,
+	GenerateTabularReportTest.class, SaveSearchTest.class})
 public class AllTests {
 		
 

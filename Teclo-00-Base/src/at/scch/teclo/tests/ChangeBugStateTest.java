@@ -19,7 +19,7 @@ public class ChangeBugStateTest {
 	private WebDriver driver;
 	private StringBuffer verificationErrors = new StringBuffer();
 
-	private NewBugCreatedPage newBugCreatedPage;
+	private int currentBugID;
 	private LoggedInBasePage loggedInBasePage;
 
 	@Before
@@ -27,23 +27,20 @@ public class ChangeBugStateTest {
 		driver = BugzillaSetup.getWebDriver();
 
 		// precondition: logged in
-		loggedInBasePage = BugzillaSetup.LogIn();
+		loggedInBasePage = BugzillaSetup.login();
 
 		// precondition: bug inserted
-		newBugCreatedPage = BugzillaSetup.CreateExampleBug(loggedInBasePage);
+		currentBugID = BugzillaSetup.getExampleBug(loggedInBasePage);
 	}
 
 	@Test
 	public void testChangeBugState() throws Exception {
-		// TODO determine id automatically from createExampleBug
-		String currentBugId = "1";
 		
 		MyBugsPage myBugsPage = loggedInBasePage.navigateToMyBugsPage();
-		
 
 		int currentAmountOfBugs = myBugsPage.getAmountOfBugs();
 		
-		EditBugPage editBugPage = myBugsPage.selectBug(currentBugId);
+		EditBugPage editBugPage = myBugsPage.selectBug(currentBugID);
 		
 		try {
 			assertEquals("NEW", editBugPage.getCurrentBugState());
@@ -54,7 +51,7 @@ public class ChangeBugStateTest {
 		editBugPage.changeBugState("ASSIGNED");
 		editBugPage = editBugPage.commitBug();
 		
-		editBugPage = editBugPage.selectCommitedBug(currentBugId);
+		editBugPage = editBugPage.selectCommitedBug(currentBugID);
 		
 		try {
 			assertEquals("ASSIGNED", editBugPage.getCurrentBugState());
@@ -65,7 +62,7 @@ public class ChangeBugStateTest {
 		editBugPage.changeBugState("RESOLVED");
 		editBugPage = editBugPage.commitBug();
 		
-		editBugPage = editBugPage.selectCommitedBug(currentBugId);
+		editBugPage = editBugPage.selectCommitedBug(currentBugID);
 		
 		try {
 			assertEquals("RESOLVED", editBugPage.getCurrentBugState());
@@ -76,7 +73,7 @@ public class ChangeBugStateTest {
 		editBugPage.changeBugState("VERIFIED");
 		editBugPage = editBugPage.commitBug();
 		
-		editBugPage = editBugPage.selectCommitedBug(currentBugId);
+		editBugPage = editBugPage.selectCommitedBug(currentBugID);
 		
 		try {
 			assertEquals("VERIFIED", editBugPage.getCurrentBugState());
@@ -87,7 +84,7 @@ public class ChangeBugStateTest {
 		editBugPage.changeBugState("CLOSED");
 		editBugPage = editBugPage.commitBug();
 		
-		editBugPage = editBugPage.selectCommitedBug(currentBugId);
+		editBugPage = editBugPage.selectCommitedBug(currentBugID);
 		
 		try {
 			assertEquals("CLOSED", editBugPage.getCurrentBugState());
@@ -111,7 +108,7 @@ public class ChangeBugStateTest {
 		editBugPage.changeBugState("REOPENED");
 		editBugPage = editBugPage.commitBug();
 		
-		editBugPage = editBugPage.selectCommitedBug(currentBugId);
+		editBugPage = editBugPage.selectCommitedBug(currentBugID);
 		
 		try {
 			assertEquals("REOPENED", editBugPage.getCurrentBugState());
@@ -122,7 +119,7 @@ public class ChangeBugStateTest {
 		editBugPage.changeBugState("NEW");
 		editBugPage = editBugPage.commitBug();
 		
-		editBugPage = editBugPage.selectCommitedBug(currentBugId);
+		editBugPage = editBugPage.selectCommitedBug(currentBugID);
 		
 		try {
 			assertEquals("NEW", editBugPage.getCurrentBugState());
@@ -142,7 +139,6 @@ public class ChangeBugStateTest {
 
 	@After
 	public void tearDown() throws Exception {
-		driver.quit();
 		String verificationErrorString = verificationErrors.toString();
 		if (!"".equals(verificationErrorString)) {
 			fail(verificationErrorString);

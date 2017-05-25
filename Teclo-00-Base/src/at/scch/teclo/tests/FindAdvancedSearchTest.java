@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.AdvancedSearchPage;
+import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.MyBugsPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
@@ -20,26 +21,29 @@ public class FindAdvancedSearchTest {
 	private WebDriver driver;
 	private StringBuffer verificationErrors = new StringBuffer();
 
-	private NewBugCreatedPage newBugCreatedPage;
+	private int currentBugID;
 	private LoggedInBasePage loggedInBasePage;
+	private MyBugsPage myBugsPage;
 
 	@Before
 	public void setUp() throws Exception {
 		driver = BugzillaSetup.getWebDriver();
 
 		// precondition: logged in
-		loggedInBasePage = BugzillaSetup.LogIn();
+		loggedInBasePage = BugzillaSetup.login();
 
 		// precondition: bug inserted
-		newBugCreatedPage = BugzillaSetup.CreateExampleBug(loggedInBasePage);
+		currentBugID = BugzillaSetup.getExampleBug(loggedInBasePage);
 		
 		// precondition: bug changed to RESOLVED
-		newBugCreatedPage.changeBugState("RESOLVED");
-		newBugCreatedPage = newBugCreatedPage.commitBug();
+		myBugsPage = loggedInBasePage.navigateToMyBugsPage();
+		EditBugPage editBugPage = myBugsPage.goToEditBug(currentBugID);
+		editBugPage.changeBugState("RESOLVED");
+		editBugPage = editBugPage.commitBug();
 	}
 
 	@Test
-	public void testChangeBugState() throws Exception {
+	public void testAdvancedSearch() throws Exception {
 		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 		
@@ -48,7 +52,7 @@ public class FindAdvancedSearchTest {
 		advancedSearchPage.deselectBugState("REOPENED");
 		
 		advancedSearchPage.selectBugState("RESOLVED");
-		MyBugsPage myBugsPage = advancedSearchPage.search();
+		myBugsPage = advancedSearchPage.search();
 		
 	    assertTrue("Bug not found!",0 < myBugsPage.getAmountOfBugs());	    
 	    
@@ -68,10 +72,15 @@ public class FindAdvancedSearchTest {
 
 	@After
 	public void tearDown() throws Exception {
-		// TODO:
-		// postcondition: change bug back to state NEW
 		
-		driver.quit();
+		// postcondition: change bug back to state NEW
+		EditBugPage editBugPage = myBugsPage.goToEditBug(currentBugID);
+		editBugPage.changeBugState("REOPENED");
+		editBugPage = editBugPage.commitBug();
+		editBugPage = editBugPage.selectCommitedBug(currentBugID);
+		editBugPage.changeBugState("NEW");
+		editBugPage = editBugPage.commitBug();
+		
 		String verificationErrorString = verificationErrors.toString();
 		if (!"".equals(verificationErrorString)) {
 			fail(verificationErrorString);

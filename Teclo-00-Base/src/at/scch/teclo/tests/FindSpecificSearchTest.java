@@ -21,7 +21,7 @@ public class FindSpecificSearchTest {
 	private WebDriver driver;
 	private StringBuffer verificationErrors = new StringBuffer();
 
-	private NewBugCreatedPage newBugCreatedPage;
+	private int currentBugID;
 	private LoggedInBasePage loggedInBasePage;
 
 	@Before
@@ -29,14 +29,14 @@ public class FindSpecificSearchTest {
 		driver = BugzillaSetup.getWebDriver();
 
 		// precondition: logged in
-		loggedInBasePage = BugzillaSetup.LogIn();
+		loggedInBasePage = BugzillaSetup.login();
 
 		// precondition: bug inserted
-		newBugCreatedPage = BugzillaSetup.CreateExampleBug(loggedInBasePage);
+		currentBugID = BugzillaSetup.getExampleBug(loggedInBasePage);
 	}
 
 	@Test
-	public void testChangeBugState() throws Exception {
+	public void testSpecificSearch() throws Exception {
 		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
 		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 		
@@ -55,7 +55,6 @@ public class FindSpecificSearchTest {
 
 	@After
 	public void tearDown() throws Exception {
-		driver.quit();
 		String verificationErrorString = verificationErrors.toString();
 		if (!"".equals(verificationErrorString)) {
 			fail(verificationErrorString);

@@ -14,14 +14,9 @@ public class NewBugCreatedPage {
 	private StringBuffer verificationErrors = new StringBuffer();
 	private final WebDriver driver;
 	
-	@FindBy(id="bug_status")
-	private WebElement bugState;
+	@FindBy(id="title")
+	private WebElement bugTitle;
 	
-	@FindBy(id="priority")
-	private WebElement priority;
-	
-	@FindBy(id="commit")
-	private WebElement commitButton;
 	
 	public NewBugCreatedPage(WebDriver driver){
 		this.driver = driver;
@@ -44,17 +39,9 @@ public class NewBugCreatedPage {
 		return PageFactory.initElements(driver, MyBugsPage.class);
 	}
 	
-	public void changeBugState(String bugStateString){
-		new Select(bugState).selectByVisibleText(bugStateString);
-	}
 	
-	public void changePriority(String priorityString){
-		new Select(priority).selectByVisibleText(priorityString);
-	}
-	
-	public NewBugCreatedPage commitBug(){
-		commitButton.click();
-		return PageFactory.initElements(driver, NewBugCreatedPage.class);
+	public int getBugID(){
+		return Integer.parseInt(bugTitle.getText().replaceAll("[^0-9]", ""));
 	}
 
 }

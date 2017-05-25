@@ -14,11 +14,11 @@ import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.MyBugsPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
 
-public class FingBugSuccess {
+public class FindBugSuccessTest {
 	private WebDriver driver;
 	private StringBuffer verificationErrors = new StringBuffer();
 
-	private NewBugCreatedPage newBugCreatedPage;
+	private int currentBugID;
 	private LoggedInBasePage loggedInBasePage;
 
 	@Before
@@ -26,14 +26,14 @@ public class FingBugSuccess {
 		driver = BugzillaSetup.getWebDriver();
 
 		// precondition: logged in
-		loggedInBasePage = BugzillaSetup.LogIn();
+		loggedInBasePage = BugzillaSetup.login();
 
 		// precondition: bug inserted
-		newBugCreatedPage = BugzillaSetup.CreateExampleBug(loggedInBasePage);
+		currentBugID = BugzillaSetup.getExampleBug(loggedInBasePage);
 	}
 
 	@Test
-	public void testChangeBugState() throws Exception {
+	public void testFindBugSuccess() throws Exception {
 		MyBugsPage myBugsPage = loggedInBasePage.searchFor("ExampleBug01");
 		
 	    assertTrue("Less bug founds, than the minimum required amount",0 < myBugsPage.getAmountOfBugs());
@@ -48,7 +48,6 @@ public class FingBugSuccess {
 
 	@After
 	public void tearDown() throws Exception {
-		driver.quit();
 		String verificationErrorString = verificationErrors.toString();
 		if (!"".equals(verificationErrorString)) {
 			fail(verificationErrorString);

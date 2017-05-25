@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.AdvancedSearchPage;
+import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.MyBugsPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
@@ -20,26 +21,29 @@ public class FindBooleanChartTest {
 	private WebDriver driver;
 	private StringBuffer verificationErrors = new StringBuffer();
 
-	private NewBugCreatedPage newBugCreatedPage;
+	private int currentBugID;
 	private LoggedInBasePage loggedInBasePage;
+	private MyBugsPage myBugsPage;
 
 	@Before
 	public void setUp() throws Exception {
 		driver = BugzillaSetup.getWebDriver();
 
 		// precondition: logged in
-		loggedInBasePage = BugzillaSetup.LogIn();
+		loggedInBasePage = BugzillaSetup.login();
 
 		// precondition: bug inserted
-		newBugCreatedPage = BugzillaSetup.CreateExampleBug(loggedInBasePage);
+		currentBugID = BugzillaSetup.getExampleBug(loggedInBasePage);
 		
 		// precondition: bug changed to Priority P3
-		newBugCreatedPage.changePriority("P3");
-		newBugCreatedPage = newBugCreatedPage.commitBug();
+		myBugsPage = loggedInBasePage.navigateToMyBugsPage();
+		EditBugPage editBugPage = myBugsPage.goToEditBug(currentBugID);
+		editBugPage.changePriority("P3");
+		editBugPage = editBugPage.commitBug();
 	}
 
 	@Test
-	public void testChangeBugState() throws Exception {
+	public void testBooleanChart() throws Exception {
 		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 		
@@ -65,10 +69,11 @@ public class FindBooleanChartTest {
 	@After
 	public void tearDown() throws Exception {
 		
-		// TODO:
 		// postcondition: change bug back to Priority P5
+		EditBugPage editBugPage = myBugsPage.goToEditBug(currentBugID);
+		editBugPage.changePriority("P5");
+		editBugPage = editBugPage.commitBug();
 		
-		driver.quit();
 		String verificationErrorString = verificationErrors.toString();
 		if (!"".equals(verificationErrorString)) {
 			fail(verificationErrorString);
