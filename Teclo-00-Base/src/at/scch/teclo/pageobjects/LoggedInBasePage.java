@@ -90,6 +90,12 @@ public class LoggedInBasePage {
 		return PageFactory.initElements(driver, MyBugsPage.class);
 	}
 	
+	public MyBugsPage getSavedSearch(String savedSearchName){
+		driver.findElement(By.linkText(savedSearchName)).click();
+		return PageFactory.initElements(driver, MyBugsPage.class);
+	}
+	
+	
 	
 	private boolean isElementPresent(By by) {
 	    try {
