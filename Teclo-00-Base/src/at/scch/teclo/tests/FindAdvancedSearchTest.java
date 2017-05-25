@@ -40,7 +40,7 @@ public class FindAdvancedSearchTest {
 
 	@Test
 	public void testChangeBugState() throws Exception {
-		SearchBasePage searchPage = loggedInBasePage.navigateToSearchPage();
+		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 		
 		advancedSearchPage.deselectBugState("NEW");

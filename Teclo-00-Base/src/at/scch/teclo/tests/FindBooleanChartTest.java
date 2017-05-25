@@ -40,7 +40,7 @@ public class FindBooleanChartTest {
 
 	@Test
 	public void testChangeBugState() throws Exception {
-		SearchBasePage searchPage = loggedInBasePage.navigateToSearchPage();
+		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 		
 		advancedSearchPage.fillBooleanChart("Priority", "is equal to", "P3");

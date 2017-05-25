@@ -10,14 +10,17 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
 import at.scch.teclo.BugzillaSetup;
+import at.scch.teclo.pageobjects.AdvancedSearchPage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.MyBugsPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
+import at.scch.teclo.pageobjects.ReportsBasePage;
 import at.scch.teclo.pageobjects.SearchBasePage;
-import at.scch.teclo.pageobjects.SpecificSearchPage;
+import at.scch.teclo.pageobjects.TabularReportsResultsPage;
+import at.scch.teclo.pageobjects.TabularReportsSearchPage;
 
-public class FindSpecificSearchTest {
-
+public class GenerateTabularReportTest {
+	
 	private WebDriver driver;
 	private StringBuffer verificationErrors = new StringBuffer();
 
@@ -37,19 +40,24 @@ public class FindSpecificSearchTest {
 
 	@Test
 	public void testChangeBugState() throws Exception {
-		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
-		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
+		ReportsBasePage reportsBasePage = loggedInBasePage.navigateToReportsBasePage();
+		TabularReportsSearchPage tabularReportsPage = reportsBasePage.navigateToTabularReportsPage();
+		tabularReportsPage.selectHorizontalAxes("Status");
+		tabularReportsPage.selectVeritcalAxes("Assignee");
 		
-		specificSearchPage.selectBugState("Open");
-		MyBugsPage myBugsPage = specificSearchPage.searchFor("ExampleBug*");
+		TabularReportsResultsPage tabularReportsResultsPage = tabularReportsPage.generateReport();
 		
-	    assertTrue("Bug not found!",0 < myBugsPage.getAmountOfBugs());
-	    
-	    try {
-	      assertEquals("ExampleBug01", myBugsPage.getSummaryOfFirstBug());
-	    } catch (Error e) {
-	      verificationErrors.append(e.toString());
-	    }
+		try {
+		  assertEquals("Status", tabularReportsResultsPage.getXAxesDescription());
+		} catch (Error e) {
+		  verificationErrors.append(e.toString());
+		}
+		
+		try {
+		  assertEquals("Assignee", tabularReportsResultsPage.getYAxesDescription());
+		} catch (Error e) {
+		  verificationErrors.append(e.toString());
+		}
 		
 	}
 
@@ -61,4 +69,5 @@ public class FindSpecificSearchTest {
 			fail(verificationErrorString);
 		}
 	}
+
 }

@@ -33,6 +33,9 @@ public class LoggedInBasePage {
 	@FindBy(linkText="Search")
 	private WebElement SearchLink;
 	
+	@FindBy(linkText="Reports")
+	private WebElement ReportsLink;
+	
 	
 	public LoggedInBasePage(WebDriver driver){
 		this.driver = driver;
@@ -56,26 +59,27 @@ public class LoggedInBasePage {
 	
 	public LoggedOutBasePage logOut(){
 		LogoutLink.click();
-		
 		return PageFactory.initElements(driver, LoggedOutBasePage.class);
 	}
 	
 	public CreateNewBugPage navigateToCreateNewBugPage() {
 		NewLink.click();
-	    
 	    return PageFactory.initElements(driver, CreateNewBugPage.class);
 	}
 	
 	public MyBugsPage navigateToMyBugsPage() {
 		MyBugsLink.click();
-		
 		return PageFactory.initElements(driver, MyBugsPage.class);
 	}
 	
-	public SearchBasePage navigateToSearchPage() {
+	public SearchBasePage navigateToSearchBasePage() {
 		SearchLink.click();
-		
 		return PageFactory.initElements(driver, SearchBasePage.class);
+	}
+	
+	public ReportsBasePage navigateToReportsBasePage() {
+		ReportsLink.click();
+		return PageFactory.initElements(driver, ReportsBasePage.class);
 	}
 	
 	public MyBugsPage searchFor(String searchTerm){
