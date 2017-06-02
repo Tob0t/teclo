@@ -1,8 +1,6 @@
-# telco
+# teclo
 
 Automated test cases for Bugzilla
-
-
 
 # Getting started
 
