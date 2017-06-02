@@ -13,35 +13,36 @@ import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.LoggedOutBasePage;
 
 public class LoginLogoutTest {
-  private WebDriver driver;
-  private StringBuffer verificationErrors = new StringBuffer();
+	private WebDriver driver;
+	private StringBuffer verificationErrors = new StringBuffer();
 
-  @Before
-  public void setUp() throws Exception {
-    driver = BugzillaSetup.getWebDriver();
-  }
-  
-  @Test
-  public void testLoginLogout() throws Exception {
-	  
-	  LogInBasePage logInBasePage = LogInBasePage.navigateTo(driver);
-	  LoggedInBasePage loggedInBasePage = logInBasePage.logIn("admin", "admin");
-	  loggedInBasePage.checkLogInStatus();
-	  
-	  LoggedOutBasePage loggedOutBasePage = loggedInBasePage.logOut();
-	  loggedOutBasePage.checkLogOutStatus();
-	  
-	  LogInErrorPage logInErrorPage = loggedOutBasePage.logInWithWrongUsernameAndWrongPassword("wrongUsername", "wrongPassword");
-	  logInErrorPage.checkLogInErrorStatus();
-  
-  }
+	@Before
+	public void setUp() throws Exception {
+		driver = BugzillaSetup.getWebDriver();
+	}
 
-  @After
-  public void tearDown() throws Exception {
-    String verificationErrorString = verificationErrors.toString();
-    if (!"".equals(verificationErrorString)) {
-      fail(verificationErrorString);
-    }
-  }
+	@Test
+	public void testLoginLogout() throws Exception {
+
+		LogInBasePage logInBasePage = LogInBasePage.navigateTo(driver);
+		LoggedInBasePage loggedInBasePage = logInBasePage.logIn("admin", "admin");
+		loggedInBasePage.checkLogInStatus();
+
+		LoggedOutBasePage loggedOutBasePage = loggedInBasePage.logOut();
+		loggedOutBasePage.checkLogOutStatus();
+
+		LogInErrorPage logInErrorPage = loggedOutBasePage
+				.logInWithWrongUsernameAndWrongPassword("wrongUsername", "wrongPassword");
+		logInErrorPage.checkLogInErrorStatus();
+
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		String verificationErrorString = verificationErrors.toString();
+		if (!"".equals(verificationErrorString)) {
+			fail(verificationErrorString);
+		}
+	}
 
 }

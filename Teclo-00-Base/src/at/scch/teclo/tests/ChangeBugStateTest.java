@@ -1,19 +1,12 @@
 package at.scch.teclo.tests;
 
-import java.util.regex.Pattern;
-import java.util.concurrent.TimeUnit;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
-
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.MyBugsPage;
-import at.scch.teclo.pageobjects.NewBugCreatedPage;
 
 public class ChangeBugStateTest {
 	private WebDriver driver;
@@ -35,106 +28,104 @@ public class ChangeBugStateTest {
 
 	@Test
 	public void testChangeBugState() throws Exception {
-		
+
 		MyBugsPage myBugsPage = loggedInBasePage.navigateToMyBugsPage();
 
 		int currentAmountOfBugs = myBugsPage.getAmountOfBugs();
-		
+
 		EditBugPage editBugPage = myBugsPage.selectBug(currentBugID);
-		
+
 		try {
 			assertEquals("NEW", editBugPage.getCurrentBugState());
 		} catch (Error e) {
 			verificationErrors.append(e.toString());
 		}
-		
+
 		editBugPage.changeBugState("ASSIGNED");
 		editBugPage = editBugPage.commitBug();
-		
+
 		editBugPage = editBugPage.selectCommitedBug(currentBugID);
-		
+
 		try {
 			assertEquals("ASSIGNED", editBugPage.getCurrentBugState());
 		} catch (Error e) {
 			verificationErrors.append(e.toString());
 		}
-		
+
 		editBugPage.changeBugState("RESOLVED");
 		editBugPage = editBugPage.commitBug();
-		
+
 		editBugPage = editBugPage.selectCommitedBug(currentBugID);
-		
+
 		try {
 			assertEquals("RESOLVED", editBugPage.getCurrentBugState());
 		} catch (Error e) {
 			verificationErrors.append(e.toString());
 		}
-		
+
 		editBugPage.changeBugState("VERIFIED");
 		editBugPage = editBugPage.commitBug();
-		
+
 		editBugPage = editBugPage.selectCommitedBug(currentBugID);
-		
+
 		try {
 			assertEquals("VERIFIED", editBugPage.getCurrentBugState());
 		} catch (Error e) {
 			verificationErrors.append(e.toString());
 		}
-		
+
 		editBugPage.changeBugState("CLOSED");
 		editBugPage = editBugPage.commitBug();
-		
+
 		editBugPage = editBugPage.selectCommitedBug(currentBugID);
-		
+
 		try {
 			assertEquals("CLOSED", editBugPage.getCurrentBugState());
 		} catch (Error e) {
 			verificationErrors.append(e.toString());
 		}
-		
+
 		// TODO: search for the bug to access it when its closed
-		/* 
-		myBugsPage = editBugPage.navigateToMyBugsPage();
-		
-		try {
-			assertEquals(currentAmountOfBugs-1, myBugsPage.getAmountOfBugs());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
-		
-		editBugPage = editBugPage.selectCommitedBug(currentBugId);
-		*/
-		
+		/*
+		 * myBugsPage = editBugPage.navigateToMyBugsPage();
+		 * 
+		 * try { assertEquals(currentAmountOfBugs-1,
+		 * myBugsPage.getAmountOfBugs()); } catch (Error e) {
+		 * verificationErrors.append(e.toString()); }
+		 * 
+		 * editBugPage = editBugPage.selectCommitedBug(currentBugId);
+		 */
+
 		editBugPage.changeBugState("REOPENED");
 		editBugPage = editBugPage.commitBug();
-		
+
 		editBugPage = editBugPage.selectCommitedBug(currentBugID);
-		
+
 		try {
 			assertEquals("REOPENED", editBugPage.getCurrentBugState());
 		} catch (Error e) {
 			verificationErrors.append(e.toString());
 		}
-		
+
 		editBugPage.changeBugState("NEW");
 		editBugPage = editBugPage.commitBug();
-		
+
 		editBugPage = editBugPage.selectCommitedBug(currentBugID);
-		
+
 		try {
 			assertEquals("NEW", editBugPage.getCurrentBugState());
 		} catch (Error e) {
 			verificationErrors.append(e.toString());
 		}
-		
+
 		myBugsPage = editBugPage.navigateToMyBugsPage();
-		
+
 		try {
 			assertEquals(currentAmountOfBugs, myBugsPage.getAmountOfBugs());
 		} catch (Error e) {
 			verificationErrors.append(e.toString());
 		}
-		
+
 	}
 
 	@After

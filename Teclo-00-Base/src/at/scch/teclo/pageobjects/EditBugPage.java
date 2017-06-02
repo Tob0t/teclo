@@ -11,88 +11,86 @@ import at.scch.teclo.Helper;
 
 public class EditBugPage {
 
-private final WebDriver driver;
-	
-	@FindBy(id="bug_status")
-	private WebElement bugState;
-	
-	@FindBy(id="priority")
-	private WebElement priority;
-	
-	@FindBy(id="commit")
-	private WebElement commitButton;
-	
+	private final WebDriver driver;
 
-	public EditBugPage(WebDriver driver){
+	@FindBy(id = "bug_status")
+	private WebElement bugState;
+
+	@FindBy(id = "priority")
+	private WebElement priority;
+
+	@FindBy(id = "commit")
+	private WebElement commitButton;
+
+	public EditBugPage(WebDriver driver) {
 		this.driver = driver;
 	}
-	
-	/*public MyBugsPage editBug(){
 
+	/*
+	 * public MyBugsPage editBug(){
+	 * 
+	 * driver.findElement(By.id("editme_action")).click();
+	 * driver.findElement(By.id("short_desc")).clear();
+	 * driver.findElement(By.id("short_desc")).sendKeys("EditedBug"); new
+	 * Select(driver.findElement(By.id("rep_platform"))).selectByVisibleText(
+	 * "Other"); new
+	 * Select(driver.findElement(By.id("op_sys"))).selectByVisibleText("Linux");
+	 * new
+	 * Select(driver.findElement(By.id("priority"))).selectByVisibleText("P1");
+	 * new
+	 * Select(driver.findElement(By.id("bug_severity"))).selectByVisibleText(
+	 * "critical"); driver.findElement(By.id("commit")).click();
+	 * driver.findElement(By.linkText("My Bugs")).click();
+	 * 
+	 * return PageFactory.initElements(driver, MyBugsPage.class); }
+	 */
+
+	public MyBugsPage editBug(String summary, String platform, String opSys, String priority,
+			String severity) {
 		driver.findElement(By.id("editme_action")).click();
-	    driver.findElement(By.id("short_desc")).clear();
-	    driver.findElement(By.id("short_desc")).sendKeys("EditedBug");
-	    new Select(driver.findElement(By.id("rep_platform"))).selectByVisibleText("Other");
-	    new Select(driver.findElement(By.id("op_sys"))).selectByVisibleText("Linux");
-	    new Select(driver.findElement(By.id("priority"))).selectByVisibleText("P1");
-	    new Select(driver.findElement(By.id("bug_severity"))).selectByVisibleText("critical");
-	    driver.findElement(By.id("commit")).click();
-	    driver.findElement(By.linkText("My Bugs")).click();
-	    
-	    return PageFactory.initElements(driver, MyBugsPage.class);
-	}*/
-	
-	public MyBugsPage editBug(String summary, String platform, String opSys, String priority, String severity){
-		driver.findElement(By.id("editme_action")).click();
-	    driver.findElement(By.id("short_desc")).clear();
-	    driver.findElement(By.id("short_desc")).sendKeys(summary);
-	    new Select(driver.findElement(By.id("rep_platform"))).selectByVisibleText(platform);
-	    new Select(driver.findElement(By.id("op_sys"))).selectByVisibleText(opSys);
-	    new Select(driver.findElement(By.id("priority"))).selectByVisibleText(priority);
-	    new Select(driver.findElement(By.id("bug_severity"))).selectByVisibleText(severity);
-	    driver.findElement(By.id("commit")).click();
-	    driver.findElement(By.linkText("My Bugs")).click();
-	    
-	    return PageFactory.initElements(driver, MyBugsPage.class);
+		driver.findElement(By.id("short_desc")).clear();
+		driver.findElement(By.id("short_desc")).sendKeys(summary);
+		new Select(driver.findElement(By.id("rep_platform"))).selectByVisibleText(platform);
+		new Select(driver.findElement(By.id("op_sys"))).selectByVisibleText(opSys);
+		new Select(driver.findElement(By.id("priority"))).selectByVisibleText(priority);
+		new Select(driver.findElement(By.id("bug_severity"))).selectByVisibleText(severity);
+		driver.findElement(By.id("commit")).click();
+		driver.findElement(By.linkText("My Bugs")).click();
+
+		return PageFactory.initElements(driver, MyBugsPage.class);
 	}
-	
-	public String getCurrentBugState(){
+
+	public String getCurrentBugState() {
 		return Helper.getSelectedOptionValue(bugState);
 	}
-	
-	public void changeBugState(String bugStateString){
+
+	public void changeBugState(String bugStateString) {
 		new Select(bugState).selectByVisibleText(bugStateString);
 	}
-	
-	public void changePriority(String priorityString){
+
+	public void changePriority(String priorityString) {
 		new Select(priority).selectByVisibleText(priorityString);
 	}
-	
-	public EditBugPage commitBug(){
+
+	public EditBugPage commitBug() {
 		commitButton.click();
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
-	
-	public EditBugPage selectCommitedBug(int bugID){
-		driver.findElement(By.linkText("bug "+String.valueOf(bugID))).click();
+
+	public EditBugPage selectCommitedBug(int bugID) {
+		driver.findElement(By.linkText("bug " + String.valueOf(bugID))).click();
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
-	
+
 	public LoggedInBasePage navigateToMyHomePage() {
 		driver.findElement(By.linkText("Home")).click();
 		return PageFactory.initElements(driver, LoggedInBasePage.class);
 	}
-	
+
 	public MyBugsPage navigateToMyBugsPage() {
 		driver.findElement(By.linkText("My Bugs")).click();
-		
+
 		return PageFactory.initElements(driver, MyBugsPage.class);
 	}
-	
-	
-	
-	
-	
-	
-	
+
 }

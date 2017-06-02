@@ -14,7 +14,6 @@ import at.scch.teclo.pageobjects.AdvancedSearchPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.MyBugsPage;
-import at.scch.teclo.pageobjects.NewBugCreatedPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 
 public class FindAdvancedSearchTest {
@@ -34,7 +33,7 @@ public class FindAdvancedSearchTest {
 
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBug(loggedInBasePage);
-		
+
 		// precondition: bug changed to RESOLVED
 		myBugsPage = loggedInBasePage.navigateToMyBugsPage();
 		EditBugPage editBugPage = myBugsPage.goToEditBug(currentBugID);
@@ -46,33 +45,33 @@ public class FindAdvancedSearchTest {
 	public void testAdvancedSearch() throws Exception {
 		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
-		
+
 		advancedSearchPage.deselectBugState("NEW");
 		advancedSearchPage.deselectBugState("ASSIGNED");
 		advancedSearchPage.deselectBugState("REOPENED");
-		
+
 		advancedSearchPage.selectBugState("RESOLVED");
 		myBugsPage = advancedSearchPage.search();
-		
-	    assertTrue("Bug not found!",0 < myBugsPage.getAmountOfBugs());	    
-	    
-	    try {
-	    	assertEquals("RESO", myBugsPage.getStateOfFirstBug());
-	    } catch (Error e) {
-	      verificationErrors.append(e.toString());
-	    }
-	    
-	    try {
-	      assertEquals("ExampleBug01", myBugsPage.getSummaryOfFirstBug());
-	    } catch (Error e) {
-	      verificationErrors.append(e.toString());
-	    }
-		
+
+		assertTrue("Bug not found!", 0 < myBugsPage.getAmountOfBugs());
+
+		try {
+			assertEquals("RESO", myBugsPage.getStateOfFirstBug());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+
+		try {
+			assertEquals("ExampleBug01", myBugsPage.getSummaryOfFirstBug());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		
+
 		// postcondition: change bug back to state NEW
 		EditBugPage editBugPage = myBugsPage.goToEditBug(currentBugID);
 		editBugPage.changeBugState("REOPENED");
@@ -80,7 +79,7 @@ public class FindAdvancedSearchTest {
 		editBugPage = editBugPage.selectCommitedBug(currentBugID);
 		editBugPage.changeBugState("NEW");
 		editBugPage = editBugPage.commitBug();
-		
+
 		String verificationErrorString = verificationErrors.toString();
 		if (!"".equals(verificationErrorString)) {
 			fail(verificationErrorString);

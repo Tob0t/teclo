@@ -12,7 +12,6 @@ import org.openqa.selenium.WebDriver;
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.MyBugsPage;
-import at.scch.teclo.pageobjects.NewBugCreatedPage;
 
 public class FindBugSuccessTest {
 	private WebDriver driver;
@@ -35,15 +34,16 @@ public class FindBugSuccessTest {
 	@Test
 	public void testFindBugSuccess() throws Exception {
 		MyBugsPage myBugsPage = loggedInBasePage.searchFor("ExampleBug01");
-		
-	    assertTrue("Less bug founds, than the minimum required amount",0 < myBugsPage.getAmountOfBugs());
-	    
-	    try {
-	      assertEquals("ExampleBug01", myBugsPage.getSummaryOfFirstBug());
-	    } catch (Error e) {
-	      verificationErrors.append(e.toString());
-	    }
-		
+
+		assertTrue("Less bug founds, than the minimum required amount",
+				0 < myBugsPage.getAmountOfBugs());
+
+		try {
+			assertEquals("ExampleBug01", myBugsPage.getSummaryOfFirstBug());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+
 	}
 
 	@After

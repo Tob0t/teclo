@@ -5,23 +5,20 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class TabularReportsResultsPage {
-	private WebDriver driver;
-	
-	@FindBy(xpath="//div[@id='bugzilla-body']/div/table/tbody/tr/td[2]/strong")
+	@FindBy(xpath = "//div[@id='bugzilla-body']/div/table/tbody/tr/td[2]/strong")
 	private WebElement xAxesDescription;
-	
-	@FindBy(xpath="//div[@id='bugzilla-body']/div/table/tbody/tr[2]/td/strong")
+
+	@FindBy(xpath = "//div[@id='bugzilla-body']/div/table/tbody/tr[2]/td/strong")
 	private WebElement yAxesDescription;
-	
-	public TabularReportsResultsPage(WebDriver driver){
-		this.driver = driver;
+
+	public TabularReportsResultsPage(WebDriver driver) {
 	}
-	
-	public String getXAxesDescription(){
+
+	public String getXAxesDescription() {
 		return xAxesDescription.getText();
 	}
-	
-	public String getYAxesDescription(){
+
+	public String getYAxesDescription() {
 		return yAxesDescription.getText();
 	}
 

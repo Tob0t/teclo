@@ -8,29 +8,29 @@ import org.openqa.selenium.support.ui.Select;
 
 public class SpecificSearchPage {
 	private WebDriver driver;
-	
-	@FindBy(id="bug_status")
+
+	@FindBy(id = "bug_status")
 	private WebElement bugState;
-	
-	@FindBy(id="content")
+
+	@FindBy(id = "content")
 	private WebElement searchField;
-	
-	@FindBy(id="search")
+
+	@FindBy(id = "search")
 	private WebElement searchButton;
-	
-	public SpecificSearchPage(WebDriver driver){
+
+	public SpecificSearchPage(WebDriver driver) {
 		this.driver = driver;
 	}
-	
-	public void selectBugState(String bugStateString){
+
+	public void selectBugState(String bugStateString) {
 		new Select(bugState).selectByVisibleText(bugStateString);
 	}
-	
-	public MyBugsPage searchFor(String searchTerm){
+
+	public MyBugsPage searchFor(String searchTerm) {
 		searchField.clear();
 		searchField.sendKeys(searchTerm);
 		searchButton.click();
-		
+
 		return PageFactory.initElements(driver, MyBugsPage.class);
 	}
 

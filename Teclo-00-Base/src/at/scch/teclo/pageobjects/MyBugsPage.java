@@ -12,122 +12,126 @@ public class MyBugsPage {
 
 	private StringBuffer verificationErrors = new StringBuffer();
 	private final WebDriver driver;
-	
-	@FindBy(css="span.bz_result_count")
+
+	@FindBy(css = "span.bz_result_count")
 	private WebElement amountOfBugs;
-	
-	@FindBy(xpath="//div[@id='bugzilla-body']/table/tbody/tr[2]/td[1]")
+
+	@FindBy(xpath = "//div[@id='bugzilla-body']/table/tbody/tr[2]/td[1]")
 	private WebElement firstBugID;
-	
-	@FindBy(xpath="//div[@id='bugzilla-body']/table/tbody/tr[2]/td[8]")
+
+	@FindBy(xpath = "//div[@id='bugzilla-body']/table/tbody/tr[2]/td[8]")
 	private WebElement firstBugSummary;
-	
-	@FindBy(xpath="//div[@id='bugzilla-body']/table/tbody/tr[2]/td[6]")
+
+	@FindBy(xpath = "//div[@id='bugzilla-body']/table/tbody/tr[2]/td[6]")
 	private WebElement firstBugState;
-	
-	@FindBy(xpath="//div[@id='bugzilla-body']/table/tbody/tr[2]/td[3]")
+
+	@FindBy(xpath = "//div[@id='bugzilla-body']/table/tbody/tr[2]/td[3]")
 	private WebElement firstBugPriority;
-	
-	@FindBy(id="save_newqueryname")
+
+	@FindBy(id = "save_newqueryname")
 	private WebElement saveSearchField;
-	
-	@FindBy(id="remember")
+
+	@FindBy(id = "remember")
 	private WebElement saveSearchButton;
-	
-	@FindBy(linkText="Home")
+
+	@FindBy(linkText = "Home")
 	private WebElement homeLink;
-	
-	public MyBugsPage(WebDriver driver){
+
+	public MyBugsPage(WebDriver driver) {
 		this.driver = driver;
 	}
-	
-	public EditBugPage goToEditBug(int currentBugID){
+
+	public EditBugPage goToEditBug(int currentBugID) {
 
 		driver.findElement(By.linkText(String.valueOf(currentBugID))).click();
-	    
-	    return PageFactory.initElements(driver, EditBugPage.class);
+
+		return PageFactory.initElements(driver, EditBugPage.class);
 	}
-	
+
 	public MyBugsPage checkEditedBugChanges() {
-		
-	    try {
-	        assertEquals("cri", driver.findElement(By.cssSelector("span[title=\"critical\"]")).getText());
-	      } catch (Error e) {
-	        verificationErrors.append(e.toString());
-	      }
-	      try {
-	        assertEquals("P1", driver.findElement(By.cssSelector("span[title=\"P1\"]")).getText());
-	      } catch (Error e) {
-	        verificationErrors.append(e.toString());
-	      }
-	      try {
-	        assertEquals("Linu", driver.findElement(By.cssSelector("span[title=\"Linux\"]")).getText());
-	      } catch (Error e) {
-	        verificationErrors.append(e.toString());
-	      }
-	      try {
-	        assertEquals("EditedBug", driver.findElement(By.xpath("//div[@id='bugzilla-body']/table/tbody/tr[2]/td[8]")).getText());
-	      } catch (Error e) {
-	        verificationErrors.append(e.toString());
-	      }
-		
+
+		try {
+			assertEquals("cri",
+					driver.findElement(By.cssSelector("span[title=\"critical\"]")).getText());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+		try {
+			assertEquals("P1", driver.findElement(By.cssSelector("span[title=\"P1\"]")).getText());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+		try {
+			assertEquals("Linu",
+					driver.findElement(By.cssSelector("span[title=\"Linux\"]")).getText());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+		try {
+			assertEquals("EditedBug",
+					driver.findElement(
+							By.xpath("//div[@id='bugzilla-body']/table/tbody/tr[2]/td[8]"))
+							.getText());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+
 		return PageFactory.initElements(driver, MyBugsPage.class);
 	}
-	
-	public int getAmountOfBugs(){
+
+	public int getAmountOfBugs() {
 		// Special Case if 0 or 1 bug is found
-		if(amountOfBugs.getText().contentEquals("Zarro Boogs found.")){
+		if (amountOfBugs.getText().contentEquals("Zarro Boogs found.")) {
 			return 0;
-		} else if(amountOfBugs.getText().contentEquals("One bug found.")){
+		} else if (amountOfBugs.getText().contentEquals("One bug found.")) {
 			return 1;
 		}
-		
+
 		return Integer.parseInt(amountOfBugs.getText().replaceAll("[^0-9]", ""));
 	}
-	
-	public String getAmountOfBugsText(){
+
+	public String getAmountOfBugsText() {
 		return amountOfBugs.getText();
 	}
-	
-	public int getIDOfFirstBug(){
+
+	public int getIDOfFirstBug() {
 		return Integer.parseInt(firstBugID.getText());
 	}
-	
-	public String getSummaryOfFirstBug(){
+
+	public String getSummaryOfFirstBug() {
 		return firstBugSummary.getText();
 	}
-	
-	public String getStateOfFirstBug(){
+
+	public String getStateOfFirstBug() {
 		return firstBugState.getText();
 	}
-	
-	public String getPriorityOfFirstBug(){
+
+	public String getPriorityOfFirstBug() {
 		return firstBugPriority.getText();
 	}
-	
-	public EditBugPage selectBug(int bugID){
+
+	public EditBugPage selectBug(int bugID) {
 		driver.findElement(By.linkText(String.valueOf(bugID))).click();
-	    return PageFactory.initElements(driver, EditBugPage.class);
+		return PageFactory.initElements(driver, EditBugPage.class);
 	}
-	
-	public MyBugsPage saveSearch(String nameOfSearch){
+
+	public MyBugsPage saveSearch(String nameOfSearch) {
 		saveSearchField.clear();
 		saveSearchField.sendKeys(nameOfSearch);
-		
+
 		saveSearchButton.click();
 		return PageFactory.initElements(driver, MyBugsPage.class);
 	}
-	
-	public MyBugsPage forgetSavedSearch(String savedSearchName){
+
+	public MyBugsPage forgetSavedSearch(String savedSearchName) {
 		driver.findElement(By.linkText(savedSearchName)).click();
-		driver.findElement(By.linkText("Forget Search '"+savedSearchName+"'")).click();
+		driver.findElement(By.linkText("Forget Search '" + savedSearchName + "'")).click();
 		return PageFactory.initElements(driver, MyBugsPage.class);
 	}
 
-	
-	public LoggedInBasePage navigateToHome(){
+	public LoggedInBasePage navigateToHome() {
 		homeLink.click();
 		return PageFactory.initElements(driver, LoggedInBasePage.class);
 	}
-	
+
 }

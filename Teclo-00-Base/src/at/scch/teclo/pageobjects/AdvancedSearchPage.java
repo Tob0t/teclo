@@ -8,57 +8,57 @@ import org.openqa.selenium.support.ui.Select;
 
 public class AdvancedSearchPage {
 	private WebDriver driver;
-	
-	@FindBy(id="bug_status")
+
+	@FindBy(id = "bug_status")
 	private WebElement bugState;
-	
-	@FindBy(id="short_desc")
+
+	@FindBy(id = "short_desc")
 	private WebElement summaryTextBox;
-	
-	@FindBy(id="longdesc")
+
+	@FindBy(id = "longdesc")
 	private WebElement commentTextBox;
-	
-	@FindBy(id="Search")
+
+	@FindBy(id = "Search")
 	private WebElement searchButton;
-	
-	@FindBy(name="field0-0-0")
+
+	@FindBy(name = "field0-0-0")
 	private WebElement booleanChartField;
-	
-	@FindBy(name="type0-0-0")
+
+	@FindBy(name = "type0-0-0")
 	private WebElement booleanChartType;
-	
-	@FindBy(name="value0-0-0")
+
+	@FindBy(name = "value0-0-0")
 	private WebElement booleanChartValue;
-	
-	public AdvancedSearchPage(WebDriver driver){
+
+	public AdvancedSearchPage(WebDriver driver) {
 		this.driver = driver;
 	}
-	
-	public MyBugsPage searchFor(String summaryString, String commentString){
+
+	public MyBugsPage searchFor(String summaryString, String commentString) {
 		summaryTextBox.clear();
 		summaryTextBox.sendKeys(summaryString);
 		commentTextBox.clear();
 		commentTextBox.sendKeys(commentString);
 		return search();
 	}
-	
-	public void deselectBugState(String bugStateString){
+
+	public void deselectBugState(String bugStateString) {
 		new Select(bugState).deselectByVisibleText(bugStateString);
 	}
-	
-	public void selectBugState(String bugStateString){
+
+	public void selectBugState(String bugStateString) {
 		new Select(bugState).selectByVisibleText(bugStateString);
 	}
-	
-	public void fillBooleanChart(String chartField, String chartType, String chartValue){
+
+	public void fillBooleanChart(String chartField, String chartType, String chartValue) {
 		new Select(booleanChartField).selectByVisibleText(chartField);
 		new Select(booleanChartType).selectByVisibleText(chartType);
 		booleanChartValue.clear();
 		booleanChartValue.sendKeys(chartValue);
 	}
-	
-	public MyBugsPage search(){
-		searchButton.click();	
+
+	public MyBugsPage search() {
+		searchButton.click();
 		return PageFactory.initElements(driver, MyBugsPage.class);
 	}
 

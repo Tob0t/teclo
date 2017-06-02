@@ -1,7 +1,6 @@
 package at.scch.teclo.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.After;
@@ -12,10 +11,9 @@ import org.openqa.selenium.WebDriver;
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.MyBugsPage;
-import at.scch.teclo.pageobjects.NewBugCreatedPage;
 
 public class FindBugZarroTest {
-	
+
 	private WebDriver driver;
 	private StringBuffer verificationErrors = new StringBuffer();
 
@@ -36,8 +34,8 @@ public class FindBugZarroTest {
 	@Test
 	public void testFindBugZarro() throws Exception {
 		MyBugsPage myBugsPage = loggedInBasePage.searchFor("EaxmpleBug01");
-		
-	    assertEquals("Zarro Boogs found.",myBugsPage.getAmountOfBugsText());
+
+		assertEquals("Zarro Boogs found.", myBugsPage.getAmountOfBugsText());
 	}
 
 	@After
@@ -47,6 +45,5 @@ public class FindBugZarroTest {
 			fail(verificationErrorString);
 		}
 	}
-
 
 }

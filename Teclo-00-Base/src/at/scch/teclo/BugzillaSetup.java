@@ -5,9 +5,6 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -27,10 +24,10 @@ import at.scch.teclo.pageobjects.SearchBasePage;
 public class BugzillaSetup {
 
 	private static WebDriver driver;
-	private static String BASE_URL="";
+	private static String BASE_URL = "";
 	public static String ExampleBugSummary = "ExampleBug01";
 	public static String ExampleBugDescription = "This is an example description for ExampleBug01";
-	
+
 	private static LoggedInBasePage loggedInBasePage;
 
 	/***
@@ -39,13 +36,14 @@ public class BugzillaSetup {
 	private static void setUp() {
 
 		loadBaseURL();
-		
+
 		String os = System.getProperty("os.name");
 
 		if (os.toLowerCase().contains("win")) {
 			System.setProperty("webdriver.chrome.driver", "./chromdriver/chromedriver.exe");
 		} else {
-			// assuming OS is UNIX based (OSX, Linux, etc.) or at least is able to execute shell scripts
+			// assuming OS is UNIX based (OSX, Linux, etc.) or at least is able
+			// to execute shell scripts
 			System.setProperty("webdriver.chrome.driver", "./chromdriver/chromedriver");
 		}
 
@@ -53,7 +51,7 @@ public class BugzillaSetup {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 	}
-	
+
 	/***
 	 * Set IP Adress on config file according to your VM! (config.properties)
 	 */
@@ -64,7 +62,7 @@ public class BugzillaSetup {
 		try {
 			String filename = "config.properties";
 			input = BugzillaSetup.class.getClassLoader().getResourceAsStream(filename);
-			if(input==null){
+			if (input == null) {
 				System.out.println("Sorry, unable to find " + filename);
 				return;
 			}
@@ -74,12 +72,12 @@ public class BugzillaSetup {
 
 			// set the variable BASE_URL received from the props file
 			BASE_URL = prop.getProperty("BASE_URL").toString();
-			System.out.println("Trying to connect to " +BASE_URL);
+			System.out.println("Trying to connect to " + BASE_URL);
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
-		} finally{
-			if(input!=null){
+		} finally {
+			if (input != null) {
 				try {
 					input.close();
 				} catch (IOException e) {
@@ -88,78 +86,81 @@ public class BugzillaSetup {
 			}
 		}
 	}
-	
-	public static String getBaseURL(){
+
+	public static String getBaseURL() {
 		return BASE_URL;
 	}
 
 	public static WebDriver getWebDriver() {
 		// tear down old driver
-		//tearDown();
+		// tearDown();
 
 		// set up new driver
-		if(driver == null){
+		if (driver == null) {
 			setUp();
 		}
 
 		return driver;
 	}
-	
+
 	/***
 	 * Helper method to log in the admin
+	 * 
 	 * @return LoggedIn page
 	 */
-	public static LoggedInBasePage login(){
+	public static LoggedInBasePage login() {
 		LogInBasePage logInBasePage = LogInBasePage.navigateTo(driver);
-		
+
 		// change the waiting time 0 seconds if the element is not found
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-		
+
 		// check if the log out button is existing
-		if(!(driver.findElements(By.linkText("Log out")).size()>0)){
+		if (!(driver.findElements(By.linkText("Log out")).size() > 0)) {
 			loggedInBasePage = logInBasePage.logIn("admin", "admin");
 		}
-		
+
 		// change the waiting time back to 10 seconds
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		
-	    return loggedInBasePage;
+
+		return loggedInBasePage;
 	}
-	
+
 	/***
 	 * Helper method to log out the current user
+	 * 
 	 * @param loggedInBasePage
 	 */
-	public static void logOut(LoggedInBasePage loggedInBasePage){
+	public static void logOut(LoggedInBasePage loggedInBasePage) {
 		LoggedOutBasePage loggedOutBasePage = loggedInBasePage.logOut();
 	}
-	
+
 	/***
 	 * Helper method to create a new example bug
+	 * 
 	 * @param loggedInBasePage
 	 * @return newBug created page
 	 */
-	public static int getExampleBug(LoggedInBasePage loggedInBasePage){
+	public static int getExampleBug(LoggedInBasePage loggedInBasePage) {
 		int bugID = 0;
 		// Search first if there is a bug already existing
 		SearchBasePage searchBasePage = loggedInBasePage.navigateToSearchBasePage();
 		AdvancedSearchPage advancedSearchPage = searchBasePage.navigateToAdvancedSearchPage();
 		advancedSearchPage.deselectBugState("ASSIGNED");
 		advancedSearchPage.deselectBugState("REOPENED");
-		MyBugsPage myBugsPage = advancedSearchPage.searchFor(ExampleBugSummary, ExampleBugDescription);
-		
+		MyBugsPage myBugsPage = advancedSearchPage.searchFor(ExampleBugSummary,
+				ExampleBugDescription);
+
 		// if the bug is existing just return the ID of the first found bug
-		if(myBugsPage.getAmountOfBugs()>1){
+		if (myBugsPage.getAmountOfBugs() > 1) {
 			bugID = myBugsPage.getIDOfFirstBug();
-		} else{ // else create a new bug and return the ID
+		} else { // else create a new bug and return the ID
 			CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
-			NewBugCreatedPage newBugCreatedPage = createNewBugPage.createNewBug(ExampleBugSummary, ExampleBugDescription);
+			NewBugCreatedPage newBugCreatedPage = createNewBugPage.createNewBug(ExampleBugSummary,
+					ExampleBugDescription);
 			bugID = newBugCreatedPage.getBugID();
 		}
 		return bugID;
 	}
-
-	
 
 	private static void tearDown() {
 		if (driver != null)
