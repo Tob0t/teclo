@@ -4,12 +4,13 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import org.openqa.selenium.*;
 import at.scch.teclo.BugzillaSetup;
+import at.scch.teclo.BugzillaTest;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.MyBugsPage;
 
-public class ChangeBugStateTest {
-	private WebDriver driver;
+public class ChangeBugStateTest extends BugzillaTest {
+	//private WebDriver driver;
 	private StringBuffer verificationErrors = new StringBuffer();
 
 	private int currentBugID;
@@ -17,7 +18,7 @@ public class ChangeBugStateTest {
 
 	@Before
 	public void setUp() throws Exception {
-		driver = BugzillaSetup.getWebDriver();
+		//driver = BugzillaSetup.getWebDriver();
 
 		// precondition: logged in
 		loggedInBasePage = BugzillaSetup.login();

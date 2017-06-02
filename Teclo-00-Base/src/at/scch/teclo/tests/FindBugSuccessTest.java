@@ -10,11 +10,12 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
 import at.scch.teclo.BugzillaSetup;
+import at.scch.teclo.BugzillaTest;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.MyBugsPage;
 
-public class FindBugSuccessTest {
-	private WebDriver driver;
+public class FindBugSuccessTest extends BugzillaTest {
+	//private WebDriver driver;
 	private StringBuffer verificationErrors = new StringBuffer();
 
 	private int currentBugID;
@@ -22,7 +23,6 @@ public class FindBugSuccessTest {
 
 	@Before
 	public void setUp() throws Exception {
-		driver = BugzillaSetup.getWebDriver();
 
 		// precondition: logged in
 		loggedInBasePage = BugzillaSetup.login();

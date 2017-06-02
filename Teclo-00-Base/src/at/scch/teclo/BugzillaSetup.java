@@ -24,6 +24,7 @@ import at.scch.teclo.pageobjects.SearchBasePage;
 public class BugzillaSetup {
 
 	private static WebDriver driver;
+	private static int driverUsageCounter;
 	private static String BASE_URL = "";
 	public static String ExampleBugSummary = "ExampleBug01";
 	public static String ExampleBugDescription = "This is an example description for ExampleBug01";
@@ -31,11 +32,14 @@ public class BugzillaSetup {
 	private static LoggedInBasePage loggedInBasePage;
 
 	/***
-	 * Setup is done once to find out the right driver
+	 * static constructor for first call
 	 */
-	private static void setUp() {
-
-		loadBaseURL();
+	{
+		loadConfig();
+		
+		// set the variable BASE_URL received from the props file
+		BASE_URL = System.getProperty("BASE_URL").toString();
+		System.out.println("Trying to connect to " + BASE_URL);
 
 		String os = System.getProperty("os.name");
 
@@ -46,22 +50,16 @@ public class BugzillaSetup {
 			// to execute shell scripts
 			System.setProperty("webdriver.chrome.driver", "./chromdriver/chromedriver");
 		}
-
-		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
 	}
 
 	/***
 	 * Set IP Adress on config file according to your VM! (config.properties)
 	 */
-	public static void loadBaseURL() {
-		Properties prop = new Properties();
-		InputStream input = null;
-
-		try {
-			String filename = "config.properties";
-			input = BugzillaSetup.class.getClassLoader().getResourceAsStream(filename);
+	public static void loadConfig() {
+		Properties prop = new Properties(System.getProperties());
+		String filename = "config.properties";
+		
+		try(InputStream input = BugzillaSetup.class.getClassLoader().getResourceAsStream(filename)) {
 			if (input == null) {
 				System.out.println("Sorry, unable to find " + filename);
 				return;
@@ -69,22 +67,13 @@ public class BugzillaSetup {
 
 			// load a properties file from class path, inside static method
 			prop.load(input);
+			System.setProperties(prop);
 
-			// set the variable BASE_URL received from the props file
-			BASE_URL = prop.getProperty("BASE_URL").toString();
-			System.out.println("Trying to connect to " + BASE_URL);
+			
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		} 
 	}
 
 	public static String getBaseURL() {
@@ -92,15 +81,28 @@ public class BugzillaSetup {
 	}
 
 	public static WebDriver getWebDriver() {
-		// tear down old driver
-		// tearDown();
+		driverUsageCounter++;
 
 		// set up new driver
 		if (driver == null) {
-			setUp();
+			driver = new ChromeDriver();
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		}
 
 		return driver;
+	}
+	
+	public static void ungetWebDriver(){
+		driverUsageCounter--;
+		
+		if(driverUsageCounter > 0){
+			return;
+		}
+		
+		if(driver != null){
+			driver.close();
+			driver = null;
+		}
 	}
 
 	/***
