@@ -12,14 +12,17 @@ import at.scch.teclo.BugzillaSetup;
 
 @RunWith(Suite.class)
 @SuiteClasses({ LoginLogoutTest.class, CreateNewBugTest.class, EditBugTest.class,
-		ChangeBugStateTest.class, FindBugSuccessTest.class, FindBugZarroTest.class,
+		ChangeBugStateTest.class, FindQuickSearchTest.class, FindBugZarroTest.class,
 		FindSpecificSearchTest.class, FindAdvancedSearchTest.class, FindBooleanChartTest.class,
 		GenerateTabularReportTest.class, SaveSearchTest.class })
 public class AllTests {
 
 	@BeforeClass
 	public void setUpDriver(){
+		// load snapshot
+		// ...
 		BugzillaSetup.getWebDriver();
+		
 	}
 	
 	@AfterClass

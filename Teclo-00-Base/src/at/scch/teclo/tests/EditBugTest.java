@@ -7,7 +7,7 @@ import org.openqa.selenium.*;
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
-import at.scch.teclo.pageobjects.MyBugsPage;
+import at.scch.teclo.pageobjects.ResultsPage;
 
 public class EditBugTest {
 	private WebDriver driver;
@@ -15,7 +15,7 @@ public class EditBugTest {
 
 	private int currentBugID;
 	private LoggedInBasePage loggedInBasePage;
-	private MyBugsPage myBugsPage;
+	private ResultsPage myBugsPage;
 
 	@Before
 	public void setUp() throws Exception {
@@ -25,12 +25,15 @@ public class EditBugTest {
 		loggedInBasePage = BugzillaSetup.login();
 
 		// precondition: bug inserted
+		// TODO: get new bug for every single test case
 		currentBugID = BugzillaSetup.getExampleBug(loggedInBasePage);
-
+		
 	}
 
+	// TODO: testEditBugTimes()
 	@Test
 	public void testEditBug() throws Exception {
+		// TODO: get direct link to Bug ID
 		myBugsPage = loggedInBasePage.navigateToMyBugsPage();
 
 		EditBugPage editBugPage = myBugsPage.goToEditBug(currentBugID);
@@ -38,6 +41,8 @@ public class EditBugTest {
 		// myBugsPage = editBugPage.editBug();
 		editBugPage.editBug("EditedBug", "Other", "Linux", "P1", "critical");
 		myBugsPage.checkEditedBugChanges();
+		// TODO: Commit
+		// Check if changes submitted
 
 	}
 

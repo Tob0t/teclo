@@ -34,7 +34,7 @@ public class AdvancedSearchPage {
 		this.driver = driver;
 	}
 
-	public MyBugsPage searchFor(String summaryString, String commentString) {
+	public ResultsPage searchFor(String summaryString, String commentString) {
 		summaryTextBox.clear();
 		summaryTextBox.sendKeys(summaryString);
 		commentTextBox.clear();
@@ -57,9 +57,9 @@ public class AdvancedSearchPage {
 		booleanChartValue.sendKeys(chartValue);
 	}
 
-	public MyBugsPage search() {
+	public ResultsPage search() {
 		searchButton.click();
-		return PageFactory.initElements(driver, MyBugsPage.class);
+		return PageFactory.initElements(driver, ResultsPage.class);
 	}
 
 }

@@ -24,14 +24,20 @@ public class CreateNewBugTest {
 	}
 
 	@Test
-	public void testCreateNewBug() throws Exception {
+	public void testCreateNewBugDefaultFields() throws Exception {
 		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
 
 		NewBugCreatedPage newBugCreatedPage = createNewBugPage.createNewBug("ExampleBug01",
 				"This is an example description for ExampleBug01");
 		newBugCreatedPage.checkCreatedBug();
+		// TODO: Check if creating bug is successful
+		
+		// TODO: Check created bug including every single field, maybe default values as well
+		
 
 	}
+	
+	// TODO: testCreateNewBugAdvancedFields()
 
 	@After
 	public void tearDown() throws Exception {

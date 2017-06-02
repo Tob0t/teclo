@@ -67,9 +67,9 @@ public class LoggedInBasePage {
 		return PageFactory.initElements(driver, CreateNewBugPage.class);
 	}
 
-	public MyBugsPage navigateToMyBugsPage() {
+	public ResultsPage navigateToMyBugsPage() {
 		MyBugsLink.click();
-		return PageFactory.initElements(driver, MyBugsPage.class);
+		return PageFactory.initElements(driver, ResultsPage.class);
 	}
 
 	public SearchBasePage navigateToSearchBasePage() {
@@ -82,17 +82,17 @@ public class LoggedInBasePage {
 		return PageFactory.initElements(driver, ReportsBasePage.class);
 	}
 
-	public MyBugsPage searchFor(String searchTerm) {
+	public ResultsPage searchFor(String searchTerm) {
 		quickSearch.clear();
 		quickSearch.sendKeys(searchTerm);
 		quickFindButton.click();
 
-		return PageFactory.initElements(driver, MyBugsPage.class);
+		return PageFactory.initElements(driver, ResultsPage.class);
 	}
 
-	public MyBugsPage getSavedSearch(String savedSearchName) {
+	public ResultsPage getSavedSearch(String savedSearchName) {
 		driver.findElement(By.linkText(savedSearchName)).click();
-		return PageFactory.initElements(driver, MyBugsPage.class);
+		return PageFactory.initElements(driver, ResultsPage.class);
 	}
 
 	private boolean isElementPresent(By by) {

@@ -14,7 +14,7 @@ import at.scch.teclo.pageobjects.CreateNewBugPage;
 import at.scch.teclo.pageobjects.LogInBasePage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.LoggedOutBasePage;
-import at.scch.teclo.pageobjects.MyBugsPage;
+import at.scch.teclo.pageobjects.ResultsPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 
@@ -34,7 +34,7 @@ public class BugzillaSetup {
 	/***
 	 * static constructor for first call
 	 */
-	{
+	static {
 		loadConfig();
 		
 		// set the variable BASE_URL received from the props file
@@ -149,7 +149,7 @@ public class BugzillaSetup {
 		AdvancedSearchPage advancedSearchPage = searchBasePage.navigateToAdvancedSearchPage();
 		advancedSearchPage.deselectBugState("ASSIGNED");
 		advancedSearchPage.deselectBugState("REOPENED");
-		MyBugsPage myBugsPage = advancedSearchPage.searchFor(ExampleBugSummary,
+		ResultsPage myBugsPage = advancedSearchPage.searchFor(ExampleBugSummary,
 				ExampleBugDescription);
 
 		// if the bug is existing just return the ID of the first found bug
@@ -162,11 +162,6 @@ public class BugzillaSetup {
 			bugID = newBugCreatedPage.getBugID();
 		}
 		return bugID;
-	}
-
-	private static void tearDown() {
-		if (driver != null)
-			driver.quit();
 	}
 
 }

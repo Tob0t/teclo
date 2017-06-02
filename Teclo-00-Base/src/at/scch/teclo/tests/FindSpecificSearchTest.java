@@ -11,7 +11,7 @@ import org.openqa.selenium.WebDriver;
 
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
-import at.scch.teclo.pageobjects.MyBugsPage;
+import at.scch.teclo.pageobjects.ResultsPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 import at.scch.teclo.pageobjects.SpecificSearchPage;
 
@@ -34,15 +34,20 @@ public class FindSpecificSearchTest {
 		currentBugID = BugzillaSetup.getExampleBug(loggedInBasePage);
 	}
 
+	// TODO: Create three test cases with bug state and description
+	// testFindBugZarro()
+	// testFindBugSingle()
+	// testFindBugMultiple()
+	
 	@Test
 	public void testSpecificSearch() throws Exception {
 		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
 		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 
 		specificSearchPage.selectBugState("Open");
-		MyBugsPage myBugsPage = specificSearchPage.searchFor("ExampleBug*");
+		ResultsPage myBugsPage = specificSearchPage.searchFor("ExampleBug*");
 
-		assertTrue("Bug not found!", 0 < myBugsPage.getAmountOfBugs());
+		assertEquals("Bug not found!", 0,  myBugsPage.getAmountOfBugs());
 
 		try {
 			assertEquals("ExampleBug01", myBugsPage.getSummaryOfFirstBug());

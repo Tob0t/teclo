@@ -7,7 +7,7 @@ import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.BugzillaTest;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
-import at.scch.teclo.pageobjects.MyBugsPage;
+import at.scch.teclo.pageobjects.ResultsPage;
 
 public class ChangeBugStateTest extends BugzillaTest {
 	//private WebDriver driver;
@@ -27,65 +27,50 @@ public class ChangeBugStateTest extends BugzillaTest {
 		currentBugID = BugzillaSetup.getExampleBug(loggedInBasePage);
 	}
 
+	// TODO: multiple tests with different paths
 	@Test
 	public void testChangeBugState() throws Exception {
 
-		MyBugsPage myBugsPage = loggedInBasePage.navigateToMyBugsPage();
+		// TODO: navigate directly to example bug
+		ResultsPage myBugsPage = loggedInBasePage.navigateToMyBugsPage();
 
 		int currentAmountOfBugs = myBugsPage.getAmountOfBugs();
 
 		EditBugPage editBugPage = myBugsPage.selectBug(currentBugID);
 
-		try {
-			assertEquals("NEW", editBugPage.getCurrentBugState());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
-
+		assertEquals("NEW", editBugPage.getCurrentBugState());
+		
 		editBugPage.changeBugState("ASSIGNED");
 		editBugPage = editBugPage.commitBug();
 
 		editBugPage = editBugPage.selectCommitedBug(currentBugID);
 
-		try {
-			assertEquals("ASSIGNED", editBugPage.getCurrentBugState());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
+		assertEquals("ASSIGNED", editBugPage.getCurrentBugState());
+		
 
 		editBugPage.changeBugState("RESOLVED");
 		editBugPage = editBugPage.commitBug();
 
 		editBugPage = editBugPage.selectCommitedBug(currentBugID);
 
-		try {
-			assertEquals("RESOLVED", editBugPage.getCurrentBugState());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
+		
+		assertEquals("RESOLVED", editBugPage.getCurrentBugState());
+
 
 		editBugPage.changeBugState("VERIFIED");
 		editBugPage = editBugPage.commitBug();
 
 		editBugPage = editBugPage.selectCommitedBug(currentBugID);
 
-		try {
-			assertEquals("VERIFIED", editBugPage.getCurrentBugState());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
+		assertEquals("VERIFIED", editBugPage.getCurrentBugState());
 
 		editBugPage.changeBugState("CLOSED");
 		editBugPage = editBugPage.commitBug();
 
 		editBugPage = editBugPage.selectCommitedBug(currentBugID);
 
-		try {
-			assertEquals("CLOSED", editBugPage.getCurrentBugState());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
-
+		assertEquals("CLOSED", editBugPage.getCurrentBugState());
+		
 		// TODO: search for the bug to access it when its closed
 		/*
 		 * myBugsPage = editBugPage.navigateToMyBugsPage();
@@ -102,39 +87,25 @@ public class ChangeBugStateTest extends BugzillaTest {
 
 		editBugPage = editBugPage.selectCommitedBug(currentBugID);
 
-		try {
-			assertEquals("REOPENED", editBugPage.getCurrentBugState());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
+		
+		assertEquals("REOPENED", editBugPage.getCurrentBugState());
+		
 
 		editBugPage.changeBugState("NEW");
 		editBugPage = editBugPage.commitBug();
 
 		editBugPage = editBugPage.selectCommitedBug(currentBugID);
 
-		try {
-			assertEquals("NEW", editBugPage.getCurrentBugState());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
+		
+		assertEquals("NEW", editBugPage.getCurrentBugState());
+		
 
-		myBugsPage = editBugPage.navigateToMyBugsPage();
+		//myBugsPage = editBugPage.navigateToMyBugsPage();
 
-		try {
-			assertEquals(currentAmountOfBugs, myBugsPage.getAmountOfBugs());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
+		
+		//assertEquals(currentAmountOfBugs, myBugsPage.getAmountOfBugs());
+		
 
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		String verificationErrorString = verificationErrors.toString();
-		if (!"".equals(verificationErrorString)) {
-			fail(verificationErrorString);
-		}
 	}
 
 }

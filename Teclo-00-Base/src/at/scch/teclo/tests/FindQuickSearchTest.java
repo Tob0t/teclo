@@ -12,9 +12,9 @@ import org.openqa.selenium.WebDriver;
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.BugzillaTest;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
-import at.scch.teclo.pageobjects.MyBugsPage;
+import at.scch.teclo.pageobjects.ResultsPage;
 
-public class FindBugSuccessTest extends BugzillaTest {
+public class FindQuickSearchTest extends BugzillaTest {
 	//private WebDriver driver;
 	private StringBuffer verificationErrors = new StringBuffer();
 
@@ -29,29 +29,26 @@ public class FindBugSuccessTest extends BugzillaTest {
 
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBug(loggedInBasePage);
+		
+		// TODO: Create Bug with unique bug summary
 	}
 
+	// TODO: Create three test cases
+	// testFindBugZarro()
+	// testFindBugSingle()
+	// testFindBugMultiple()
 	@Test
-	public void testFindBugSuccess() throws Exception {
-		MyBugsPage myBugsPage = loggedInBasePage.searchFor("ExampleBug01");
+	public void testFindBugSingle() throws Exception {
+		ResultsPage resultsPage = loggedInBasePage.searchFor("ExampleBug01");
 
-		assertTrue("Less bug founds, than the minimum required amount",
-				0 < myBugsPage.getAmountOfBugs());
+		assertEquals("No bug found", 0, resultsPage.getAmountOfBugs());
 
 		try {
-			assertEquals("ExampleBug01", myBugsPage.getSummaryOfFirstBug());
+			assertEquals("ExampleBug01", resultsPage.getSummaryOfFirstBug());
 		} catch (Error e) {
 			verificationErrors.append(e.toString());
 		}
 
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		String verificationErrorString = verificationErrors.toString();
-		if (!"".equals(verificationErrorString)) {
-			fail(verificationErrorString);
-		}
 	}
 
 }

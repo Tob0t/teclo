@@ -10,7 +10,7 @@ import org.openqa.selenium.WebDriver;
 
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
-import at.scch.teclo.pageobjects.MyBugsPage;
+import at.scch.teclo.pageobjects.ResultsPage;
 
 public class FindBugZarroTest {
 
@@ -33,7 +33,7 @@ public class FindBugZarroTest {
 
 	@Test
 	public void testFindBugZarro() throws Exception {
-		MyBugsPage myBugsPage = loggedInBasePage.searchFor("EaxmpleBug01");
+		ResultsPage myBugsPage = loggedInBasePage.searchFor("EaxmpleBug01");
 
 		assertEquals("Zarro Boogs found.", myBugsPage.getAmountOfBugsText());
 	}

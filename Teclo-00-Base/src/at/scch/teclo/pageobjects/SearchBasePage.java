@@ -13,6 +13,7 @@ public class SearchBasePage {
 		this.driver = driver;
 	}
 
+	// TODO: find out on which page is selected by css
 	public SpecificSearchPage navigateToSpecificSearchPage() {
 		// Type in exact URL to avoid state conflicts
 		driver.get(driver.getCurrentUrl() + specificURL);

@@ -26,12 +26,12 @@ public class SpecificSearchPage {
 		new Select(bugState).selectByVisibleText(bugStateString);
 	}
 
-	public MyBugsPage searchFor(String searchTerm) {
+	public ResultsPage searchFor(String searchTerm) {
 		searchField.clear();
 		searchField.sendKeys(searchTerm);
 		searchButton.click();
 
-		return PageFactory.initElements(driver, MyBugsPage.class);
+		return PageFactory.initElements(driver, ResultsPage.class);
 	}
 
 }

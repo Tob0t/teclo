@@ -13,17 +13,29 @@ public class EditBugPage {
 
 	private final WebDriver driver;
 
+	@FindBy(id = "short_desc")
+	private WebElement bugSummary;
+	
+	@FindBy(id = "rep_platform")
+	private WebElement bugPlatform;
+	
+	@FindBy(id = "op_sys")
+	private WebElement bugOpSys;
+	
+	
 	@FindBy(id = "bug_status")
 	private WebElement bugState;
 
 	@FindBy(id = "priority")
-	private WebElement priority;
+	private WebElement bugPriority;
 
 	@FindBy(id = "commit")
 	private WebElement commitButton;
 
 	public EditBugPage(WebDriver driver) {
 		this.driver = driver;
+		
+		// TODO: verify that title is correct
 	}
 
 	/*
@@ -45,7 +57,8 @@ public class EditBugPage {
 	 * return PageFactory.initElements(driver, MyBugsPage.class); }
 	 */
 
-	public MyBugsPage editBug(String summary, String platform, String opSys, String priority,
+	// TODO: Split every edit in a single method inclusive commit!
+	public ResultsPage editBug(String summary, String platform, String opSys, String priority,
 			String severity) {
 		driver.findElement(By.id("editme_action")).click();
 		driver.findElement(By.id("short_desc")).clear();
@@ -57,7 +70,24 @@ public class EditBugPage {
 		driver.findElement(By.id("commit")).click();
 		driver.findElement(By.linkText("My Bugs")).click();
 
-		return PageFactory.initElements(driver, MyBugsPage.class);
+		return PageFactory.initElements(driver, ResultsPage.class);
+	}
+	
+	public void editSummary(String summary){
+		bugSummary.clear();
+		bugSummary.sendKeys(summary);
+	}
+	
+	public void editPlatform(String platform){
+		new Select(bugPlatform).selectByVisibleText(platform);
+	}
+	
+	public void editOpSys(String opSys){
+		new Select(bugOpSys).selectByVisibleText(opSys);
+	}
+	
+	public void editPriority(String priority){
+		new Select(bugPriority).selectByVisibleText(priority);
 	}
 
 	public String getCurrentBugState() {
@@ -69,7 +99,7 @@ public class EditBugPage {
 	}
 
 	public void changePriority(String priorityString) {
-		new Select(priority).selectByVisibleText(priorityString);
+		new Select(bugPriority).selectByVisibleText(priorityString);
 	}
 
 	public EditBugPage commitBug() {
@@ -87,10 +117,10 @@ public class EditBugPage {
 		return PageFactory.initElements(driver, LoggedInBasePage.class);
 	}
 
-	public MyBugsPage navigateToMyBugsPage() {
+	public ResultsPage navigateToMyBugsPage() {
 		driver.findElement(By.linkText("My Bugs")).click();
 
-		return PageFactory.initElements(driver, MyBugsPage.class);
+		return PageFactory.initElements(driver, ResultsPage.class);
 	}
 
 }

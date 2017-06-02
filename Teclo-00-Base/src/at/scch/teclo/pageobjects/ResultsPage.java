@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class MyBugsPage {
+public class ResultsPage {
 
 	private StringBuffer verificationErrors = new StringBuffer();
 	private final WebDriver driver;
@@ -37,7 +37,7 @@ public class MyBugsPage {
 	@FindBy(linkText = "Home")
 	private WebElement homeLink;
 
-	public MyBugsPage(WebDriver driver) {
+	public ResultsPage(WebDriver driver) {
 		this.driver = driver;
 	}
 
@@ -48,7 +48,7 @@ public class MyBugsPage {
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
 
-	public MyBugsPage checkEditedBugChanges() {
+	public ResultsPage checkEditedBugChanges() {
 
 		try {
 			assertEquals("cri",
@@ -76,7 +76,7 @@ public class MyBugsPage {
 			verificationErrors.append(e.toString());
 		}
 
-		return PageFactory.initElements(driver, MyBugsPage.class);
+		return PageFactory.initElements(driver, ResultsPage.class);
 	}
 
 	public int getAmountOfBugs() {
@@ -115,18 +115,18 @@ public class MyBugsPage {
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
 
-	public MyBugsPage saveSearch(String nameOfSearch) {
+	public ResultsPage saveSearch(String nameOfSearch) {
 		saveSearchField.clear();
 		saveSearchField.sendKeys(nameOfSearch);
 
 		saveSearchButton.click();
-		return PageFactory.initElements(driver, MyBugsPage.class);
+		return PageFactory.initElements(driver, ResultsPage.class);
 	}
 
-	public MyBugsPage forgetSavedSearch(String savedSearchName) {
+	public ResultsPage forgetSavedSearch(String savedSearchName) {
 		driver.findElement(By.linkText(savedSearchName)).click();
 		driver.findElement(By.linkText("Forget Search '" + savedSearchName + "'")).click();
-		return PageFactory.initElements(driver, MyBugsPage.class);
+		return PageFactory.initElements(driver, ResultsPage.class);
 	}
 
 	public LoggedInBasePage navigateToHome() {

@@ -18,12 +18,14 @@ public class NewBugCreatedPage {
 
 	public NewBugCreatedPage(WebDriver driver) {
 		this.driver = driver;
+		
+		// TODO: check if the title of the page is correct
 	}
 
 	public NewBugCreatedPage checkCreatedBug() {
 		try {
 			assertEquals("Bug 1 has been added to the database",
-					driver.findElement(By.cssSelector("dt")).getText());
+				driver.findElement(By.cssSelector("dt")).getText());
 		} catch (Error e) {
 			verificationErrors.append(e.toString());
 		}
@@ -32,10 +34,10 @@ public class NewBugCreatedPage {
 
 	}
 
-	public MyBugsPage navigateToMyBugsPage() {
+	public ResultsPage navigateToMyBugsPage() {
 		driver.findElement(By.linkText("My Bugs")).click();
 
-		return PageFactory.initElements(driver, MyBugsPage.class);
+		return PageFactory.initElements(driver, ResultsPage.class);
 	}
 
 	public int getBugID() {

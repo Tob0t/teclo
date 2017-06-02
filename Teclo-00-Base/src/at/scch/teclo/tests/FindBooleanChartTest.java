@@ -13,7 +13,7 @@ import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.AdvancedSearchPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
-import at.scch.teclo.pageobjects.MyBugsPage;
+import at.scch.teclo.pageobjects.ResultsPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 
 public class FindBooleanChartTest {
@@ -22,7 +22,7 @@ public class FindBooleanChartTest {
 
 	private int currentBugID;
 	private LoggedInBasePage loggedInBasePage;
-	private MyBugsPage myBugsPage;
+	private ResultsPage myBugsPage;
 
 	@Before
 	public void setUp() throws Exception {
@@ -47,7 +47,7 @@ public class FindBooleanChartTest {
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 
 		advancedSearchPage.fillBooleanChart("Priority", "is equal to", "P3");
-		MyBugsPage myBugsPage = advancedSearchPage.search();
+		ResultsPage myBugsPage = advancedSearchPage.search();
 
 		assertTrue("Bug not found!", 0 < myBugsPage.getAmountOfBugs());
 
