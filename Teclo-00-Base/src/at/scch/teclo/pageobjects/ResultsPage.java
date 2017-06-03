@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import at.scch.teclo.BugzillaSetup;
+
 public class ResultsPage {
 
 	private StringBuffer verificationErrors = new StringBuffer();
@@ -97,10 +99,7 @@ public class ResultsPage {
 		return firstBugPriority.getText();
 	}
 
-	public EditBugPage selectBug(int bugID) {
-		driver.findElement(By.linkText(String.valueOf(bugID))).click();
-		return PageFactory.initElements(driver, EditBugPage.class);
-	}
+
 
 	public ResultsPage saveSearch(String nameOfSearch) {
 		saveSearchField.clear();
