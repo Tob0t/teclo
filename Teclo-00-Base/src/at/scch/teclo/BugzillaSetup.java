@@ -35,6 +35,7 @@ public class BugzillaSetup {
 
 	private static LoggedInBasePage loggedInBasePage;
 	private static int currentbugID;
+	private static String exampleBugName;
 
 	/***
 	 * singleton pattern
@@ -143,7 +144,7 @@ public class BugzillaSetup {
 	public static void createExampleBug(){
 		// set the bug name
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
-		String exampleBugName = "Bug_"+dateFormat.format(new Date());
+		exampleBugName = "Bug_"+dateFormat.format(new Date());
 		
 		// precondition: logged in
 		loggedInBasePage = BugzillaSetup.login();
@@ -164,38 +165,16 @@ public class BugzillaSetup {
 		return currentbugID;
 	}
 	
+	public static String getExampleBugName(){
+		// if there is no bug created yet do it now
+		if(currentbugID == 0){
+			createExampleBug();
+		}
+		return exampleBugName;
+	}
+	
 	public static EditBugPage showBug(int bugID) {
 		driver.get(BASE_URL + "/show_bug.cgi?id="+bugID);
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
-
-	/***
-	 * Helper method to create a new example bug
-	 * 
-	 * @param loggedInBasePage
-	 * @return newBug created page
-	 */
-	/*public static int getExampleBug(LoggedInBasePage loggedInBasePage) {
-		int bugID = 0;
-		// Search first if there is a bug already existing
-		SearchBasePage searchBasePage = loggedInBasePage.navigateToSearchBasePage();
-		AdvancedSearchPage advancedSearchPage = searchBasePage.navigateToAdvancedSearchPage();
-		advancedSearchPage.deselectBugState("ASSIGNED");
-		advancedSearchPage.deselectBugState("REOPENED");
-		ResultsPage myBugsPage = advancedSearchPage.searchFor(ExampleBugSummary,
-				ExampleBugDescription);
-
-		// if the bug is existing just return the ID of the first found bug
-		if (myBugsPage.getAmountOfBugs() > 1) {
-			bugID = myBugsPage.getIDOfFirstBug();
-		} else { // else create a new bug and return the ID
-			CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
-			NewBugCreatedPage newBugCreatedPage = createNewBugPage.createNewBug(ExampleBugSummary,
-					ExampleBugDescription);
-			bugID = newBugCreatedPage.getBugID();
-		}
-		return bugID;
-		
-	}
-*/
 }
