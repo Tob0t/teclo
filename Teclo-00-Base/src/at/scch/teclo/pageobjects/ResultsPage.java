@@ -47,36 +47,23 @@ public class ResultsPage {
 
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
-
-	public ResultsPage checkEditedBugChanges() {
-
-		try {
-			assertEquals("cri",
-					driver.findElement(By.cssSelector("span[title=\"critical\"]")).getText());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
-		try {
-			assertEquals("P1", driver.findElement(By.cssSelector("span[title=\"P1\"]")).getText());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
-		try {
-			assertEquals("Linu",
-					driver.findElement(By.cssSelector("span[title=\"Linux\"]")).getText());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
-		try {
-			assertEquals("EditedBug",
-					driver.findElement(
-							By.xpath("//div[@id='bugzilla-body']/table/tbody/tr[2]/td[8]"))
-							.getText());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
-
-		return PageFactory.initElements(driver, ResultsPage.class);
+	
+	public String getCriticalLevel () {
+		return driver.findElement(By.cssSelector("span[title=\"critical\"]")).getText();
+	}
+	
+	public String getPriorityLevel() {
+		return driver.findElement(By.cssSelector("span[title=\"P1\"]")).getText();
+	}
+	
+	public String getOperatingSystem() {
+		return driver.findElement(By.cssSelector("span[title=\"Linux\"]")).getText();
+	}
+	
+	public String getBugTitle() {
+		return driver.findElement(
+				By.xpath("//div[@id='bugzilla-body']/table/tbody/tr[2]/td[8]"))
+				.getText();
 	}
 
 	public int getAmountOfBugs() {

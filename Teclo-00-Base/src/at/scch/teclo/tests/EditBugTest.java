@@ -1,17 +1,16 @@
 package at.scch.teclo.tests;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.*;
-import static org.junit.Assert.*;
-import org.openqa.selenium.*;
 
 import at.scch.teclo.BugzillaSetup;
+import at.scch.teclo.BugzillaTest;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.ResultsPage;
 
-public class EditBugTest {
-	private WebDriver driver;
-	private StringBuffer verificationErrors = new StringBuffer();
+public class EditBugTest extends BugzillaTest {
 
 	private int currentBugID;
 	private LoggedInBasePage loggedInBasePage;
@@ -19,8 +18,6 @@ public class EditBugTest {
 
 	@Before
 	public void setUp() throws Exception {
-		driver = BugzillaSetup.getWebDriver();
-
 		// precondition: logged in
 		loggedInBasePage = BugzillaSetup.login();
 
@@ -40,23 +37,40 @@ public class EditBugTest {
 
 		// myBugsPage = editBugPage.editBug();
 		editBugPage.editBug("EditedBug", "Other", "Linux", "P1", "critical");
-		myBugsPage.checkEditedBugChanges();
+		
+		try {
+			assertEquals("cri", myBugsPage.getCriticalLevel());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+		try {
+			assertEquals("P1", myBugsPage.getPriorityLevel());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+		try {
+			assertEquals("Linu", myBugsPage.getOperatingSystem());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+		try {
+			assertEquals("EditedBug", myBugsPage.getBugTitle());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+		
 		// TODO: Commit
 		// Check if changes submitted
 
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDownEditedBug() throws Exception {
 		// postcondition: change bug back to standard
 		EditBugPage editBugPage = myBugsPage.goToEditBug(currentBugID);
 
 		editBugPage.editBug("ExampleBug01", "PC", "Windows", "P5", "enhancement");
 
-		String verificationErrorString = verificationErrors.toString();
-		if (!"".equals(verificationErrorString)) {
-			fail(verificationErrorString);
-		}
 	}
 
 }

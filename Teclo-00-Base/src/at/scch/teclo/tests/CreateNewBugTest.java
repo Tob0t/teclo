@@ -28,8 +28,12 @@ public class CreateNewBugTest extends BugzillaTest {
 		NewBugCreatedPage newBugCreatedPage = createNewBugPage.createNewBug("ExampleBug01",
 				"This is an example description for ExampleBug01");
 		
-		assertEquals("Bug " + newBugCreatedPage.getBugID() + " has been added to the database", newBugCreatedPage.getBugWasAddedText());
-		
+		try {
+			assertEquals("Bug " + newBugCreatedPage.getBugID() + " has been added to the database", newBugCreatedPage.getBugWasAddedText());
+		} catch (Error e) {
+			verificationErrors.append(e.toString());
+		}
+			
 		// TODO: Check if creating bug is successful
 		
 		// TODO: Check created bug including every single field, maybe default values as well
