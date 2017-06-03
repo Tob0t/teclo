@@ -22,4 +22,13 @@ public class CreateNewBugPage {
 
 		return PageFactory.initElements(driver, NewBugCreatedPage.class);
 	}
+	
+	public NewBugCreatedPage createNewBugSimple(String name) {
+
+		driver.findElement(By.name("short_desc")).clear();
+		driver.findElement(By.name("short_desc")).sendKeys(name);
+		driver.findElement(By.id("commit")).click();
+
+		return PageFactory.initElements(driver, NewBugCreatedPage.class);
+	}
 }

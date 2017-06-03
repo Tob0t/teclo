@@ -20,8 +20,12 @@ public class AllTests {
 	@BeforeClass
 	public static void setUpDriver(){
 		// load snapshot
-		// ...
+		
+		// initialize web driver
 		BugzillaSetup.getWebDriver();
+		
+		// create example Bug
+		BugzillaSetup.createExampleBug();
 		
 	}
 	
