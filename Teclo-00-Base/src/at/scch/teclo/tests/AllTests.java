@@ -18,7 +18,7 @@ import at.scch.teclo.BugzillaSetup;
 public class AllTests {
 
 	@BeforeClass
-	public void setUpDriver(){
+	public static void setUpDriver(){
 		// load snapshot
 		// ...
 		BugzillaSetup.getWebDriver();
@@ -26,7 +26,7 @@ public class AllTests {
 	}
 	
 	@AfterClass
-	public void tearDownDriver(){
+	public static void tearDownDriver(){
 		BugzillaSetup.ungetWebDriver();
 	}
 	

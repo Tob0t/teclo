@@ -1,8 +1,5 @@
 package at.scch.teclo.pageobjects;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -12,7 +9,6 @@ import org.openqa.selenium.support.PageFactory;
 
 public class LoggedInBasePage {
 
-	private StringBuffer verificationErrors = new StringBuffer();
 	private final WebDriver driver;
 
 	@FindBy(id = "quicksearch_top")
@@ -35,26 +31,12 @@ public class LoggedInBasePage {
 
 	@FindBy(linkText = "Reports")
 	private WebElement ReportsLink;
+	
+	@FindBy(xpath = "//div[@id='header']/ul/li[9]")
+	private WebElement loginUserName;
 
 	public LoggedInBasePage(WebDriver driver) {
 		this.driver = driver;
-	}
-
-	public LoggedInBasePage checkLogInStatus() {
-		try {
-			assertTrue(isElementPresent(By.linkText("Log out")));
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
-		try {
-			assertEquals("| Log out admin",
-					driver.findElement(By.xpath("//div[@id='header']/ul/li[9]")).getText());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
-
-		return PageFactory.initElements(driver, LoggedInBasePage.class);
-
 	}
 
 	public LoggedOutBasePage logOut() {
@@ -103,5 +85,12 @@ public class LoggedInBasePage {
 			return false;
 		}
 	}
+	
+	public boolean isLogoutLinkPresent() {
+		return isElementPresent(By.linkText("Log out"));
+	}
 
+	public String getLogoutTextPlusUserName() {
+		return loginUserName.getText();
+	}
 }
