@@ -2,66 +2,67 @@ package at.scch.teclo.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 
 import at.scch.teclo.BugzillaSetup;
+import at.scch.teclo.BugzillaTest;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
-import at.scch.teclo.pageobjects.ResultsPage;
+import at.scch.teclo.pageobjects.BugResultsPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 import at.scch.teclo.pageobjects.SpecificSearchPage;
 
-public class FindSpecificSearchTest {
-
-	private WebDriver driver;
-	private StringBuffer verificationErrors = new StringBuffer();
-
+public class FindSpecificSearchTest extends BugzillaTest{
 	private int currentBugID;
 	private LoggedInBasePage loggedInBasePage;
 
 	@Before
 	public void setUp() throws Exception {
-		driver = BugzillaSetup.getWebDriver();
-
 		// precondition: logged in
-		loggedInBasePage = BugzillaSetup.login();
+		loggedInBasePage = homeBasePage.loginAdmin();
 
 		// precondition: bug inserted
-		currentBugID = BugzillaSetup.getExampleBug(loggedInBasePage);
+		currentBugID = BugzillaSetup.getExampleBugID();
+		
+		// go to home base page
+		BugzillaSetup.navigateToHomeBasePage();
 	}
 
-	// TODO: Create three test cases with bug state and description
-	// testFindBugZarro()
-	// testFindBugSingle()
-	// testFindBugMultiple()
-	
 	@Test
-	public void testSpecificSearch() throws Exception {
+	public void testFindBugZarro() throws Exception {
 		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
 		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 
-		specificSearchPage.selectBugState("Open");
-		ResultsPage myBugsPage = specificSearchPage.searchFor("ExampleBug*");
+		specificSearchPage.selectBugState("Closed");
+		BugResultsPage bugResultsPage = specificSearchPage.searchFor(BugzillaSetup.getExampleBugName().replace("_", "-"));
 
-		assertEquals("Bug not found!", 0,  myBugsPage.getAmountOfBugs());
-
-		try {
-			assertEquals("ExampleBug01", myBugsPage.getSummaryOfFirstBug());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
-
+		assertEquals("More than 0 bugs found!", 0, bugResultsPage.getAmountOfBugs());
 	}
+	
+	@Test
+	public void testFindBugSingle() throws Exception {
+		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
+		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 
-	@After
-	public void tearDown() throws Exception {
-		String verificationErrorString = verificationErrors.toString();
-		if (!"".equals(verificationErrorString)) {
-			fail(verificationErrorString);
-		}
+		specificSearchPage.selectBugState("All");
+		BugResultsPage bugResultsPage = specificSearchPage.searchFor(BugzillaSetup.getExampleBugName());
+
+		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
+		assertEquals(BugzillaSetup.getExampleBugName(), bugResultsPage.getSummaryOfFirstBug());
+	}
+	
+	@Test
+	public void testFindBugMultiple() throws Exception {
+		// add one more bug to make sure that there are at least 2 or more bugs in the database
+		BugzillaSetup.createExampleBug();
+		
+		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
+		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
+
+		specificSearchPage.selectBugState("All");
+		BugResultsPage bugResultsPage = specificSearchPage.searchFor("Bug*");
+
+		assertTrue("No multiple bugs found", 1 < bugResultsPage.getAmountOfBugs());
 	}
 }

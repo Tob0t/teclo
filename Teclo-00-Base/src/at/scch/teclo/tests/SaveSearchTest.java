@@ -1,75 +1,54 @@
 package at.scch.teclo.tests;
 
-import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import org.hamcrest.Matchers;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
-import org.openqa.selenium.WebDriver;
 
 import at.scch.teclo.BugzillaSetup;
+import at.scch.teclo.BugzillaTest;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
-import at.scch.teclo.pageobjects.ResultsPage;
+import at.scch.teclo.pageobjects.BugResultsPage;
 
-public class SaveSearchTest {
-	private WebDriver driver;
-	private StringBuffer verificationErrors = new StringBuffer();
+public class SaveSearchTest extends BugzillaTest {
 	public ErrorCollector errors = new ErrorCollector();
 
 	private int currentBugID;
 	private LoggedInBasePage loggedInBasePage;
-	private ResultsPage myBugsPage;
+	private BugResultsPage bugResultsPage;
 
 	@Before
 	public void setUp() throws Exception {
-		driver = BugzillaSetup.getWebDriver();
-
 		// precondition: logged in
-		loggedInBasePage = BugzillaSetup.login();
+		loggedInBasePage = homeBasePage.loginAdmin();
 
 		// precondition: bug inserted
-		currentBugID = BugzillaSetup.getExampleBug(loggedInBasePage);
+		currentBugID = BugzillaSetup.getExampleBugID();
+		
+		// go to home base page
+		BugzillaSetup.navigateToHomeBasePage();
 	}
 
-	// TODO: Set unique string as search name
 	@Test
 	public void testSaveSearch() throws Exception {
-		myBugsPage = loggedInBasePage.searchFor("ExampleBug01");
+		bugResultsPage = loggedInBasePage.searchFor(BugzillaSetup.getExampleBugName());
 
-		assertTrue("Less bug founds, than the minimum required amount",
-				0 < myBugsPage.getAmountOfBugs());
+		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
+		assertEquals(BugzillaSetup.getExampleBugName(), bugResultsPage.getSummaryOfFirstBug());
 
-		//errors.checkThat(myBugsPage.getSummaryOfFirstBug(), is("ExampleBug01"));
-		assertEquals("ExampleBug01", myBugsPage.getSummaryOfFirstBug());
+		// optional replacing asserts by errors:
+		// errors.checkThat(myBugsPage.getSummaryOfFirstBug(), is(BugzillaSetup.getExampleBugName()));
 
-		myBugsPage = myBugsPage.saveSearch("ExampleSearch01");
-		loggedInBasePage = myBugsPage.navigateToHome();
-		myBugsPage = loggedInBasePage.getSavedSearch("ExampleSearch01");
+		bugResultsPage = bugResultsPage.saveSearch("SearchFor_"+BugzillaSetup.getExampleBugName());
+		loggedInBasePage = bugResultsPage.navigateToHome();
+		bugResultsPage = loggedInBasePage.getSavedSearch("SearchFor_"+BugzillaSetup.getExampleBugName());
 
-		assertTrue("Less bug founds, than the minimum required amount",
-				0 < myBugsPage.getAmountOfBugs());
-
-		assertEquals("ExampleBug01", myBugsPage.getSummaryOfFirstBug());
+		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
+		assertEquals(BugzillaSetup.getExampleBugName(), bugResultsPage.getSummaryOfFirstBug());
 		
 		// forget saved search
-		myBugsPage.forgetSavedSearch("ExampleSearch01");
-
-
-	}
-
-	@After
-	public void tearDown() throws Exception {
-
-		
-		String verificationErrorString = verificationErrors.toString();
-		if (!"".equals(verificationErrorString)) {
-			fail(verificationErrorString);
-		}
+		bugResultsPage.forgetSavedSearch("SearchFor_"+BugzillaSetup.getExampleBugName());
 	}
 
 }

@@ -2,13 +2,11 @@ package at.scch.teclo.tests;
 
 import org.junit.*;
 import static org.junit.Assert.*;
-import org.openqa.selenium.*;
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.BugzillaTest;
 import at.scch.teclo.pageobjects.BugCommitedPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
-import at.scch.teclo.pageobjects.ResultsPage;
 
 public class ChangeBugStateTest extends BugzillaTest {
 	private int currentBugID;
@@ -18,12 +16,13 @@ public class ChangeBugStateTest extends BugzillaTest {
 	public void setUp() throws Exception {
 		
 		// precondition: logged in
-		loggedInBasePage = BugzillaSetup.login();
-		System.out.println("login");
+		loggedInBasePage = homeBasePage.loginAdmin();
 
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBugID();
-		System.out.println("getExampleBug");
+		
+		// go to home base page
+		BugzillaSetup.navigateToHomeBasePage();
 	}
 
 	@Test

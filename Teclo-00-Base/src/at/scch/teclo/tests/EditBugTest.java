@@ -19,7 +19,7 @@ public class EditBugTest extends BugzillaTest {
 	@Before
 	public void setUp() throws Exception {
 		// precondition: logged in
-		loggedInBasePage = BugzillaSetup.login();
+		loggedInBasePage = homeBasePage.loginAdmin();
 
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBugID();
@@ -27,6 +27,8 @@ public class EditBugTest extends BugzillaTest {
 		// save the original name of the bug temporary
 		originalBugName = BugzillaSetup.getExampleBugName();
 		
+		// go to home base page
+		BugzillaSetup.navigateToHomeBasePage();
 	}
 
 	@Test
@@ -41,9 +43,6 @@ public class EditBugTest extends BugzillaTest {
 		editBugPage.editPriority("P1");
 		editBugPage.editSeverity("critical");
 		
-		// change the name of the bug in the setup to avoid error in constructor of EditBugPage
-		BugzillaSetup.setExampleBugName("EditedBug");
-		
 		// commit bug
 		BugCommitedPage bugCommitedPage = editBugPage.commitBug();
 		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
@@ -54,7 +53,6 @@ public class EditBugTest extends BugzillaTest {
 		assertEquals("Linux", editBugPage.getCurrentOpSys());
 		assertEquals("P1", editBugPage.getCurrentPriority());
 		assertEquals("critical", editBugPage.getCurrentSeverity());
-
 	}
 	
 	@Test
@@ -78,7 +76,6 @@ public class EditBugTest extends BugzillaTest {
 		assertEquals("5.0 +", editBugPage.getTimeWorkTime());
 		assertEquals("2.0", editBugPage.getTimeRemainingTime());
 		assertEquals("2017-01-01", editBugPage.getTimeDeadline());
-
 	}
 
 	@After
@@ -92,8 +89,9 @@ public class EditBugTest extends BugzillaTest {
 		editBugPage.editPriority("P5");
 		editBugPage.editSeverity("enhancement");
 		
-		// change the name of the bug back to the original one
-		BugzillaSetup.setExampleBugName(originalBugName);
+		// commit bug
+		editBugPage.commitBug();
+
 	}
 
 }

@@ -1,36 +1,32 @@
 package at.scch.teclo.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 
 import at.scch.teclo.BugzillaSetup;
+import at.scch.teclo.BugzillaTest;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.ReportsBasePage;
 import at.scch.teclo.pageobjects.TabularReportsResultsPage;
 import at.scch.teclo.pageobjects.TabularReportsSearchPage;
 
-public class GenerateTabularReportTest {
-
-	private WebDriver driver;
-	private StringBuffer verificationErrors = new StringBuffer();
-
+public class GenerateTabularReportTest extends BugzillaTest{
 	private int currentBugID;
 	private LoggedInBasePage loggedInBasePage;
 
 	@Before
 	public void setUp() throws Exception {
-		driver = BugzillaSetup.getWebDriver();
 
 		// precondition: logged in
-		loggedInBasePage = BugzillaSetup.login();
+		loggedInBasePage = homeBasePage.loginAdmin();
 
 		// precondition: bug inserted
-		currentBugID = BugzillaSetup.getExampleBug(loggedInBasePage);
+		currentBugID = BugzillaSetup.getExampleBugID();
+		
+		// go to home base page
+		BugzillaSetup.navigateToHomeBasePage();
 	}
 
 	@Test
@@ -43,26 +39,7 @@ public class GenerateTabularReportTest {
 
 		TabularReportsResultsPage tabularReportsResultsPage = tabularReportsPage.generateReport();
 
-		try {
-			assertEquals("Status", tabularReportsResultsPage.getXAxesDescription());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
-
-		try {
-			assertEquals("Assignee", tabularReportsResultsPage.getYAxesDescription());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
-
+		assertEquals("Status", tabularReportsResultsPage.getXAxesDescription());
+		assertEquals("Assignee", tabularReportsResultsPage.getYAxesDescription());
 	}
-
-	@After
-	public void tearDown() throws Exception {
-		String verificationErrorString = verificationErrors.toString();
-		if (!"".equals(verificationErrorString)) {
-			fail(verificationErrorString);
-		}
-	}
-
 }

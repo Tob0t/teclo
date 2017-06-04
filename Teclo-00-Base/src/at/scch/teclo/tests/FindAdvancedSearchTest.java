@@ -2,47 +2,44 @@ package at.scch.teclo.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 
 import at.scch.teclo.BugzillaSetup;
+import at.scch.teclo.BugzillaTest;
 import at.scch.teclo.pageobjects.AdvancedSearchPage;
+import at.scch.teclo.pageobjects.BugCommitedPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
-import at.scch.teclo.pageobjects.ResultsPage;
+import at.scch.teclo.pageobjects.BugResultsPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 
-public class FindAdvancedSearchTest {
-	private WebDriver driver;
-	private StringBuffer verificationErrors = new StringBuffer();
-
+public class FindAdvancedSearchTest extends BugzillaTest{
 	private int currentBugID;
 	private LoggedInBasePage loggedInBasePage;
-	private ResultsPage myBugsPage;
+	private BugResultsPage bugResultsPage;
 
 	@Before
 	public void setUp() throws Exception {
-		driver = BugzillaSetup.getWebDriver();
-
 		// precondition: logged in
-		loggedInBasePage = BugzillaSetup.login();
+		loggedInBasePage = homeBasePage.loginAdmin();
 
 		// precondition: bug inserted
-		currentBugID = BugzillaSetup.getExampleBug(loggedInBasePage);
+		currentBugID = BugzillaSetup.getExampleBugID();
 
 		// precondition: bug changed to RESOLVED
-		myBugsPage = loggedInBasePage.navigateToMyBugsPage();
-		EditBugPage editBugPage = myBugsPage.goToEditBug(currentBugID);
+		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
 		editBugPage.changeBugState("RESOLVED");
-		editBugPage = editBugPage.commitBug();
+		editBugPage.commitBug();
+		
+		// go to home base page
+		BugzillaSetup.navigateToHomeBasePage();
 	}
-
+	
 	@Test
-	public void testAdvancedSearch() throws Exception {
+	public void testFindBugZarro() throws Exception {
 		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 
@@ -51,39 +48,56 @@ public class FindAdvancedSearchTest {
 		advancedSearchPage.deselectBugState("REOPENED");
 
 		advancedSearchPage.selectBugState("RESOLVED");
-		myBugsPage = advancedSearchPage.search();
+		advancedSearchPage.fillSummary(BugzillaSetup.getExampleBugName().replace("_", "-"));
+		bugResultsPage = advancedSearchPage.submitSearch();
 
-		assertTrue("Bug not found!", 0 < myBugsPage.getAmountOfBugs());
-
-		try {
-			assertEquals("RESO", myBugsPage.getStateOfFirstBug());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
-
-		try {
-			assertEquals("ExampleBug01", myBugsPage.getSummaryOfFirstBug());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
-
+		assertEquals("More than 0 bugs found!", 0, bugResultsPage.getAmountOfBugs());
 	}
+
+	@Test
+	public void testFindBugSingle() throws Exception {
+		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
+		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
+
+		advancedSearchPage.deselectBugState("NEW");
+		advancedSearchPage.deselectBugState("ASSIGNED");
+		advancedSearchPage.deselectBugState("REOPENED");
+
+		advancedSearchPage.selectBugState("RESOLVED");
+		advancedSearchPage.fillSummary(BugzillaSetup.getExampleBugName());
+		bugResultsPage = advancedSearchPage.submitSearch();
+
+		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
+		assertEquals("RESO", bugResultsPage.getStateOfFirstBug());
+		assertEquals(BugzillaSetup.getExampleBugName(), bugResultsPage.getSummaryOfFirstBug());
+	}
+	
+	@Test
+	public void testFindBugMultiple() throws Exception {
+		// add one more bug to make sure that there are at least 2 or more bugs in the database
+		BugzillaSetup.createExampleBug();
+		
+		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
+		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
+
+		advancedSearchPage.selectBugState("RESOLVED");
+		bugResultsPage = advancedSearchPage.submitSearch();
+
+		assertTrue("No multiple bugs found", 1 < bugResultsPage.getAmountOfBugs());
+	}
+	
+
 
 	@After
 	public void tearDown() throws Exception {
 
 		// postcondition: change bug back to state NEW
-		EditBugPage editBugPage = myBugsPage.goToEditBug(currentBugID);
+		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
 		editBugPage.changeBugState("REOPENED");
-		editBugPage = editBugPage.commitBug();
-		editBugPage = editBugPage.selectCommitedBug(currentBugID);
+		BugCommitedPage bugCommitedPage = editBugPage.commitBug();
+		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
 		editBugPage.changeBugState("NEW");
-		editBugPage = editBugPage.commitBug();
-
-		String verificationErrorString = verificationErrors.toString();
-		if (!"".equals(verificationErrorString)) {
-			fail(verificationErrorString);
-		}
+		editBugPage.commitBug();
 	}
 
 }

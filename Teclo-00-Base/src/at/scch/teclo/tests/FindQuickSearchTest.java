@@ -1,22 +1,18 @@
 package at.scch.teclo.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.BugzillaTest;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.BugResultsPage;
+import at.scch.teclo.pageobjects.EditBugPage;
 
 public class FindQuickSearchTest extends BugzillaTest {
-	private StringBuffer verificationErrors = new StringBuffer();
-
 	private int currentBugID;
 	private LoggedInBasePage loggedInBasePage;
 
@@ -24,29 +20,33 @@ public class FindQuickSearchTest extends BugzillaTest {
 	public void setUp() throws Exception {
 
 		// precondition: logged in
-		loggedInBasePage = BugzillaSetup.login();
+		loggedInBasePage = homeBasePage.loginAdmin();
 
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBugID();
+		
+		// go to home base page
+		BugzillaSetup.navigateToHomeBasePage();
 	}
 
-	// TODO: Create three test cases
-	// testFindBugZarro()
-	// testFindBugSingle()
-	// testFindBugMultiple()
-	@Test
-	public void testFindBugSingle() throws Exception {
-		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(BugzillaSetup.getExampleBugName());
-
-		assertEquals("No bug found!", 1, bugResultsPage.getAmountOfBugs());
-
-		assertEquals(BugzillaSetup.getExampleBugName(), bugResultsPage.getSummaryOfFirstBug());
-	}
-	
 	@Test
 	public void testFindBugZarro() throws Exception {
 		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(BugzillaSetup.getExampleBugName().replace("_", "-"));
 		assertEquals("More than 0 bugs found!", 0, bugResultsPage.getAmountOfBugs());
+	}
+	
+	@Test
+	public void testFindBugSingleByName() throws Exception {
+		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(BugzillaSetup.getExampleBugName());
+
+		assertEquals("No bug found!", 1, bugResultsPage.getAmountOfBugs());
+		assertEquals(BugzillaSetup.getExampleBugName(), bugResultsPage.getSummaryOfFirstBug());
+	}
+	
+	@Test
+	public void testFindBugSingleByID() throws Exception {
+		EditBugPage editBugPage = loggedInBasePage.searchFor(currentBugID);
+		assertEquals("Bug not found by ID", BugzillaSetup.getExampleBugName(),editBugPage.getSummary());
 	}
 	
 	@Test
