@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import at.scch.teclo.BugzillaSetup;
 
-public class ResultsPage {
+public class BugResultsPage {
 
 	private StringBuffer verificationErrors = new StringBuffer();
 	private final WebDriver driver;
@@ -39,7 +39,7 @@ public class ResultsPage {
 	@FindBy(linkText = "Home")
 	private WebElement homeLink;
 
-	public ResultsPage(WebDriver driver) {
+	public BugResultsPage(WebDriver driver) {
 		this.driver = driver;
 	}
 
@@ -101,18 +101,18 @@ public class ResultsPage {
 
 
 
-	public ResultsPage saveSearch(String nameOfSearch) {
+	public BugResultsPage saveSearch(String nameOfSearch) {
 		saveSearchField.clear();
 		saveSearchField.sendKeys(nameOfSearch);
 
 		saveSearchButton.click();
-		return PageFactory.initElements(driver, ResultsPage.class);
+		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
 
-	public ResultsPage forgetSavedSearch(String savedSearchName) {
+	public BugResultsPage forgetSavedSearch(String savedSearchName) {
 		driver.findElement(By.linkText(savedSearchName)).click();
 		driver.findElement(By.linkText("Forget Search '" + savedSearchName + "'")).click();
-		return PageFactory.initElements(driver, ResultsPage.class);
+		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
 
 	public LoggedInBasePage navigateToHome() {

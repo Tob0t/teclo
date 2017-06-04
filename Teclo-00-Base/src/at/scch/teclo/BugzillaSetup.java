@@ -19,7 +19,7 @@ import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.LogInBasePage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.LoggedOutBasePage;
-import at.scch.teclo.pageobjects.ResultsPage;
+import at.scch.teclo.pageobjects.BugResultsPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 
@@ -171,6 +171,10 @@ public class BugzillaSetup {
 			createExampleBug();
 		}
 		return exampleBugName;
+	}
+	
+	public static void setExampleBugName(String newName){
+		exampleBugName = newName;
 	}
 	
 	public static EditBugPage showBug(int bugID) {
