@@ -8,20 +8,15 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 
-import at.scch.teclo.pageobjects.AdvancedSearchPage;
 import at.scch.teclo.pageobjects.CreateNewBugPage;
 import at.scch.teclo.pageobjects.EditBugPage;
-import at.scch.teclo.pageobjects.LogInBasePage;
+import at.scch.teclo.pageobjects.HomeBasePage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
-import at.scch.teclo.pageobjects.LoggedOutBasePage;
-import at.scch.teclo.pageobjects.BugResultsPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
-import at.scch.teclo.pageobjects.SearchBasePage;
 
 /**
  * @author fabianbouchal
@@ -31,7 +26,6 @@ public class BugzillaSetup {
 	private static WebDriver driver;
 	private static int driverUsageCounter;
 	private static String BASE_URL = "";
-	public static String ExampleBugDescription = "This is an example description for ExampleBug01";
 
 	private static LoggedInBasePage loggedInBasePage;
 	private static int currentbugID;
@@ -109,45 +103,14 @@ public class BugzillaSetup {
 		}
 	}
 
-	/***
-	 * TODO: move to page object
-	 * Helper method to log in the admin
-	 * 
-	 * @return LoggedIn page
-	 */
-	public static LoggedInBasePage login() {
-		LogInBasePage logInBasePage = LogInBasePage.navigateTo(driver);
-
-		// change the waiting time 0 seconds if the element is not found
-		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-
-		// check if the log out button is existing
-		if (!(driver.findElements(By.linkText("Log out")).size() > 0)) {
-			loggedInBasePage = logInBasePage.logIn("admin", "admin");
-		}
-
-		// change the waiting time back to 10 seconds
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-		return loggedInBasePage;
-	}
-
-	/***
-	 * Helper method to log out the current user
-	 * 
-	 * @param loggedInBasePage
-	 */
-	public static void logOut(LoggedInBasePage loggedInBasePage) {
-		LoggedOutBasePage loggedOutBasePage = loggedInBasePage.logOut();
-	}
-	
 	public static void createExampleBug(){
+		// precondition: logged in
+		HomeBasePage homeBasePage = navigateToHomeBasePage();
+		loggedInBasePage = homeBasePage.loginAdmin();
+		
 		// set the bug name
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
 		exampleBugName = "Bug_"+dateFormat.format(new Date());
-		
-		// precondition: logged in
-		loggedInBasePage = BugzillaSetup.login();
 		
 		// create bug
 		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
@@ -155,6 +118,7 @@ public class BugzillaSetup {
 		
 		// save the id of the bug
 		currentbugID = newBugCreatedPage.getBugID();
+		System.out.println("Creating new example bug with the name "+exampleBugName+ " and ID "+currentbugID);
 	}
 	
 	public static int getExampleBugID(){
@@ -180,5 +144,10 @@ public class BugzillaSetup {
 	public static EditBugPage showBug(int bugID) {
 		driver.get(BASE_URL + "/show_bug.cgi?id="+bugID);
 		return PageFactory.initElements(driver, EditBugPage.class);
+	}
+
+	public static HomeBasePage navigateToHomeBasePage() {
+		driver.get(BASE_URL);
+		return PageFactory.initElements(driver, HomeBasePage.class);
 	}
 }

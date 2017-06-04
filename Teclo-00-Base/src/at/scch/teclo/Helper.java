@@ -8,8 +8,7 @@ public class Helper {
 	/***
 	 * Helper method to read the selected option
 	 * 
-	 * @param web
-	 *            element
+	 * @param web element
 	 * @return selected option as string
 	 */
 	public static String getSelectedOptionValue(WebElement element) {
