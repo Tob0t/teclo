@@ -1,18 +1,13 @@
 package at.scch.teclo.pageobjects;
 
-import static org.junit.Assert.assertEquals;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import at.scch.teclo.BugzillaSetup;
-
 public class BugResultsPage {
 
-	private StringBuffer verificationErrors = new StringBuffer();
 	private final WebDriver driver;
 
 	@FindBy(css = "span.bz_result_count")
@@ -41,6 +36,11 @@ public class BugResultsPage {
 
 	public BugResultsPage(WebDriver driver) {
 		this.driver = driver;
+		
+		// Check that we're on the right page, "Bug List" for all the searches and "Search created|Search is gone" if a search is saved|forgot
+        if (!(driver.getTitle().matches("Bug List.*|Search created|Search is gone"))) {
+        	throw new IllegalStateException("This is not the bug results page (Title: "+driver.getTitle()+")!");
+        }
 	}
 
 	public EditBugPage goToEditBug(int currentBugID) {
@@ -50,24 +50,6 @@ public class BugResultsPage {
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
 	
-	public String getCriticalLevel () {
-		return driver.findElement(By.cssSelector("span[title=\"critical\"]")).getText();
-	}
-	
-	public String getPriorityLevel() {
-		return driver.findElement(By.cssSelector("span[title=\"P1\"]")).getText();
-	}
-	
-	public String getOperatingSystem() {
-		return driver.findElement(By.cssSelector("span[title=\"Linux\"]")).getText();
-	}
-	
-	public String getBugTitle() {
-		return driver.findElement(
-				By.xpath("//div[@id='bugzilla-body']/table/tbody/tr[2]/td[8]"))
-				.getText();
-	}
-
 	public int getAmountOfBugs() {
 		// Special Case if 0 or 1 bug is found
 		if (amountOfBugs.getText().contentEquals("Zarro Boogs found.")) {
@@ -98,8 +80,6 @@ public class BugResultsPage {
 	public String getPriorityOfFirstBug() {
 		return firstBugPriority.getText();
 	}
-
-
 
 	public BugResultsPage saveSearch(String nameOfSearch) {
 		saveSearchField.clear();

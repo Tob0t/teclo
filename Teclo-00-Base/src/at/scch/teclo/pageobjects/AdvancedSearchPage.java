@@ -32,14 +32,29 @@ public class AdvancedSearchPage {
 
 	public AdvancedSearchPage(WebDriver driver) {
 		this.driver = driver;
+		
+		// Check that we're on the right page.
+        if (!("Search for bugs").equals(driver.getTitle())) {
+        	throw new IllegalStateException("This is not the advanced search page (Title: "+driver.getTitle()+")!");
+        }
 	}
 
-	public ResultsPage searchFor(String summaryString, String commentString) {
+	public BugResultsPage searchFor(String summaryString, String commentString) {
 		summaryTextBox.clear();
 		summaryTextBox.sendKeys(summaryString);
 		commentTextBox.clear();
 		commentTextBox.sendKeys(commentString);
-		return search();
+		return submitSearch();
+	}
+	
+	public void fillSummary(String summaryString){
+		summaryTextBox.clear();
+		summaryTextBox.sendKeys(summaryString);
+	}
+	
+	public void fillComment(String commentString){
+		commentTextBox.clear();
+		commentTextBox.sendKeys(commentString);
 	}
 
 	public void deselectBugState(String bugStateString) {
@@ -57,9 +72,9 @@ public class AdvancedSearchPage {
 		booleanChartValue.sendKeys(chartValue);
 	}
 
-	public ResultsPage search() {
+	public BugResultsPage submitSearch() {
 		searchButton.click();
-		return PageFactory.initElements(driver, ResultsPage.class);
+		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
 
 }

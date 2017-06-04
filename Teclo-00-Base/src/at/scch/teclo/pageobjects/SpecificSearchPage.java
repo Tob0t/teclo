@@ -20,18 +20,23 @@ public class SpecificSearchPage {
 
 	public SpecificSearchPage(WebDriver driver) {
 		this.driver = driver;
+		
+		// Check that we're on the right page
+        if (!("Find a Specific Bug").equals(driver.getTitle())) {
+        	throw new IllegalStateException("This is not the specific search page (Title: "+driver.getTitle()+")!");
+        }
 	}
 
 	public void selectBugState(String bugStateString) {
 		new Select(bugState).selectByVisibleText(bugStateString);
 	}
 
-	public ResultsPage searchFor(String searchTerm) {
+	public BugResultsPage searchFor(String searchTerm) {
 		searchField.clear();
 		searchField.sendKeys(searchTerm);
 		searchButton.click();
 
-		return PageFactory.initElements(driver, ResultsPage.class);
+		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
 
 }

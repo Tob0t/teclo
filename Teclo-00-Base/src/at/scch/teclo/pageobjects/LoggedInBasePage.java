@@ -37,6 +37,11 @@ public class LoggedInBasePage {
 
 	public LoggedInBasePage(WebDriver driver) {
 		this.driver = driver;
+		
+		// Check that we're on the right page.
+        if (!("Bugzilla Main Page").equals(driver.getTitle())) {
+        	throw new IllegalStateException("This is not the logged in page (Title: "+driver.getTitle()+")!");
+        }
 	}
 
 	public LoggedOutBasePage logOut() {
@@ -49,9 +54,9 @@ public class LoggedInBasePage {
 		return PageFactory.initElements(driver, CreateNewBugPage.class);
 	}
 
-	public ResultsPage navigateToMyBugsPage() {
+	public BugResultsPage navigateToBugResultsPage() {
 		MyBugsLink.click();
-		return PageFactory.initElements(driver, ResultsPage.class);
+		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
 
 	public SearchBasePage navigateToSearchBasePage() {
@@ -64,17 +69,25 @@ public class LoggedInBasePage {
 		return PageFactory.initElements(driver, ReportsBasePage.class);
 	}
 
-	public ResultsPage searchFor(String searchTerm) {
+	public BugResultsPage searchFor(String searchTerm) {
 		quickSearch.clear();
 		quickSearch.sendKeys(searchTerm);
 		quickFindButton.click();
 
-		return PageFactory.initElements(driver, ResultsPage.class);
+		return PageFactory.initElements(driver, BugResultsPage.class);
+	}
+	
+	public EditBugPage searchFor(int bugId) {
+		quickSearch.clear();
+		quickSearch.sendKeys(String.valueOf(bugId));
+		quickFindButton.click();
+
+		return PageFactory.initElements(driver, EditBugPage.class);
 	}
 
-	public ResultsPage getSavedSearch(String savedSearchName) {
+	public BugResultsPage getSavedSearch(String savedSearchName) {
 		driver.findElement(By.linkText(savedSearchName)).click();
-		return PageFactory.initElements(driver, ResultsPage.class);
+		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
 
 	private boolean isElementPresent(By by) {

@@ -6,7 +6,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.Helper;
 
 public class EditBugPage {
@@ -68,8 +67,8 @@ public class EditBugPage {
 		this.driver = driver;
 		
 		// Check that we're on the right page.
-        if (!("Bug "+BugzillaSetup.getExampleBugID()+" – "+BugzillaSetup.getExampleBugName()).equals(driver.getTitle())) {
-        	throw new IllegalStateException("This is not the edit bug page!");
+        if (!(driver.getTitle().matches("Bug \\d+ – .*"))) {
+        	throw new IllegalStateException("This is not the edit bug page (Title: "+driver.getTitle()+")!");
         }
 	}
 

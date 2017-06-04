@@ -1,8 +1,6 @@
 package at.scch.teclo.pageobjects;
 
-import static org.junit.Assert.assertEquals;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
 
 public class LogInErrorPage {
 
@@ -10,6 +8,11 @@ public class LogInErrorPage {
 
 	public LogInErrorPage(WebDriver driver) {
 		this.driver = driver;
+		
+		// Check that we're on the right page
+        if (!("Invalid Username Or Password").equals(driver.getTitle())) {
+        	throw new IllegalStateException("This is not the log in error page (Title: "+driver.getTitle()+")!");
+        }
 	}
 
 	public String getDriverTitle() {

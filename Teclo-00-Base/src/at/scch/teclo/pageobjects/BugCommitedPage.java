@@ -4,8 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-import at.scch.teclo.BugzillaSetup;
-
 public class BugCommitedPage {
 	
 	private final WebDriver driver;
@@ -14,8 +12,8 @@ public class BugCommitedPage {
 		this.driver = driver;
 		
 		// Check that we're on the right page.
-        if (!("Bug "+BugzillaSetup.getExampleBugID()+" processed").equals(driver.getTitle())) {
-        	throw new IllegalStateException("This is not the edit bug page!");
+        if (!(driver.getTitle().matches("Bug \\d+ processed"))) {
+        	throw new IllegalStateException("This is not the committed bug page (Title: "+driver.getTitle()+")!");
         }
 	}
 	
