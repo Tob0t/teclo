@@ -1,6 +1,5 @@
 package at.scch.teclo.pageobjects;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,6 +14,12 @@ public class EditBugPage {
 	private final WebDriver driver;
 
 	@FindBy(id = "short_desc")
+	private WebElement bugSummaryEdit;
+	
+	@FindBy(id = "editme_action")
+	private WebElement editBugSummaryLink;
+	
+	@FindBy(id = "short_desc_nonedit_display")
 	private WebElement bugSummary;
 	
 	@FindBy(id = "rep_platform")
@@ -23,15 +28,41 @@ public class EditBugPage {
 	@FindBy(id = "op_sys")
 	private WebElement bugOpSys;
 	
+	@FindBy(id = "priority")
+	private WebElement bugPriority;
+
+	@FindBy(id = "bug_severity")
+	private WebElement bugSeverity;
+	
+	@FindBy(id = "comment")
+	private WebElement bugComment;
+	
+	@FindBy(id = "estimated_time")
+	private WebElement timeEstimatedTime;
+	
+	@FindBy(id = "work_time")
+	private WebElement timeWorkTime;
+	
+	@FindBy(xpath = "//div[@id='bugzilla-body']/form/table[2]/tbody/tr[2]/td[3]")
+	private WebElement timeWorkTimeReadOnly;
+	
+	@FindBy(id = "remaining_time")
+	private WebElement timeRemainingTime;
+	
+	@FindBy(id = "deadline")
+	private WebElement timeDeadline;
 	
 	@FindBy(id = "bug_status")
 	private WebElement bugState;
 
-	@FindBy(id = "priority")
-	private WebElement bugPriority;
-
 	@FindBy(id = "commit")
 	private WebElement commitButton;
+	
+	@FindBy(linkText = "Home")
+	private WebElement homeLink;
+	
+	@FindBy(linkText = "My Bugs")
+	private WebElement myBugsLink;
 
 	public EditBugPage(WebDriver driver) {
 		this.driver = driver;
@@ -42,25 +73,10 @@ public class EditBugPage {
         }
 	}
 
-	// TODO: Split every edit in a single method inclusive commit!
-	public ResultsPage editBug(String summary, String platform, String opSys, String priority,
-			String severity) {
-		driver.findElement(By.id("editme_action")).click();
-		driver.findElement(By.id("short_desc")).clear();
-		driver.findElement(By.id("short_desc")).sendKeys(summary);
-		new Select(driver.findElement(By.id("rep_platform"))).selectByVisibleText(platform);
-		new Select(driver.findElement(By.id("op_sys"))).selectByVisibleText(opSys);
-		new Select(driver.findElement(By.id("priority"))).selectByVisibleText(priority);
-		new Select(driver.findElement(By.id("bug_severity"))).selectByVisibleText(severity);
-		driver.findElement(By.id("commit")).click();
-		driver.findElement(By.linkText("My Bugs")).click();
-
-		return PageFactory.initElements(driver, ResultsPage.class);
-	}
-	
 	public void editSummary(String summary){
-		bugSummary.clear();
-		bugSummary.sendKeys(summary);
+		editBugSummaryLink.click();
+		bugSummaryEdit.clear();
+		bugSummaryEdit.sendKeys(summary);
 	}
 	
 	public void editPlatform(String platform){
@@ -74,17 +90,78 @@ public class EditBugPage {
 	public void editPriority(String priority){
 		new Select(bugPriority).selectByVisibleText(priority);
 	}
+	
+	public void editSeverity(String severity){
+		new Select(bugSeverity).selectByVisibleText(severity);
+	}
+	
+	public void editTimeEstimatedTime(double estimatedTime){
+		timeEstimatedTime.clear();
+		timeEstimatedTime.sendKeys(String.valueOf(estimatedTime));
+	}
+	
+	public void editTimeWorkTime(double workTime){
+		timeWorkTime.clear();
+		timeWorkTime.sendKeys(String.valueOf(workTime));
+	}
+	
+	public void editTimeRemainigTime(double remainingTime){
+		timeRemainingTime.clear();
+		timeRemainingTime.sendKeys(String.valueOf(remainingTime));
+	}
+	
+	public void editTimeDeadline(String deadline){
+		timeDeadline.clear();
+		timeDeadline.sendKeys(String.valueOf(deadline));
+	}
+	
+	public void editComment(String comment){
+		bugComment.clear();
+		bugComment.sendKeys(comment);
+	}
+	
+	public void changeBugState(String bugStateString) {
+		new Select(bugState).selectByVisibleText(bugStateString);
+	}
+	
+	public String getSummary(){
+		return bugSummary.getText();
+	}
+	
+	public String getCurrentPlatform() {
+		return Helper.getSelectedOptionValue(bugPlatform);
+	}
+	
+	public String getCurrentOpSys() {
+		return Helper.getSelectedOptionValue(bugOpSys);
+	}
+	
+	public String getCurrentPriority() {
+		return Helper.getSelectedOptionValue(bugPriority);
+	}
+	
+	public String getCurrentSeverity() {
+		return Helper.getSelectedOptionValue(bugSeverity);
+	}
 
 	public String getCurrentBugState() {
 		return Helper.getSelectedOptionValue(bugState);
 	}
-
-	public void changeBugState(String bugStateString) {
-		new Select(bugState).selectByVisibleText(bugStateString);
+	
+	public String getTimeEstimatedTime(){
+		return timeEstimatedTime.getAttribute("value");
 	}
-
-	public void changePriority(String priorityString) {
-		new Select(bugPriority).selectByVisibleText(priorityString);
+	
+	public String getTimeWorkTime(){
+		return timeWorkTimeReadOnly.getText();
+	}
+	
+	public String getTimeRemainingTime(){
+		return timeRemainingTime.getAttribute("value");
+	}
+	
+	public String getTimeDeadline(){
+		return timeDeadline.getAttribute("value");
 	}
 
 	public BugCommitedPage commitBug() {
@@ -92,16 +169,14 @@ public class EditBugPage {
 		return PageFactory.initElements(driver, BugCommitedPage.class);
 	}
 
-
 	public LoggedInBasePage navigateToMyHomePage() {
-		driver.findElement(By.linkText("Home")).click();
+		homeLink.click();
 		return PageFactory.initElements(driver, LoggedInBasePage.class);
 	}
 
-	public ResultsPage navigateToMyBugsPage() {
-		driver.findElement(By.linkText("My Bugs")).click();
-
-		return PageFactory.initElements(driver, ResultsPage.class);
+	public BugResultsPage navigateToBugResultsPage() {
+		myBugsLink.click();
+		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
 
 }
