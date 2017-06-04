@@ -12,10 +12,9 @@ import org.openqa.selenium.WebDriver;
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.BugzillaTest;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
-import at.scch.teclo.pageobjects.ResultsPage;
+import at.scch.teclo.pageobjects.BugResultsPage;
 
 public class FindQuickSearchTest extends BugzillaTest {
-	//private WebDriver driver;
 	private StringBuffer verificationErrors = new StringBuffer();
 
 	private int currentBugID;
@@ -28,9 +27,7 @@ public class FindQuickSearchTest extends BugzillaTest {
 		loggedInBasePage = BugzillaSetup.login();
 
 		// precondition: bug inserted
-		currentBugID = BugzillaSetup.getExampleBug(loggedInBasePage);
-		
-		// TODO: Create Bug with unique bug summary
+		currentBugID = BugzillaSetup.getExampleBugID();
 	}
 
 	// TODO: Create three test cases
@@ -39,16 +36,26 @@ public class FindQuickSearchTest extends BugzillaTest {
 	// testFindBugMultiple()
 	@Test
 	public void testFindBugSingle() throws Exception {
-		ResultsPage resultsPage = loggedInBasePage.searchFor("ExampleBug01");
+		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(BugzillaSetup.getExampleBugName());
 
-		assertEquals("No bug found", 0, resultsPage.getAmountOfBugs());
+		assertEquals("No bug found!", 1, bugResultsPage.getAmountOfBugs());
 
-		try {
-			assertEquals("ExampleBug01", resultsPage.getSummaryOfFirstBug());
-		} catch (Error e) {
-			verificationErrors.append(e.toString());
-		}
-
+		assertEquals(BugzillaSetup.getExampleBugName(), bugResultsPage.getSummaryOfFirstBug());
+	}
+	
+	@Test
+	public void testFindBugZarro() throws Exception {
+		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(BugzillaSetup.getExampleBugName().replace("_", "-"));
+		assertEquals("More than 0 bugs found!", 0, bugResultsPage.getAmountOfBugs());
+	}
+	
+	@Test
+	public void testFindBugMultiple() throws Exception {
+		// add one more bug to make sure that there are at least 2 or more bugs in the database
+		BugzillaSetup.createExampleBug();
+		
+		BugResultsPage bugResultsPage = loggedInBasePage.searchFor("Bug");
+		assertTrue("No multiple bugs found", 1 < bugResultsPage.getAmountOfBugs());
 	}
 
 }
