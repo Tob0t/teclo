@@ -54,7 +54,7 @@ public class NewBugCreatedPage {
 		this.driver = driver;
 		
 		// Check that we're on the right page.
-        if (!(driver.getTitle().matches("Bug \\d+ Submitted – .*"))) {
+        if (!(driver.getTitle().matches("Bug \\d+ Submitted.*"))) {
         	throw new IllegalStateException("This is not the new bug created page (Title: "+driver.getTitle()+")!");
         }
 	}

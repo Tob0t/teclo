@@ -67,7 +67,7 @@ public class EditBugPage {
 		this.driver = driver;
 		
 		// Check that we're on the right page.
-        if (!(driver.getTitle().matches("Bug \\d+ – .*"))) {
+        if (!(driver.getTitle().matches("Bug \\d+ .*"))) {
         	throw new IllegalStateException("This is not the edit bug page (Title: "+driver.getTitle()+")!");
         }
 	}
