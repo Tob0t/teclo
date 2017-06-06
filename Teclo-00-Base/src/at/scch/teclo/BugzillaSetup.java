@@ -110,7 +110,7 @@ public class BugzillaSetup {
 		loggedInBasePage = homeBasePage.loginAdmin();
 		
 		// set the bug name
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
 		exampleBugName = "Bug_"+dateFormat.format(new Date());
 		
 		// create bug
