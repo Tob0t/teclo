@@ -1,5 +1,6 @@
 package at.scch.teclo.pageobjects;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -39,4 +40,28 @@ public class SpecificSearchPage {
 		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
 
+	/** Search term contains only blank chars, results in parameter required error. */
+	public ParametersRequiredErrorPage searchForBlanks() {
+		searchField.clear();
+		searchField.sendKeys(" ");
+		searchButton.click();
+		
+		return PageFactory.initElements(driver, ParametersRequiredErrorPage.class);
+	}
+
+	/** Search term is empty, results in alert popup. */
+	public String searchForEmpty() {
+		String alertText;
+		
+		searchField.clear();
+		searchButton.click();
+		
+		Alert alert = driver.switchTo().alert();
+		alertText = alert.getText();
+		alert.accept();
+		driver.switchTo().defaultContent();
+		
+		return alertText;
+	}
+	
 }

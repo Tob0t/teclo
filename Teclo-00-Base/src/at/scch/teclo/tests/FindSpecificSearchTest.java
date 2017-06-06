@@ -9,12 +9,13 @@ import org.junit.Test;
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.BugzillaTest;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
+import at.scch.teclo.pageobjects.ParametersRequiredErrorPage;
 import at.scch.teclo.pageobjects.BugResultsPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 import at.scch.teclo.pageobjects.SpecificSearchPage;
 
-public class FindSpecificSearchTest extends BugzillaTest{
-	private int currentBugID;
+public class FindSpecificSearchTest extends BugzillaTest {
+
 	private LoggedInBasePage loggedInBasePage;
 
 	@Before
@@ -23,7 +24,7 @@ public class FindSpecificSearchTest extends BugzillaTest{
 		loggedInBasePage = homeBasePage.loginAdmin();
 
 		// precondition: bug inserted
-		currentBugID = BugzillaSetup.getExampleBugID();
+		BugzillaSetup.getExampleBugID();
 		
 		// go to home base page
 		BugzillaSetup.navigateToHomeBasePage();
@@ -64,5 +65,25 @@ public class FindSpecificSearchTest extends BugzillaTest{
 		BugResultsPage bugResultsPage = specificSearchPage.searchFor("Bug*");
 
 		assertTrue("No multiple bugs found", 1 < bugResultsPage.getAmountOfBugs());
+	}
+	
+	@Test
+	public void testSearchBlanksResultsInError() {
+		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
+		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
+
+		ParametersRequiredErrorPage parametersRequiredErrorPage = specificSearchPage.searchForBlanks();
+
+		assertEquals("You may not search, or create saved searches, without any search terms.", parametersRequiredErrorPage.getErrorMsg());
+	}
+	
+	@Test
+	public void testSearchEmptyResultsInAlertPopup() {
+		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
+		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
+
+		String alertMsg = specificSearchPage.searchForEmpty();
+
+		assertEquals("The Words field cannot be empty. You have to enter at least one word in your search criteria.", alertMsg);
 	}
 }
