@@ -24,6 +24,9 @@ public abstract class BugzillaTest {
 	
 	@After
 	public void tearDownDriver(){
+		// only close and quit selenium driver here
+		// do not use driver to navigate, because if test failed with selenium error, teardown will not execute correctly
+		
 		BugzillaSetup.ungetWebDriver();
 		
 		String verificationErrorString = verificationErrors .toString();
