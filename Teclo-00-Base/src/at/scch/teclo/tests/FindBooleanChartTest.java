@@ -14,9 +14,10 @@ import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.BugResultsPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 
-public class FindBooleanChartTest extends BugzillaTest{
+public class FindBooleanChartTest extends BugzillaTest {
 	private int currentBugID;
 	private LoggedInBasePage loggedInBasePage;
+	private String originalBugPrio;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -29,6 +30,7 @@ public class FindBooleanChartTest extends BugzillaTest{
 
 		// precondition: bug changed to Priority P3
 		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
+		originalBugPrio = editBugPage.getCurrentPriority();
 		editBugPage.editPriority("P3");
 		editBugPage.commitBug();
 		
@@ -54,7 +56,7 @@ public class FindBooleanChartTest extends BugzillaTest{
 	public void tearDown() throws Exception {
 		// postcondition: change bug back to Priority P5
 		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
-		editBugPage.editPriority("P5");
+		editBugPage.editPriority(originalBugPrio);
 		editBugPage.commitBug();
 	}
 
