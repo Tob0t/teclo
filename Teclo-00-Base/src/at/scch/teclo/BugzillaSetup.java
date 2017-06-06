@@ -99,6 +99,7 @@ public class BugzillaSetup {
 		
 		if(driver != null){
 			driver.close();
+			driver.quit();
 			driver = null;
 		}
 	}
