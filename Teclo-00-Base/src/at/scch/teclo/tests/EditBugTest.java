@@ -25,7 +25,7 @@ public class EditBugTest extends BugzillaTest {
 		currentBugID = BugzillaSetup.getExampleBugID();
 		
 		// save the original name of the bug temporary
-		originalBugName = BugzillaSetup.getExampleBugName();
+		originalBugName = BugzillaSetup.getExampleBugSummary();
 		
 		// go to home base page
 		BugzillaSetup.navigateToHomeBasePage();

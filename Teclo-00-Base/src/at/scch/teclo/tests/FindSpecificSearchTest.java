@@ -36,7 +36,7 @@ public class FindSpecificSearchTest extends BugzillaTest {
 		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 
 		specificSearchPage.selectBugState("Closed");
-		BugResultsPage bugResultsPage = specificSearchPage.searchFor(BugzillaSetup.getExampleBugName().replace("_", "-"));
+		BugResultsPage bugResultsPage = specificSearchPage.searchFor(BugzillaSetup.getExampleBugSummary().replace("_", "-"));
 
 		assertEquals("More than 0 bugs found!", 0, bugResultsPage.getAmountOfBugs());
 	}
@@ -47,10 +47,10 @@ public class FindSpecificSearchTest extends BugzillaTest {
 		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 
 		specificSearchPage.selectBugState("All");
-		BugResultsPage bugResultsPage = specificSearchPage.searchFor(BugzillaSetup.getExampleBugName());
+		BugResultsPage bugResultsPage = specificSearchPage.searchFor(BugzillaSetup.getExampleBugSummary());
 
 		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
-		assertEquals(BugzillaSetup.getExampleBugName(), bugResultsPage.getSummaryOfFirstBug());
+		assertEquals(BugzillaSetup.getExampleBugSummary(), bugResultsPage.getSummaryOfFirstBug());
 	}
 	
 	@Test

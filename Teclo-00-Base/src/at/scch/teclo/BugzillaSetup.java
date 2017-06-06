@@ -29,7 +29,7 @@ public class BugzillaSetup {
 
 	private static LoggedInBasePage loggedInBasePage;
 	private static int currentbugID;
-	private static String exampleBugName;
+	private static String exampleBugSummary;
 
 	/***
 	 * singleton pattern
@@ -109,17 +109,17 @@ public class BugzillaSetup {
 		HomeBasePage homeBasePage = navigateToHomeBasePage();
 		loggedInBasePage = homeBasePage.loginAdmin();
 		
-		// set the bug name
+		// set the bug summary
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
-		exampleBugName = "Bug_"+dateFormat.format(new Date());
+		exampleBugSummary = "Bug_"+dateFormat.format(new Date());
 		
 		// create bug
 		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
-		NewBugCreatedPage newBugCreatedPage = createNewBugPage.createNewBugSimple(exampleBugName);
+		NewBugCreatedPage newBugCreatedPage = createNewBugPage.createNewBugSimple(exampleBugSummary);
 		
 		// save the id of the bug
 		currentbugID = newBugCreatedPage.getBugID();
-		System.out.println("Creating new example bug with the name "+exampleBugName+ " and ID "+currentbugID);
+		System.out.println("Created new example bug with summary "+exampleBugSummary+ " and ID "+currentbugID);
 	}
 	
 	public static int getExampleBugID(){
@@ -130,16 +130,12 @@ public class BugzillaSetup {
 		return currentbugID;
 	}
 	
-	public static String getExampleBugName(){
+	public static String getExampleBugSummary() {
 		// if there is no bug created yet do it now
 		if(currentbugID == 0){
 			createExampleBug();
 		}
-		return exampleBugName;
-	}
-	
-	public static void setExampleBugName(String newName){
-		exampleBugName = newName;
+		return exampleBugSummary;
 	}
 	
 	public static EditBugPage showBug(int bugID) {

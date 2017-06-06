@@ -44,12 +44,12 @@ public class FindBooleanChartTest extends BugzillaTest {
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 
 		advancedSearchPage.fillBooleanChart("Priority", "is equal to", "P3");
-		advancedSearchPage.fillSummary(BugzillaSetup.getExampleBugName());
+		advancedSearchPage.fillSummary(BugzillaSetup.getExampleBugSummary());
 		BugResultsPage bugResultsPage = advancedSearchPage.submitSearch();
 
 		assertEquals("No bug found!", 1, bugResultsPage.getAmountOfBugs());
 		assertEquals("P3", bugResultsPage.getPriorityOfFirstBug());
-		assertEquals(BugzillaSetup.getExampleBugName(), bugResultsPage.getSummaryOfFirstBug());
+		assertEquals(BugzillaSetup.getExampleBugSummary(), bugResultsPage.getSummaryOfFirstBug());
 	}
 
 	@After

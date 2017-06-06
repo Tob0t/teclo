@@ -32,23 +32,23 @@ public class SaveSearchTest extends BugzillaTest {
 
 	@Test
 	public void testSaveSearch() throws Exception {
-		bugResultsPage = loggedInBasePage.searchFor(BugzillaSetup.getExampleBugName());
+		bugResultsPage = loggedInBasePage.searchFor(BugzillaSetup.getExampleBugSummary());
 
 		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
-		assertEquals(BugzillaSetup.getExampleBugName(), bugResultsPage.getSummaryOfFirstBug());
+		assertEquals(BugzillaSetup.getExampleBugSummary(), bugResultsPage.getSummaryOfFirstBug());
 
 		// optional replacing asserts by errors:
 		// errors.checkThat(myBugsPage.getSummaryOfFirstBug(), is(BugzillaSetup.getExampleBugName()));
 
-		bugResultsPage = bugResultsPage.saveSearch("SearchFor_"+BugzillaSetup.getExampleBugName());
+		bugResultsPage = bugResultsPage.saveSearch("SearchFor_"+BugzillaSetup.getExampleBugSummary());
 		loggedInBasePage = bugResultsPage.navigateToHome();
-		bugResultsPage = loggedInBasePage.getSavedSearch("SearchFor_"+BugzillaSetup.getExampleBugName());
+		bugResultsPage = loggedInBasePage.getSavedSearch("SearchFor_"+BugzillaSetup.getExampleBugSummary());
 
 		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
-		assertEquals(BugzillaSetup.getExampleBugName(), bugResultsPage.getSummaryOfFirstBug());
+		assertEquals(BugzillaSetup.getExampleBugSummary(), bugResultsPage.getSummaryOfFirstBug());
 		
 		// forget saved search
-		bugResultsPage.forgetSavedSearch("SearchFor_"+BugzillaSetup.getExampleBugName());
+		bugResultsPage.forgetSavedSearch("SearchFor_"+BugzillaSetup.getExampleBugSummary());
 	}
 
 }

@@ -48,7 +48,7 @@ public class FindAdvancedSearchTest extends BugzillaTest {
 		advancedSearchPage.deselectBugState("REOPENED");
 
 		advancedSearchPage.selectBugState("RESOLVED");
-		advancedSearchPage.fillSummary(BugzillaSetup.getExampleBugName().replace("_", "-"));
+		advancedSearchPage.fillSummary(BugzillaSetup.getExampleBugSummary().replace("_", "-"));
 		bugResultsPage = advancedSearchPage.submitSearch();
 
 		assertEquals("More than 0 bugs found!", 0, bugResultsPage.getAmountOfBugs());
@@ -64,12 +64,12 @@ public class FindAdvancedSearchTest extends BugzillaTest {
 		advancedSearchPage.deselectBugState("REOPENED");
 
 		advancedSearchPage.selectBugState("RESOLVED");
-		advancedSearchPage.fillSummary(BugzillaSetup.getExampleBugName());
+		advancedSearchPage.fillSummary(BugzillaSetup.getExampleBugSummary());
 		bugResultsPage = advancedSearchPage.submitSearch();
 
 		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
 		assertEquals("RESO", bugResultsPage.getStateOfFirstBug());
-		assertEquals(BugzillaSetup.getExampleBugName(), bugResultsPage.getSummaryOfFirstBug());
+		assertEquals(BugzillaSetup.getExampleBugSummary(), bugResultsPage.getSummaryOfFirstBug());
 	}
 	
 	@Test

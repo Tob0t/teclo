@@ -31,22 +31,22 @@ public class FindQuickSearchTest extends BugzillaTest {
 
 	@Test
 	public void testFindBugZarro() throws Exception {
-		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(BugzillaSetup.getExampleBugName().replace("_", "-"));
+		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(BugzillaSetup.getExampleBugSummary().replace("_", "-"));
 		assertEquals("More than 0 bugs found!", 0, bugResultsPage.getAmountOfBugs());
 	}
 	
 	@Test
 	public void testFindBugSingleByName() throws Exception {
-		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(BugzillaSetup.getExampleBugName());
+		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(BugzillaSetup.getExampleBugSummary());
 
 		assertEquals("No bug found!", 1, bugResultsPage.getAmountOfBugs());
-		assertEquals(BugzillaSetup.getExampleBugName(), bugResultsPage.getSummaryOfFirstBug());
+		assertEquals(BugzillaSetup.getExampleBugSummary(), bugResultsPage.getSummaryOfFirstBug());
 	}
 	
 	@Test
 	public void testFindBugSingleByID() throws Exception {
 		EditBugPage editBugPage = loggedInBasePage.searchFor(currentBugID);
-		assertEquals("Bug not found by ID", BugzillaSetup.getExampleBugName(),editBugPage.getSummary());
+		assertEquals("Bug not found by ID", BugzillaSetup.getExampleBugSummary(),editBugPage.getSummary());
 	}
 	
 	@Test
