@@ -24,9 +24,6 @@ public abstract class BugzillaTest {
 	
 	@After
 	public void tearDownDriver(){
-		// navigate to home base page
-		homeBasePage = BugzillaSetup.navigateToHomeBasePage();
-		
 		BugzillaSetup.ungetWebDriver();
 		
 		String verificationErrorString = verificationErrors .toString();
