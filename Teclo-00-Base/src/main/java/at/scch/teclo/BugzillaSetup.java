@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import at.scch.teclo.pageobjects.CreateNewBugPage;
 import at.scch.teclo.pageobjects.EditBugPage;
@@ -22,11 +24,12 @@ import at.scch.teclo.pageobjects.NewBugCreatedPage;
  * @author fabianbouchal
  */
 public class BugzillaSetup {
+	private static final Logger Logger = LoggerFactory.getLogger(BugzillaSetup.class);
 
 	private static final String CHROME_DRIVER_PROPERTY = "webdriver.chrome.driver";
+	private static String baseUrl = "";
 	private static WebDriver driver;
 	private static int driverUsageCounter;
-	private static String BASE_URL = "";
 
 	private static int loginUsageCounter;
 	private static LoggedInBasePage loggedInBasePage;
@@ -40,7 +43,7 @@ public class BugzillaSetup {
 		loadConfig();
 
 		// set the variable BASE_URL received from the props file
-		BASE_URL = System.getProperty("BASE_URL");
+		baseUrl = System.getProperty("BASE_URL");
 
 		String webDriver = System.getProperty(CHROME_DRIVER_PROPERTY);
 		if (webDriver == null) {
@@ -56,6 +59,10 @@ public class BugzillaSetup {
 		}
 	}
 
+	private BugzillaSetup() {
+		/* empty */
+	}
+
 	/***
 	 * Set IP Adress on config file according to your VM! (config.properties)
 	 */
@@ -64,7 +71,7 @@ public class BugzillaSetup {
 
 		try (InputStream input = BugzillaSetup.class.getClassLoader().getResourceAsStream(filename)) {
 			if (input == null) {
-				System.out.println("Sorry, unable to find " + filename);
+				Logger.info("Unable to find {}.", filename);
 				return;
 			}
 
@@ -75,12 +82,12 @@ public class BugzillaSetup {
 
 			System.setProperties(prop);
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			Logger.error("Could not load config file.", ex);
 		}
 	}
 
 	public static String getBaseURL() {
-		return BASE_URL;
+		return baseUrl;
 	}
 
 	public static WebDriver getWebDriver() {
@@ -119,7 +126,7 @@ public class BugzillaSetup {
 
 		// save the id of the bug
 		currentbugID = newBugCreatedPage.getBugID();
-		System.out.println("Created new example bug with summary " + exampleBugSummary + " and ID " + currentbugID);
+		Logger.info("Created new example bug with summary {} and ID {}.", exampleBugSummary, currentbugID);
 	}
 
 	public static int getExampleBugID() {
@@ -139,12 +146,12 @@ public class BugzillaSetup {
 	}
 
 	public static EditBugPage showBug(int bugID) {
-		driver.get(BASE_URL + "/show_bug.cgi?id=" + bugID);
+		driver.get(baseUrl + "/show_bug.cgi?id=" + bugID);
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
 
 	public static HomeBasePage navigateToHomeBasePage() {
-		driver.get(BASE_URL);
+		driver.get(baseUrl);
 		return PageFactory.initElements(driver, HomeBasePage.class);
 	}
 
