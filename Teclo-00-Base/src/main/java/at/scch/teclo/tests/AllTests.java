@@ -12,14 +12,14 @@ import at.scch.teclo.BugzillaSetup;
 @SuiteClasses({ LoginLogoutTest.class, CreateNewBugTest.class, EditBugTest.class, ChangeBugStateTest.class,
 		FindQuickSearchTest.class, FindSpecificSearchTest.class, FindAdvancedSearchTest.class,
 		FindBooleanChartTest.class, GenerateTabularReportTest.class, SaveSearchTest.class })
-public class AllTests {
+public class AllTests { // NOSONAR
 
 	@BeforeClass
 	public static void setUpDriver() {
 		// load snapshot
 
 		// initialize web driver
-		BugzillaSetup.getWebDriver();
+		BugzillaSetup.openWebDriver();
 
 		BugzillaSetup.login();
 		BugzillaSetup.createExampleBug();
@@ -28,6 +28,6 @@ public class AllTests {
 	@AfterClass
 	public static void tearDownDriver() {
 		BugzillaSetup.logout();
-		BugzillaSetup.ungetWebDriver();
+		BugzillaSetup.closeWebDriver();
 	}
 }

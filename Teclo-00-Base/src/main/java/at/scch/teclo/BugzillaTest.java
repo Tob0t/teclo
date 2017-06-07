@@ -1,25 +1,31 @@
 package at.scch.teclo;
 
-import static org.junit.Assert.fail;
-
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
-import org.openqa.selenium.WebDriver;
+import org.junit.BeforeClass;
 
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 
 public abstract class BugzillaTest {
-	protected WebDriver driver;
 	protected LoggedInBasePage loggedInBasePage;
-	protected final StringBuffer verificationErrors = new StringBuffer();
+
+	@BeforeClass
+	public static void setUpDriverStatic() {
+		BugzillaSetup.openWebDriver();
+	}
+
+	@AfterClass
+	public static void tearDownDriverStatic() {
+		BugzillaSetup.closeWebDriver();
+	}
 
 	@Before
 	public void setUpDriver() {
-		driver = BugzillaSetup.getWebDriver();
+		BugzillaSetup.openWebDriver();
 
 		// navigate to home base page
 		loggedInBasePage = BugzillaSetup.login();
-
 	}
 
 	@After
@@ -29,12 +35,6 @@ public abstract class BugzillaTest {
 		// error, teardown will not execute correctly
 
 		BugzillaSetup.logout();
-		BugzillaSetup.ungetWebDriver();
-
-		String verificationErrorString = verificationErrors.toString();
-		if (!"".equals(verificationErrorString)) {
-			fail(verificationErrorString);
-		}
+		BugzillaSetup.closeWebDriver();
 	}
-
 }

@@ -18,7 +18,7 @@ public class BugCommitedPage {
 	}
 
 	public EditBugPage selectCommitedBug(int bugID) {
-		driver.findElement(By.linkText("bug " + String.valueOf(bugID))).click();
+		driver.findElement(By.linkText("bug " + bugID)).click();
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
 

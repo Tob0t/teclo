@@ -90,7 +90,7 @@ public class BugzillaSetup {
 		return baseUrl;
 	}
 
-	public static WebDriver getWebDriver() {
+	public static WebDriver openWebDriver() {
 		driverUsageCounter++;
 		// set up new driver
 		if (driver == null) {
@@ -101,7 +101,7 @@ public class BugzillaSetup {
 		return driver;
 	}
 
-	public static void ungetWebDriver() {
+	public static void closeWebDriver() {
 		driverUsageCounter--;
 
 		if (driverUsageCounter > 0) {

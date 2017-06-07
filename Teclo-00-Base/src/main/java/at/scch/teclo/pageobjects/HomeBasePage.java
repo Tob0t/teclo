@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 public class HomeBasePage {
 
 	private final WebDriver driver;
-	private static LoggedInBasePage loggedInBasePage;
+	private LoggedInBasePage loggedInBasePage;
 
 	public HomeBasePage(WebDriver driver) {
 		this.driver = driver;
@@ -32,7 +32,7 @@ public class HomeBasePage {
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
 		// check if the log in button is existing
-		if (driver.findElements(By.linkText("Log In")).size() > 0) {
+		if (!driver.findElements(By.linkText("Log In")).isEmpty()) {
 			loggedInBasePage = logInBasePage.logIn("admin", "admin");
 		}
 
@@ -54,7 +54,7 @@ public class HomeBasePage {
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
 		// check if the log out button is existing
-		if (driver.findElements(By.linkText("Log out")).size() > 0) {
+		if (!driver.findElements(By.linkText("Log out")).isEmpty()) {
 			loggedInBasePage.logOut();
 		}
 
