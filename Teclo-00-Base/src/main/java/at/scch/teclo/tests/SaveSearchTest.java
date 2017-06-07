@@ -7,10 +7,10 @@ import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 
 import at.scch.teclo.BugzillaSetup;
-import at.scch.teclo.BugzillaTest;
+import at.scch.teclo.AbstractBugzillaTestWithLogin;
 import at.scch.teclo.pageobjects.BugResultsPage;
 
-public class SaveSearchTest extends BugzillaTest {
+public class SaveSearchTest extends AbstractBugzillaTestWithLogin {
 	public ErrorCollector errors = new ErrorCollector();
 
 	private String currentBugSummary;

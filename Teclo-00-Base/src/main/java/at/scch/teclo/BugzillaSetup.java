@@ -116,6 +116,9 @@ public class BugzillaSetup {
 	}
 
 	public static void createExampleBug() {
+		checkDriver();
+		checkLogin();
+
 		// set the bug summary
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
 		exampleBugSummary = "Bug_" + dateFormat.format(new Date());
@@ -146,33 +149,54 @@ public class BugzillaSetup {
 	}
 
 	public static EditBugPage showBug(int bugID) {
+		checkDriver();
+
 		driver.get(baseUrl + "/show_bug.cgi?id=" + bugID);
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
 
 	public static HomeBasePage navigateToHomeBasePage() {
+		checkDriver();
+
 		driver.get(baseUrl);
 		return PageFactory.initElements(driver, HomeBasePage.class);
 	}
 
 	public static LoggedInBasePage login() {
+		checkDriver();
+
 		// if not logged in, do it now
 		if (loggedInBasePage == null) {
 			HomeBasePage homeBasePage = navigateToHomeBasePage();
-			loggedInBasePage = homeBasePage.loginAdmin();
+			loggedInBasePage = homeBasePage.login("admin", "admin");
 		}
 		loginUsageCounter++;
 		return loggedInBasePage;
 	}
 
 	public static void logout() {
+		checkDriver();
+
 		loginUsageCounter--;
+		if (loginUsageCounter > 0)
+			return;
+
 		// if logged in, do logout
-		if (loginUsageCounter == 0 && loggedInBasePage != null) {
-			HomeBasePage homeBasePage = navigateToHomeBasePage();
-			homeBasePage.logoutAdmin();
+		if (loggedInBasePage != null) {
+			loggedInBasePage.logOut();
 			loggedInBasePage = null;
 		}
 	}
 
+	private static void checkLogin() {
+		if (loggedInBasePage == null) {
+			throw new IllegalStateException("User not logged in!");
+		}
+	}
+
+	private static void checkDriver() {
+		if (driver == null) {
+			throw new IllegalStateException("Driver not initialized!");
+		}
+	}
 }

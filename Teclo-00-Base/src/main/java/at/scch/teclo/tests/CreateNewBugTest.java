@@ -8,11 +8,11 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import at.scch.teclo.BugzillaTest;
+import at.scch.teclo.AbstractBugzillaTestWithLogin;
 import at.scch.teclo.pageobjects.CreateNewBugPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
 
-public class CreateNewBugTest extends BugzillaTest {
+public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testCreateNewBugDefaultFields() throws Exception {

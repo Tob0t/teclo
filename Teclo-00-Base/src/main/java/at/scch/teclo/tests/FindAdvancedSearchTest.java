@@ -8,14 +8,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import at.scch.teclo.BugzillaSetup;
-import at.scch.teclo.BugzillaTest;
+import at.scch.teclo.AbstractBugzillaTestWithLogin;
 import at.scch.teclo.pageobjects.AdvancedSearchPage;
 import at.scch.teclo.pageobjects.BugCommittedPage;
 import at.scch.teclo.pageobjects.BugResultsPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 
-public class FindAdvancedSearchTest extends BugzillaTest {
+public class FindAdvancedSearchTest extends AbstractBugzillaTestWithLogin {
 	private int currentBugID;
 	private String currentBugSummary;
 	private BugResultsPage bugResultsPage;

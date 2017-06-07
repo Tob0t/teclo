@@ -7,11 +7,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import at.scch.teclo.BugzillaSetup;
-import at.scch.teclo.BugzillaTest;
+import at.scch.teclo.AbstractBugzillaTestWithLogin;
 import at.scch.teclo.pageobjects.BugResultsPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 
-public class FindQuickSearchTest extends BugzillaTest {
+public class FindQuickSearchTest extends AbstractBugzillaTestWithLogin {
 	private int currentBugID;
 	private String currentBugSummary;
 

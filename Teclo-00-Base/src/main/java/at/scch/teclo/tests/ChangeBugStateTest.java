@@ -6,11 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import at.scch.teclo.BugzillaSetup;
-import at.scch.teclo.BugzillaTest;
+import at.scch.teclo.AbstractBugzillaTestWithLogin;
 import at.scch.teclo.pageobjects.BugCommittedPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 
-public class ChangeBugStateTest extends BugzillaTest {
+public class ChangeBugStateTest extends AbstractBugzillaTestWithLogin {
 	private int currentBugID;
 
 	@Before

@@ -33,7 +33,7 @@ public class LogInBasePage {
 		}
 	}
 
-	public LoggedInBasePage logIn(String username, String password) {
+	public LoggedInBasePage login(String username, String password) {
 
 		driver.findElement(By.id("login_link_top")).click();
 		driver.findElement(By.id("Bugzilla_login_top")).click();

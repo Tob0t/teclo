@@ -7,13 +7,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import at.scch.teclo.BugzillaSetup;
-import at.scch.teclo.BugzillaTest;
+import at.scch.teclo.AbstractBugzillaTestWithLogin;
 import at.scch.teclo.pageobjects.BugResultsPage;
 import at.scch.teclo.pageobjects.ParametersRequiredErrorPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 import at.scch.teclo.pageobjects.SpecificSearchPage;
 
-public class FindSpecificSearchTest extends BugzillaTest {
+public class FindSpecificSearchTest extends AbstractBugzillaTestWithLogin {
 
 	private String currentBugSummary;
 
