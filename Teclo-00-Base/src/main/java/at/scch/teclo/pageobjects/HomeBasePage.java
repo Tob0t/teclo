@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 public class HomeBasePage {
 
 	private final WebDriver driver;
-	private LoggedInBasePage loggedInBasePage;
+	private static LoggedInBasePage loggedInBasePage;
 
 	public HomeBasePage(WebDriver driver) {
 		this.driver = driver;
