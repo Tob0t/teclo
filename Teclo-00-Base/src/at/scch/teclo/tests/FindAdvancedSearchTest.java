@@ -35,9 +35,6 @@ public class FindAdvancedSearchTest extends BugzillaTest {
 		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
 		editBugPage.changeBugState("RESOLVED");
 		editBugPage.commitBug();
-		
-		// go to home base page
-		BugzillaSetup.navigateToHomeBasePage();
 	}
 	
 	@Test

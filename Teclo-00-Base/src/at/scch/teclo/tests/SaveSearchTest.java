@@ -27,9 +27,6 @@ public class SaveSearchTest extends BugzillaTest {
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBugID();
 		currentBugSummary = BugzillaSetup.getExampleBugSummary();
-		
-		// go to home base page
-		BugzillaSetup.navigateToHomeBasePage();
 	}
 
 	@Test

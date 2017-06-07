@@ -26,9 +26,6 @@ public class FindSpecificSearchTest extends BugzillaTest {
 
 		// precondition: bug inserted
 		currentBugSummary = BugzillaSetup.getExampleBugSummary();
-		
-		// go to home base page
-		BugzillaSetup.navigateToHomeBasePage();
 	}
 
 	@Test

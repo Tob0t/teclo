@@ -35,9 +35,6 @@ public class FindBooleanChartTest extends BugzillaTest {
 		originalBugPrio = editBugPage.getCurrentPriority();
 		editBugPage.editPriority("P3");
 		editBugPage.commitBug();
-		
-		// go to home base page
-		BugzillaSetup.navigateToHomeBasePage();
 	}
 
 	@Test

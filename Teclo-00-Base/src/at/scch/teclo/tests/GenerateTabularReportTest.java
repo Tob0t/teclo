@@ -24,9 +24,6 @@ public class GenerateTabularReportTest extends BugzillaTest{
 
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBugID();
-		
-		// go to home base page
-		BugzillaSetup.navigateToHomeBasePage();
 	}
 
 	@Test
