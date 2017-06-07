@@ -8,22 +8,17 @@ import org.junit.Test;
 
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.BugzillaTest;
-import at.scch.teclo.pageobjects.LoggedInBasePage;
-import at.scch.teclo.pageobjects.ParametersRequiredErrorPage;
 import at.scch.teclo.pageobjects.BugResultsPage;
+import at.scch.teclo.pageobjects.ParametersRequiredErrorPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 import at.scch.teclo.pageobjects.SpecificSearchPage;
 
 public class FindSpecificSearchTest extends BugzillaTest {
 
-	private LoggedInBasePage loggedInBasePage;
 	private String currentBugSummary;
 
 	@Before
 	public void setUp() throws Exception {
-		// precondition: logged in
-		loggedInBasePage = homeBasePage.loginAdmin();
-
 		// precondition: bug inserted
 		currentBugSummary = BugzillaSetup.getExampleBugSummary();
 	}

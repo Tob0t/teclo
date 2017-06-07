@@ -1,23 +1,20 @@
 package at.scch.teclo.tests;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.BugzillaTest;
 import at.scch.teclo.pageobjects.BugCommitedPage;
 import at.scch.teclo.pageobjects.EditBugPage;
-import at.scch.teclo.pageobjects.LoggedInBasePage;
 
 public class ChangeBugStateTest extends BugzillaTest {
 	private int currentBugID;
-	private LoggedInBasePage loggedInBasePage;
 
 	@Before
 	public void setUp() throws Exception {
-		
-		// precondition: logged in
-		loggedInBasePage = homeBasePage.loginAdmin();
-
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBugID();
 	}

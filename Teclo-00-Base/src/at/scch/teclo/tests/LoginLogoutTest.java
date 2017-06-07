@@ -1,12 +1,15 @@
 package at.scch.teclo.tests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-import org.junit.Before;
-
+import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.BugzillaTest;
+import at.scch.teclo.pageobjects.HomeBasePage;
 import at.scch.teclo.pageobjects.LogInBasePage;
 import at.scch.teclo.pageobjects.LogInErrorPage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
@@ -14,15 +17,17 @@ import at.scch.teclo.pageobjects.LoggedOutBasePage;
 
 public class LoginLogoutTest extends BugzillaTest {
 
+	private HomeBasePage homeBasePage;
+	
 	@Before
 	public void setUp() throws Exception {
-		
+		homeBasePage = BugzillaSetup.navigateToHomeBasePage();
 		// precondition: logged out
 		homeBasePage.logoutAdmin();
 	}
 	
 	@Test
-	public void testLoginLogout() throws Exception {
+	public void testLoginLogout() {
 
 		LogInBasePage logInBasePage = homeBasePage.navigateToLoginBasePage();
 		LoggedInBasePage loggedInBasePage = logInBasePage.logIn("admin", "admin");
@@ -44,8 +49,13 @@ public class LoginLogoutTest extends BugzillaTest {
 				.logInWithWrongUsernameAndWrongPassword("wrongUsername", "wrongPassword");
 	
 		assertEquals("Invalid Username Or Password", logInErrorPage.getDriverTitle());
-
 	}
+	
+	@After
+	public void tearDown() {
+		BugzillaSetup.navigateToHomeBasePage();
+		homeBasePage.loginAdmin();
+	}	
 	
 
 }

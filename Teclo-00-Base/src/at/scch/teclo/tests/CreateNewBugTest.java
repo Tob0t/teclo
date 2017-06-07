@@ -1,27 +1,18 @@
 package at.scch.teclo.tests;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.junit.Test;
+
 import at.scch.teclo.BugzillaTest;
 import at.scch.teclo.pageobjects.CreateNewBugPage;
-import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
 
 public class CreateNewBugTest extends BugzillaTest {
-
-	private LoggedInBasePage loggedInBasePage;
-
-	@Before
-	public void setUp() throws Exception {
-		
-		// precondition: logged in
-		loggedInBasePage = homeBasePage.loginAdmin();
-	}
 
 	@Test
 	public void testCreateNewBugDefaultFields() throws Exception {

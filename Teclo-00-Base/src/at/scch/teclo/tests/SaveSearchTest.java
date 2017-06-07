@@ -8,7 +8,6 @@ import org.junit.rules.ErrorCollector;
 
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.BugzillaTest;
-import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.BugResultsPage;
 
 public class SaveSearchTest extends BugzillaTest {
@@ -16,14 +15,10 @@ public class SaveSearchTest extends BugzillaTest {
 
 	private int currentBugID;
 	private String currentBugSummary;
-	private LoggedInBasePage loggedInBasePage;
 	private BugResultsPage bugResultsPage;
 
 	@Before
 	public void setUp() throws Exception {
-		// precondition: logged in
-		loggedInBasePage = homeBasePage.loginAdmin();
-
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBugID();
 		currentBugSummary = BugzillaSetup.getExampleBugSummary();

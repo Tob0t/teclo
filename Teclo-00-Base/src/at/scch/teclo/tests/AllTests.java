@@ -22,13 +22,14 @@ public class AllTests {
 		// initialize web driver
 		BugzillaSetup.getWebDriver();
 		
-		// create example Bug
+		BugzillaSetup.login();
 		BugzillaSetup.createExampleBug();
 				
 	}
 	
 	@AfterClass
 	public static void tearDownDriver(){
+		BugzillaSetup.logout();
 		BugzillaSetup.ungetWebDriver();
 	}
 	

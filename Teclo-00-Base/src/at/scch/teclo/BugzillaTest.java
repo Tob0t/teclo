@@ -6,11 +6,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 
-import at.scch.teclo.pageobjects.HomeBasePage;
+import at.scch.teclo.pageobjects.LoggedInBasePage;
 
 public abstract class BugzillaTest {
 	protected WebDriver driver;
-	protected HomeBasePage homeBasePage;
+	protected LoggedInBasePage loggedInBasePage;
 	protected final StringBuffer verificationErrors = new StringBuffer();
 
 	@Before
@@ -18,7 +18,7 @@ public abstract class BugzillaTest {
 		driver = BugzillaSetup.getWebDriver();
 		
 		// navigate to home base page
-		homeBasePage = BugzillaSetup.navigateToHomeBasePage();
+		loggedInBasePage = BugzillaSetup.login();
 
 	}
 	
@@ -27,6 +27,7 @@ public abstract class BugzillaTest {
 		// only close and quit selenium driver here
 		// do not use driver to navigate, because if test failed with selenium error, teardown will not execute correctly
 		
+		BugzillaSetup.logout();
 		BugzillaSetup.ungetWebDriver();
 		
 		String verificationErrorString = verificationErrors .toString();

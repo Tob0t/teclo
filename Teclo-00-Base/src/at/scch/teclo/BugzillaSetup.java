@@ -27,6 +27,7 @@ public class BugzillaSetup {
 	private static int driverUsageCounter;
 	private static String BASE_URL = "";
 
+	private static int loginUsageCounter;
 	private static LoggedInBasePage loggedInBasePage;
 	private static int currentbugID;
 	private static String exampleBugSummary;
@@ -105,10 +106,6 @@ public class BugzillaSetup {
 	}
 
 	public static void createExampleBug(){
-		// precondition: logged in
-		HomeBasePage homeBasePage = navigateToHomeBasePage();
-		loggedInBasePage = homeBasePage.loginAdmin();
-		
 		// set the bug summary
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
 		exampleBugSummary = "Bug_"+dateFormat.format(new Date());
@@ -147,4 +144,25 @@ public class BugzillaSetup {
 		driver.get(BASE_URL);
 		return PageFactory.initElements(driver, HomeBasePage.class);
 	}
+	
+	public static LoggedInBasePage login() {
+		// if not logged in, do it now
+		if (loggedInBasePage == null) {
+			HomeBasePage homeBasePage = navigateToHomeBasePage();
+			loggedInBasePage = homeBasePage.loginAdmin();
+		}
+		loginUsageCounter++;
+		return loggedInBasePage;
+	}
+	
+	public static void logout() {
+		loginUsageCounter--;
+		// if logged in, do logout
+		if (loginUsageCounter == 0 && loggedInBasePage != null) {
+			HomeBasePage homeBasePage = navigateToHomeBasePage();
+			homeBasePage.logoutAdmin();
+			loggedInBasePage = null;
+		}
+	}
+	
 }
