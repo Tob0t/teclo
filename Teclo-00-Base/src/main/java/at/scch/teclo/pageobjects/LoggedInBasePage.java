@@ -44,7 +44,7 @@ public class LoggedInBasePage {
 		}
 	}
 
-	public LoggedOutBasePage logOut() {
+	public LoggedOutBasePage logout() {
 		LogoutLink.click();
 		return PageFactory.initElements(driver, LoggedOutBasePage.class);
 	}

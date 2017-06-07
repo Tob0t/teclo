@@ -183,7 +183,7 @@ public class BugzillaSetup {
 
 		// if logged in, do logout
 		if (loggedInBasePage != null) {
-			loggedInBasePage.logOut();
+			loggedInBasePage.logout();
 			loggedInBasePage = null;
 		}
 	}

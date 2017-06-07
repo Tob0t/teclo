@@ -35,7 +35,7 @@ public class LoginLogoutTest extends AbstractBugzillaTest {
 		// check if correct user is logged in
 		assertEquals("| Log out admin", loggedInBasePage.getLogoutTextPlusUserName());
 
-		LoggedOutBasePage loggedOutBasePage = loggedInBasePage.logOut();
+		LoggedOutBasePage loggedOutBasePage = loggedInBasePage.logout();
 
 		// check if login link is being displayed again
 		assertTrue(loggedOutBasePage.isLoginLinkTopPresent());

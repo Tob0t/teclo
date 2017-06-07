@@ -46,7 +46,7 @@ public class HomeBasePage {
 	}
 
 	/***
-	 * Method to log out the current user (in not already logged out)
+	 * Method to log out the current user (if not already logged out)
 	 * 
 	 * @param loggedOut
 	 *            page
@@ -65,7 +65,7 @@ public class HomeBasePage {
 				throw new IllegalStateException("No 'Log out' button found!");
 			}
 
-			loggedInBasePage.logOut();
+			loggedInBasePage.logout();
 		} finally {
 			// change the waiting time back to 10 seconds
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
