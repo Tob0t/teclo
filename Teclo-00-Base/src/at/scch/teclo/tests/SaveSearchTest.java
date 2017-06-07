@@ -1,11 +1,9 @@
 package at.scch.teclo.tests;
 
-import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,31 +39,28 @@ public class SaveSearchTest {
 	public void testSaveSearch() throws Exception {
 		myBugsPage = loggedInBasePage.searchFor("ExampleBug01");
 
-		assertTrue("Less bug founds, than the minimum required amount",
-				0 < myBugsPage.getAmountOfBugs());
+		assertTrue("Less bug founds, than the minimum required amount", 0 < myBugsPage.getAmountOfBugs());
 
-		//errors.checkThat(myBugsPage.getSummaryOfFirstBug(), is("ExampleBug01"));
+		// errors.checkThat(myBugsPage.getSummaryOfFirstBug(),
+		// is("ExampleBug01"));
 		assertEquals("ExampleBug01", myBugsPage.getSummaryOfFirstBug());
 
 		myBugsPage = myBugsPage.saveSearch("ExampleSearch01");
 		loggedInBasePage = myBugsPage.navigateToHome();
 		myBugsPage = loggedInBasePage.getSavedSearch("ExampleSearch01");
 
-		assertTrue("Less bug founds, than the minimum required amount",
-				0 < myBugsPage.getAmountOfBugs());
+		assertTrue("Less bug founds, than the minimum required amount", 0 < myBugsPage.getAmountOfBugs());
 
 		assertEquals("ExampleBug01", myBugsPage.getSummaryOfFirstBug());
-		
+
 		// forget saved search
 		myBugsPage.forgetSavedSearch("ExampleSearch01");
-
 
 	}
 
 	@After
 	public void tearDown() throws Exception {
 
-		
 		String verificationErrorString = verificationErrors.toString();
 		if (!"".equals(verificationErrorString)) {
 			fail(verificationErrorString);

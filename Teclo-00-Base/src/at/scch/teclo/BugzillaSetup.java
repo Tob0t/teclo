@@ -14,8 +14,8 @@ import at.scch.teclo.pageobjects.CreateNewBugPage;
 import at.scch.teclo.pageobjects.LogInBasePage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.LoggedOutBasePage;
-import at.scch.teclo.pageobjects.ResultsPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
+import at.scch.teclo.pageobjects.ResultsPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 
 /**
@@ -36,7 +36,7 @@ public class BugzillaSetup {
 	 */
 	static {
 		loadConfig();
-		
+
 		// set the variable BASE_URL received from the props file
 		BASE_URL = System.getProperty("BASE_URL").toString();
 		System.out.println("Trying to connect to " + BASE_URL);
@@ -58,8 +58,8 @@ public class BugzillaSetup {
 	public static void loadConfig() {
 		Properties prop = new Properties(System.getProperties());
 		String filename = "config.properties";
-		
-		try(InputStream input = BugzillaSetup.class.getClassLoader().getResourceAsStream(filename)) {
+
+		try (InputStream input = BugzillaSetup.class.getClassLoader().getResourceAsStream(filename)) {
 			if (input == null) {
 				System.out.println("Sorry, unable to find " + filename);
 				return;
@@ -69,11 +69,9 @@ public class BugzillaSetup {
 			prop.load(input);
 			System.setProperties(prop);
 
-			
-
 		} catch (IOException ex) {
 			ex.printStackTrace();
-		} 
+		}
 	}
 
 	public static String getBaseURL() {
@@ -91,15 +89,15 @@ public class BugzillaSetup {
 
 		return driver;
 	}
-	
-	public static void ungetWebDriver(){
+
+	public static void ungetWebDriver() {
 		driverUsageCounter--;
-		
-		if(driverUsageCounter > 0){
+
+		if (driverUsageCounter > 0) {
 			return;
 		}
-		
-		if(driver != null){
+
+		if (driver != null) {
 			driver.close();
 			driver = null;
 		}
@@ -131,9 +129,10 @@ public class BugzillaSetup {
 	 * Helper method to log out the current user
 	 * 
 	 * @param loggedInBasePage
+	 * @return the logged out page
 	 */
-	public static void logOut(LoggedInBasePage loggedInBasePage) {
-		LoggedOutBasePage loggedOutBasePage = loggedInBasePage.logOut();
+	public static LoggedOutBasePage logOut(LoggedInBasePage loggedInBasePage) {
+		return loggedInBasePage.logOut();
 	}
 
 	/***
@@ -149,8 +148,7 @@ public class BugzillaSetup {
 		AdvancedSearchPage advancedSearchPage = searchBasePage.navigateToAdvancedSearchPage();
 		advancedSearchPage.deselectBugState("ASSIGNED");
 		advancedSearchPage.deselectBugState("REOPENED");
-		ResultsPage myBugsPage = advancedSearchPage.searchFor(ExampleBugSummary,
-				ExampleBugDescription);
+		ResultsPage myBugsPage = advancedSearchPage.searchFor(ExampleBugSummary, ExampleBugDescription);
 
 		// if the bug is existing just return the ID of the first found bug
 		if (myBugsPage.getAmountOfBugs() > 1) {
