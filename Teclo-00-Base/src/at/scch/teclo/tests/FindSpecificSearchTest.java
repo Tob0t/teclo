@@ -17,6 +17,7 @@ import at.scch.teclo.pageobjects.SpecificSearchPage;
 public class FindSpecificSearchTest extends BugzillaTest {
 
 	private LoggedInBasePage loggedInBasePage;
+	private String currentBugSummary;
 
 	@Before
 	public void setUp() throws Exception {
@@ -24,7 +25,7 @@ public class FindSpecificSearchTest extends BugzillaTest {
 		loggedInBasePage = homeBasePage.loginAdmin();
 
 		// precondition: bug inserted
-		BugzillaSetup.getExampleBugID();
+		currentBugSummary = BugzillaSetup.getExampleBugSummary();
 		
 		// go to home base page
 		BugzillaSetup.navigateToHomeBasePage();
@@ -36,7 +37,7 @@ public class FindSpecificSearchTest extends BugzillaTest {
 		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 
 		specificSearchPage.selectBugState("Closed");
-		BugResultsPage bugResultsPage = specificSearchPage.searchFor(BugzillaSetup.getExampleBugSummary().replace("_", "-"));
+		BugResultsPage bugResultsPage = specificSearchPage.searchFor(currentBugSummary.replace("_", "-"));
 
 		assertEquals("More than 0 bugs found!", 0, bugResultsPage.getAmountOfBugs());
 	}
@@ -47,7 +48,7 @@ public class FindSpecificSearchTest extends BugzillaTest {
 		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 
 		specificSearchPage.selectBugState("All");
-		BugResultsPage bugResultsPage = specificSearchPage.searchFor(BugzillaSetup.getExampleBugSummary());
+		BugResultsPage bugResultsPage = specificSearchPage.searchFor(currentBugSummary);
 
 		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
 		assertEquals(BugzillaSetup.getExampleBugSummary(), bugResultsPage.getSummaryOfFirstBug());
