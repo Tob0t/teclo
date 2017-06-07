@@ -32,7 +32,8 @@ public class SaveSearchTest extends BugzillaTest {
 		assertEquals(currentBugSummary, bugResultsPage.getSummaryOfFirstBug());
 
 		// optional replacing asserts by errors:
-		// errors.checkThat(myBugsPage.getSummaryOfFirstBug(), is(BugzillaSetup.getExampleBugName()));
+		// errors.checkThat(myBugsPage.getSummaryOfFirstBug(),
+		// is(BugzillaSetup.getExampleBugName()));
 
 		bugResultsPage = bugResultsPage.saveSearch("SearchFor_" + currentBugSummary);
 		loggedInBasePage = bugResultsPage.navigateToHome();
@@ -40,7 +41,7 @@ public class SaveSearchTest extends BugzillaTest {
 
 		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
 		assertEquals(currentBugSummary, bugResultsPage.getSummaryOfFirstBug());
-		
+
 		// forget saved search
 		bugResultsPage.forgetSavedSearch("SearchFor_" + currentBugSummary);
 	}

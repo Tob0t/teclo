@@ -33,12 +33,11 @@ public class BugzillaSetup {
 	private static String exampleBugSummary;
 
 	/***
-	 * singleton pattern
-	 * static constructor for first call
+	 * singleton pattern static constructor for first call
 	 */
 	static {
 		loadConfig();
-		
+
 		// set the variable BASE_URL received from the props file
 		BASE_URL = System.getProperty("BASE_URL").toString();
 		System.out.println("Trying to connect to " + BASE_URL);
@@ -60,8 +59,8 @@ public class BugzillaSetup {
 	public static void loadConfig() {
 		Properties prop = new Properties(System.getProperties());
 		String filename = "config.properties";
-		
-		try(InputStream input = BugzillaSetup.class.getClassLoader().getResourceAsStream(filename)) {
+
+		try (InputStream input = BugzillaSetup.class.getClassLoader().getResourceAsStream(filename)) {
 			if (input == null) {
 				System.out.println("Sorry, unable to find " + filename);
 				return;
@@ -73,7 +72,7 @@ public class BugzillaSetup {
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
-		} 
+		}
 	}
 
 	public static String getBaseURL() {
@@ -90,53 +89,53 @@ public class BugzillaSetup {
 
 		return driver;
 	}
-	
-	public static void ungetWebDriver(){
+
+	public static void ungetWebDriver() {
 		driverUsageCounter--;
-		
-		if(driverUsageCounter > 0){
+
+		if (driverUsageCounter > 0) {
 			return;
 		}
-		
-		if(driver != null){
+
+		if (driver != null) {
 			driver.close();
 			driver.quit();
 			driver = null;
 		}
 	}
 
-	public static void createExampleBug(){
+	public static void createExampleBug() {
 		// set the bug summary
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
-		exampleBugSummary = "Bug_"+dateFormat.format(new Date());
-		
+		exampleBugSummary = "Bug_" + dateFormat.format(new Date());
+
 		// create bug
 		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
 		NewBugCreatedPage newBugCreatedPage = createNewBugPage.createNewBugSimple(exampleBugSummary);
-		
+
 		// save the id of the bug
 		currentbugID = newBugCreatedPage.getBugID();
-		System.out.println("Created new example bug with summary "+exampleBugSummary+ " and ID "+currentbugID);
+		System.out.println("Created new example bug with summary " + exampleBugSummary + " and ID " + currentbugID);
 	}
-	
-	public static int getExampleBugID(){
+
+	public static int getExampleBugID() {
 		// if there is no bug created yet do it now
-		if(currentbugID == 0){
+		if (currentbugID == 0) {
 			createExampleBug();
 		}
 		return currentbugID;
 	}
-	
+
 	public static String getExampleBugSummary() {
 		// if there is no bug created yet do it now
-		if(currentbugID == 0){
+		if (currentbugID == 0) {
 			createExampleBug();
 		}
 		return exampleBugSummary;
 	}
-	
+
 	public static EditBugPage showBug(int bugID) {
-		driver.get(BASE_URL + "/show_bug.cgi?id="+bugID);
+		driver.get(BASE_URL + "/show_bug.cgi?id=" + bugID);
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
 
@@ -144,7 +143,7 @@ public class BugzillaSetup {
 		driver.get(BASE_URL);
 		return PageFactory.initElements(driver, HomeBasePage.class);
 	}
-	
+
 	public static LoggedInBasePage login() {
 		// if not logged in, do it now
 		if (loggedInBasePage == null) {
@@ -154,7 +153,7 @@ public class BugzillaSetup {
 		loginUsageCounter++;
 		return loggedInBasePage;
 	}
-	
+
 	public static void logout() {
 		loginUsageCounter--;
 		// if logged in, do logout
@@ -164,5 +163,5 @@ public class BugzillaSetup {
 			loggedInBasePage = null;
 		}
 	}
-	
+
 }

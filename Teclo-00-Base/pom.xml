@@ -5,11 +5,26 @@
 	<artifactId>Teclo-00-Base</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
+	<properties>
+		<junit-version>4.12</junit-version>
+		<selenium-version>3.4.0</selenium-version>
+	</properties>
+	
 	<dependencies>
 		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit-version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-java</artifactId>
-			<version>3.4.0</version>
+			<artifactId>selenium-chrome-driver</artifactId>
+			<version>${selenium-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-support</artifactId>
+			<version>${selenium-version}</version>
 		</dependency>
 	</dependencies>
 
