@@ -61,7 +61,7 @@ public class HomeBasePage {
 		return PageFactory.initElements(driver, LoggedOutBasePage.class);
 	}
 	
-	public LogInBasePage navigateToLoginBasePage(){
+	public LogInBasePage navigateToLoginBasePage() {
 		return PageFactory.initElements(driver, LogInBasePage.class);
 	}
 
