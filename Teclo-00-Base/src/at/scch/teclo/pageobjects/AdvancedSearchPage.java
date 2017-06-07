@@ -32,11 +32,11 @@ public class AdvancedSearchPage {
 
 	public AdvancedSearchPage(WebDriver driver) {
 		this.driver = driver;
-		
+
 		// Check that we're on the right page.
-        if (!("Search for bugs").equals(driver.getTitle())) {
-        	throw new IllegalStateException("This is not the advanced search page (Title: "+driver.getTitle()+")!");
-        }
+		if (!("Search for bugs").equals(driver.getTitle())) {
+			throw new IllegalStateException("This is not the advanced search page (Title: " + driver.getTitle() + ")!");
+		}
 	}
 
 	public BugResultsPage searchFor(String summaryString, String commentString) {
@@ -46,13 +46,13 @@ public class AdvancedSearchPage {
 		commentTextBox.sendKeys(commentString);
 		return submitSearch();
 	}
-	
-	public void fillSummary(String summaryString){
+
+	public void fillSummary(String summaryString) {
 		summaryTextBox.clear();
 		summaryTextBox.sendKeys(summaryString);
 	}
-	
-	public void fillComment(String commentString){
+
+	public void fillComment(String commentString) {
 		commentTextBox.clear();
 		commentTextBox.sendKeys(commentString);
 	}

@@ -21,11 +21,11 @@ public class SpecificSearchPage {
 
 	public SpecificSearchPage(WebDriver driver) {
 		this.driver = driver;
-		
+
 		// Check that we're on the right page
-        if (!("Find a Specific Bug").equals(driver.getTitle())) {
-        	throw new IllegalStateException("This is not the specific search page (Title: "+driver.getTitle()+")!");
-        }
+		if (!("Find a Specific Bug").equals(driver.getTitle())) {
+			throw new IllegalStateException("This is not the specific search page (Title: " + driver.getTitle() + ")!");
+		}
 	}
 
 	public void selectBugState(String bugStateString) {
@@ -40,28 +40,31 @@ public class SpecificSearchPage {
 		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
 
-	/** Search term contains only blank chars, results in parameter required error. */
+	/**
+	 * Search term contains only blank chars, results in parameter required
+	 * error.
+	 */
 	public ParametersRequiredErrorPage searchForBlanks() {
 		searchField.clear();
 		searchField.sendKeys(" ");
 		searchButton.click();
-		
+
 		return PageFactory.initElements(driver, ParametersRequiredErrorPage.class);
 	}
 
 	/** Search term is empty, results in alert popup. */
 	public String searchForEmpty() {
 		String alertText;
-		
+
 		searchField.clear();
 		searchButton.click();
-		
+
 		Alert alert = driver.switchTo().alert();
 		alertText = alert.getText();
 		alert.accept();
 		driver.switchTo().defaultContent();
-		
+
 		return alertText;
 	}
-	
+
 }

@@ -36,11 +36,12 @@ public class BugResultsPage {
 
 	public BugResultsPage(WebDriver driver) {
 		this.driver = driver;
-		
-		// Check that we're on the right page, "Bug List" for all the searches and "Search created|Search is gone" if a search is saved|forgot
-        if (!(driver.getTitle().matches("Bug List.*|Search created|Search is gone"))) {
-        	throw new IllegalStateException("This is not the bug results page (Title: "+driver.getTitle()+")!");
-        }
+
+		// Check that we're on the right page, "Bug List" for all the searches
+		// and "Search created|Search is gone" if a search is saved|forgot
+		if (!(driver.getTitle().matches("Bug List.*|Search created|Search is gone"))) {
+			throw new IllegalStateException("This is not the bug results page (Title: " + driver.getTitle() + ")!");
+		}
 	}
 
 	public EditBugPage goToEditBug(int currentBugID) {
@@ -49,7 +50,7 @@ public class BugResultsPage {
 
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
-	
+
 	public int getAmountOfBugs() {
 		// Special Case if 0 or 1 bug is found
 		if (amountOfBugs.getText().contentEquals("Zarro Boogs found.")) {

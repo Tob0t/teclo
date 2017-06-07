@@ -14,11 +14,11 @@ public class ReportsBasePage {
 
 	public ReportsBasePage(WebDriver driver) {
 		this.driver = driver;
-		
+
 		// Check that we're on the right page
-        if (!("Reporting and Charting Kitchen").equals(driver.getTitle())) {
-        	throw new IllegalStateException("This is not the reports base page (Title: "+driver.getTitle()+")!");
-        }
+		if (!("Reporting and Charting Kitchen").equals(driver.getTitle())) {
+			throw new IllegalStateException("This is not the reports base page (Title: " + driver.getTitle() + ")!");
+		}
 	}
 
 	public TabularReportsSearchPage navigateToTabularReportsPage() {

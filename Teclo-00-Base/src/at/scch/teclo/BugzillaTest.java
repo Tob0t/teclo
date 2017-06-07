@@ -14,23 +14,24 @@ public abstract class BugzillaTest {
 	protected final StringBuffer verificationErrors = new StringBuffer();
 
 	@Before
-	public void setUpDriver(){
+	public void setUpDriver() {
 		driver = BugzillaSetup.getWebDriver();
-		
+
 		// navigate to home base page
 		loggedInBasePage = BugzillaSetup.login();
 
 	}
-	
+
 	@After
-	public void tearDownDriver(){
+	public void tearDownDriver() {
 		// only close and quit selenium driver here
-		// do not use driver to navigate, because if test failed with selenium error, teardown will not execute correctly
-		
+		// do not use driver to navigate, because if test failed with selenium
+		// error, teardown will not execute correctly
+
 		BugzillaSetup.logout();
 		BugzillaSetup.ungetWebDriver();
-		
-		String verificationErrorString = verificationErrors .toString();
+
+		String verificationErrorString = verificationErrors.toString();
 		if (!"".equals(verificationErrorString)) {
 			fail(verificationErrorString);
 		}

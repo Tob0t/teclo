@@ -17,21 +17,21 @@ import at.scch.teclo.pageobjects.SearchBasePage;
 
 public class FindAdvancedSearchTest extends BugzillaTest {
 	private int currentBugID;
-	private String currentBugSummary;	
+	private String currentBugSummary;
 	private BugResultsPage bugResultsPage;
 
 	@Before
 	public void setUp() throws Exception {
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBugID();
-		currentBugSummary = BugzillaSetup.getExampleBugSummary();		
+		currentBugSummary = BugzillaSetup.getExampleBugSummary();
 
 		// precondition: bug changed to RESOLVED
 		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
 		editBugPage.changeBugState("RESOLVED");
 		editBugPage.commitBug();
 	}
-	
+
 	@Test
 	public void testFindBugZarro() throws Exception {
 		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
@@ -65,12 +65,13 @@ public class FindAdvancedSearchTest extends BugzillaTest {
 		assertEquals("RESO", bugResultsPage.getStateOfFirstBug());
 		assertEquals(currentBugSummary, bugResultsPage.getSummaryOfFirstBug());
 	}
-	
+
 	@Test
 	public void testFindBugMultiple() throws Exception {
-		// add one more bug to make sure that there are at least 2 or more bugs in the database
+		// add one more bug to make sure that there are at least 2 or more bugs
+		// in the database
 		BugzillaSetup.createExampleBug();
-		
+
 		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 
@@ -79,8 +80,6 @@ public class FindAdvancedSearchTest extends BugzillaTest {
 
 		assertTrue("No multiple bugs found", 1 < bugResultsPage.getAmountOfBugs());
 	}
-	
-
 
 	@After
 	public void tearDown() throws Exception {

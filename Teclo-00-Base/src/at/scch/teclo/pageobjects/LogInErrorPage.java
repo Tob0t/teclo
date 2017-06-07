@@ -8,11 +8,11 @@ public class LogInErrorPage {
 
 	public LogInErrorPage(WebDriver driver) {
 		this.driver = driver;
-		
+
 		// Check that we're on the right page
-        if (!("Invalid Username Or Password").equals(driver.getTitle())) {
-        	throw new IllegalStateException("This is not the log in error page (Title: "+driver.getTitle()+")!");
-        }
+		if (!("Invalid Username Or Password").equals(driver.getTitle())) {
+			throw new IllegalStateException("This is not the log in error page (Title: " + driver.getTitle() + ")!");
+		}
 	}
 
 	public String getDriverTitle() {

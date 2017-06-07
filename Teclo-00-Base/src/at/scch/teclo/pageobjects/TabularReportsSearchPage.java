@@ -20,11 +20,12 @@ public class TabularReportsSearchPage {
 
 	public TabularReportsSearchPage(WebDriver driver) {
 		this.driver = driver;
-		
+
 		// Check that we're on the right page
-        if (!("Generate Tabular Report").equals(driver.getTitle())) {
-        	throw new IllegalStateException("This is not the tabular reports search page (Title: "+driver.getTitle()+")!");
-        }
+		if (!("Generate Tabular Report").equals(driver.getTitle())) {
+			throw new IllegalStateException(
+					"This is not the tabular reports search page (Title: " + driver.getTitle() + ")!");
+		}
 	}
 
 	public void selectHorizontalAxes(String horizontalValue) {

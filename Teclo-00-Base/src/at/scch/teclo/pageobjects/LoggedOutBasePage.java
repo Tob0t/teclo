@@ -10,33 +10,31 @@ import org.openqa.selenium.support.PageFactory;
 
 public class LoggedOutBasePage {
 
-	
 	private final WebDriver driver;
-	
+
 	@FindBy(id = "login_link_top")
 	private WebElement loginLink;
-	
+
 	@FindBy(id = "Bugzilla_login_top")
 	private WebElement loginFieldUsername;
-	
+
 	@FindBy(id = "Bugzilla_password_top")
 	private WebElement loginFieldPassword;
-	
+
 	@FindBy(id = "log_in_top")
 	private WebElement loginButton;
 
 	public LoggedOutBasePage(WebDriver driver) {
 		this.driver = driver;
-		
-		// Check that we're on the right page, the title jumps between "Logged Out" and "Bugzilla Main Page" depending on the previous state
-        if (!(("Logged Out").equals(driver.getTitle()) || ("Bugzilla Main Page").equals(driver.getTitle()))) {
-        	throw new IllegalStateException("This is not the logged out page (Title: "+driver.getTitle()+")!");
-        }
+
+		// Check that we're on the right page, the title jumps between "Logged
+		// Out" and "Bugzilla Main Page" depending on the previous state
+		if (!(("Logged Out").equals(driver.getTitle()) || ("Bugzilla Main Page").equals(driver.getTitle()))) {
+			throw new IllegalStateException("This is not the logged out page (Title: " + driver.getTitle() + ")!");
+		}
 	}
 
-
-	public LogInErrorPage logInWithWrongUsernameAndWrongPassword(String wrongUsername,
-			String wrongPassword) {
+	public LogInErrorPage logInWithWrongUsernameAndWrongPassword(String wrongUsername, String wrongPassword) {
 		loginLink.click();
 		loginFieldUsername.clear();
 		loginFieldUsername.sendKeys(wrongUsername);
@@ -60,7 +58,7 @@ public class LoggedOutBasePage {
 			return false;
 		}
 	}
-	
+
 	public boolean isLoginLinkTopPresent() {
 		return isElementPresent(By.id("login_link_top"));
 	}

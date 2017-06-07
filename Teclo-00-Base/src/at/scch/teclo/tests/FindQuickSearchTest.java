@@ -27,7 +27,7 @@ public class FindQuickSearchTest extends BugzillaTest {
 		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(currentBugSummary.replace("_", "-"));
 		assertEquals("More than 0 bugs found!", 0, bugResultsPage.getAmountOfBugs());
 	}
-	
+
 	@Test
 	public void testFindBugSingleByName() throws Exception {
 		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(currentBugSummary);
@@ -35,18 +35,19 @@ public class FindQuickSearchTest extends BugzillaTest {
 		assertEquals("No bug found!", 1, bugResultsPage.getAmountOfBugs());
 		assertEquals(currentBugSummary, bugResultsPage.getSummaryOfFirstBug());
 	}
-	
+
 	@Test
 	public void testFindBugSingleByID() throws Exception {
 		EditBugPage editBugPage = loggedInBasePage.searchFor(currentBugID);
 		assertEquals("Bug not found by ID", currentBugSummary, editBugPage.getSummary());
 	}
-	
+
 	@Test
 	public void testFindBugMultiple() throws Exception {
-		// add one more bug to make sure that there are at least 2 or more bugs in the database
+		// add one more bug to make sure that there are at least 2 or more bugs
+		// in the database
 		BugzillaSetup.createExampleBug();
-		
+
 		BugResultsPage bugResultsPage = loggedInBasePage.searchFor("Bug");
 		assertTrue("No multiple bugs found", 1 < bugResultsPage.getAmountOfBugs());
 	}

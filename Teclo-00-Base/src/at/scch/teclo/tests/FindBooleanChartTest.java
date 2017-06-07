@@ -15,14 +15,14 @@ import at.scch.teclo.pageobjects.SearchBasePage;
 
 public class FindBooleanChartTest extends BugzillaTest {
 	private int currentBugID;
-	private String currentBugSummary;	
+	private String currentBugSummary;
 	private String originalBugPrio;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBugID();
-		currentBugSummary = BugzillaSetup.getExampleBugSummary();		
+		currentBugSummary = BugzillaSetup.getExampleBugSummary();
 
 		// precondition: bug changed to Priority P3
 		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);

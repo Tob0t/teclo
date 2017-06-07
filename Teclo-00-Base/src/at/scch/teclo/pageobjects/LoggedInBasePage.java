@@ -31,17 +31,17 @@ public class LoggedInBasePage {
 
 	@FindBy(linkText = "Reports")
 	private WebElement ReportsLink;
-	
+
 	@FindBy(xpath = "//div[@id='header']/ul/li[9]")
 	private WebElement loginUserName;
 
 	public LoggedInBasePage(WebDriver driver) {
 		this.driver = driver;
-		
+
 		// Check that we're on the right page.
-        if (!("Bugzilla Main Page").equals(driver.getTitle())) {
-        	throw new IllegalStateException("This is not the logged in page (Title: "+driver.getTitle()+")!");
-        }
+		if (!("Bugzilla Main Page").equals(driver.getTitle())) {
+			throw new IllegalStateException("This is not the logged in page (Title: " + driver.getTitle() + ")!");
+		}
 	}
 
 	public LoggedOutBasePage logOut() {
@@ -76,7 +76,7 @@ public class LoggedInBasePage {
 
 		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
-	
+
 	public EditBugPage searchFor(int bugId) {
 		quickSearch.clear();
 		quickSearch.sendKeys(String.valueOf(bugId));
@@ -98,7 +98,7 @@ public class LoggedInBasePage {
 			return false;
 		}
 	}
-	
+
 	public boolean isLogoutLinkPresent() {
 		return isElementPresent(By.linkText("Log out"));
 	}

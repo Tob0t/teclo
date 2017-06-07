@@ -33,7 +33,7 @@ public class FindSpecificSearchTest extends BugzillaTest {
 
 		assertEquals("More than 0 bugs found!", 0, bugResultsPage.getAmountOfBugs());
 	}
-	
+
 	@Test
 	public void testFindBugSingle() throws Exception {
 		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
@@ -45,12 +45,13 @@ public class FindSpecificSearchTest extends BugzillaTest {
 		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
 		assertEquals(BugzillaSetup.getExampleBugSummary(), bugResultsPage.getSummaryOfFirstBug());
 	}
-	
+
 	@Test
 	public void testFindBugMultiple() throws Exception {
-		// add one more bug to make sure that there are at least 2 or more bugs in the database
+		// add one more bug to make sure that there are at least 2 or more bugs
+		// in the database
 		BugzillaSetup.createExampleBug();
-		
+
 		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
 		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 
@@ -59,7 +60,7 @@ public class FindSpecificSearchTest extends BugzillaTest {
 
 		assertTrue("No multiple bugs found", 1 < bugResultsPage.getAmountOfBugs());
 	}
-	
+
 	@Test
 	public void testSearchBlanksResultsInError() {
 		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
@@ -67,9 +68,10 @@ public class FindSpecificSearchTest extends BugzillaTest {
 
 		ParametersRequiredErrorPage parametersRequiredErrorPage = specificSearchPage.searchForBlanks();
 
-		assertEquals("You may not search, or create saved searches, without any search terms.", parametersRequiredErrorPage.getErrorMsg());
+		assertEquals("You may not search, or create saved searches, without any search terms.",
+				parametersRequiredErrorPage.getErrorMsg());
 	}
-	
+
 	@Test
 	public void testSearchEmptyResultsInAlertPopup() {
 		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
@@ -77,6 +79,7 @@ public class FindSpecificSearchTest extends BugzillaTest {
 
 		String alertMsg = specificSearchPage.searchForEmpty();
 
-		assertEquals("The Words field cannot be empty. You have to enter at least one word in your search criteria.", alertMsg);
+		assertEquals("The Words field cannot be empty. You have to enter at least one word in your search criteria.",
+				alertMsg);
 	}
 }
