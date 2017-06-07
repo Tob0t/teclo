@@ -10,19 +10,17 @@ import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.BugzillaTest;
 import at.scch.teclo.pageobjects.BugCommitedPage;
 import at.scch.teclo.pageobjects.EditBugPage;
+import at.scch.teclo.pageobjects.SummaryNeededErrorPage;
 
 public class EditBugTest extends BugzillaTest {
-
 	private int currentBugID;
-	private String originalBugName;
+	private String currentBugSummary;	
 
 	@Before
 	public void setUp() throws Exception {
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBugID();
-		
-		// save the original name of the bug temporary
-		originalBugName = BugzillaSetup.getExampleBugSummary();
+		currentBugSummary = BugzillaSetup.getExampleBugSummary();
 	}
 
 	@Test
@@ -72,12 +70,30 @@ public class EditBugTest extends BugzillaTest {
 		assertEquals("2017-01-01", editBugPage.getTimeDeadline());
 	}
 
+	@Test
+	public void testEditEmptySummary() throws Exception {
+		// browse to the current bug
+		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
+		
+		// edit bug
+		editBugPage.editSummary("");
+
+		// commit bug
+		SummaryNeededErrorPage summaryNeededErrorPage = editBugPage.commitBugWithEmptySummary();
+		assertEquals("You must enter a summary for this bug.", summaryNeededErrorPage.getErrorMsg());
+		
+		editBugPage = BugzillaSetup.showBug(currentBugID);
+		
+		// verify no changes were made
+		assertEquals(currentBugSummary, editBugPage.getSummary());
+	}	
+	
 	@After
 	public void tearDownEditedBug() throws Exception {
 		// postcondition: change bug back to standard
 		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
 		
-		editBugPage.editSummary(originalBugName);
+		editBugPage.editSummary(currentBugSummary);
 		editBugPage.editPlatform("PC");
 		editBugPage.editOpSys("Windows");
 		editBugPage.editPriority("P5");

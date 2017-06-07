@@ -167,6 +167,11 @@ public class EditBugPage {
 		commitButton.click();
 		return PageFactory.initElements(driver, BugCommitedPage.class);
 	}
+	
+	public SummaryNeededErrorPage commitBugWithEmptySummary() {
+		commitButton.click();
+		return PageFactory.initElements(driver, SummaryNeededErrorPage.class);
+	}
 
 	public LoggedInBasePage navigateToMyHomePage() {
 		homeLink.click();
