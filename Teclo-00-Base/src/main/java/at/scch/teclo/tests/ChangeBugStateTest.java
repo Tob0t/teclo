@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.BugzillaTest;
-import at.scch.teclo.pageobjects.BugCommitedPage;
+import at.scch.teclo.pageobjects.BugCommittedPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 
 public class ChangeBugStateTest extends BugzillaTest {
@@ -26,34 +26,34 @@ public class ChangeBugStateTest extends BugzillaTest {
 
 		assertEquals("NEW", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("ASSIGNED");
-		BugCommitedPage bugCommitedPage = editBugPage.commitBug();
+		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("ASSIGNED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("RESOLVED");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("RESOLVED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("VERIFIED");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("VERIFIED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("CLOSED");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("CLOSED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("REOPENED");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("REOPENED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("NEW");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("NEW", editBugPage.getCurrentBugState());
 	}
 
@@ -64,29 +64,29 @@ public class ChangeBugStateTest extends BugzillaTest {
 
 		assertEquals("NEW", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("RESOLVED");
-		BugCommitedPage bugCommitedPage = editBugPage.commitBug();
+		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("RESOLVED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("RESOLVED");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("RESOLVED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("CLOSED");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("CLOSED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("REOPENED");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("REOPENED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("NEW");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("NEW", editBugPage.getCurrentBugState());
 	}
 
@@ -97,59 +97,59 @@ public class ChangeBugStateTest extends BugzillaTest {
 
 		assertEquals("NEW", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("ASSIGNED");
-		BugCommitedPage bugCommitedPage = editBugPage.commitBug();
+		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("ASSIGNED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("NEW");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("NEW", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("ASSIGNED");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("ASSIGNED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("RESOLVED");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("RESOLVED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("REOPENED");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("REOPENED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("ASSIGNED");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("ASSIGNED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("RESOLVED");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("RESOLVED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("VERIFIED");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("VERIFIED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("CLOSED");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("CLOSED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("REOPENED");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("REOPENED", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("NEW");
-		bugCommitedPage = editBugPage.commitBug();
+		bugCommittedPage = editBugPage.commitBug();
 
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("NEW", editBugPage.getCurrentBugState());
 	}
 

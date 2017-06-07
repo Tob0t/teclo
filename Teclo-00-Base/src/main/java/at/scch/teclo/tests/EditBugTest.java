@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.BugzillaTest;
-import at.scch.teclo.pageobjects.BugCommitedPage;
+import at.scch.teclo.pageobjects.BugCommittedPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.SummaryNeededErrorPage;
 
@@ -36,8 +36,8 @@ public class EditBugTest extends BugzillaTest {
 		editBugPage.editSeverity("critical");
 
 		// commit bug
-		BugCommitedPage bugCommitedPage = editBugPage.commitBug();
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 
 		// verify changes
 		assertEquals("EditedBug", editBugPage.getSummary());
@@ -60,8 +60,8 @@ public class EditBugTest extends BugzillaTest {
 		editBugPage.editComment("Added time estimation!");
 
 		// commit bug
-		BugCommitedPage bugCommitedPage = editBugPage.commitBug();
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 
 		// verify changes
 		assertEquals("20.0", editBugPage.getTimeEstimatedTime());

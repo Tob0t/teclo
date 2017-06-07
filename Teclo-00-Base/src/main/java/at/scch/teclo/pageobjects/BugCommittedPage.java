@@ -4,11 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-public class BugCommitedPage {
+public class BugCommittedPage {
 
 	private final WebDriver driver;
 
-	public BugCommitedPage(WebDriver driver) {
+	public BugCommittedPage(WebDriver driver) {
 		this.driver = driver;
 
 		// Check that we're on the right page.
@@ -17,7 +17,7 @@ public class BugCommitedPage {
 		}
 	}
 
-	public EditBugPage selectCommitedBug(int bugID) {
+	public EditBugPage selectCommittedBug(int bugID) {
 		driver.findElement(By.linkText("bug " + bugID)).click();
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}

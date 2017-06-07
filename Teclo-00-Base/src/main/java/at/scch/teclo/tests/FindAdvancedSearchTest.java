@@ -10,7 +10,7 @@ import org.junit.Test;
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.BugzillaTest;
 import at.scch.teclo.pageobjects.AdvancedSearchPage;
-import at.scch.teclo.pageobjects.BugCommitedPage;
+import at.scch.teclo.pageobjects.BugCommittedPage;
 import at.scch.teclo.pageobjects.BugResultsPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
@@ -87,8 +87,8 @@ public class FindAdvancedSearchTest extends BugzillaTest {
 		// postcondition: change bug back to state NEW
 		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
 		editBugPage.changeBugState("REOPENED");
-		BugCommitedPage bugCommitedPage = editBugPage.commitBug();
-		editBugPage = bugCommitedPage.selectCommitedBug(currentBugID);
+		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		editBugPage.changeBugState("NEW");
 		editBugPage.commitBug();
 	}

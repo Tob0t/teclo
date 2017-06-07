@@ -163,9 +163,9 @@ public class EditBugPage {
 		return timeDeadline.getAttribute("value");
 	}
 
-	public BugCommitedPage commitBug() {
+	public BugCommittedPage commitBug() {
 		commitButton.click();
-		return PageFactory.initElements(driver, BugCommitedPage.class);
+		return PageFactory.initElements(driver, BugCommittedPage.class);
 	}
 
 	public SummaryNeededErrorPage commitBugWithEmptySummary() {
