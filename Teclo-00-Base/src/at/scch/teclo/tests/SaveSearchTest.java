@@ -15,6 +15,7 @@ public class SaveSearchTest extends BugzillaTest {
 	public ErrorCollector errors = new ErrorCollector();
 
 	private int currentBugID;
+	private String currentBugSummary;
 	private LoggedInBasePage loggedInBasePage;
 	private BugResultsPage bugResultsPage;
 
@@ -25,6 +26,7 @@ public class SaveSearchTest extends BugzillaTest {
 
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBugID();
+		currentBugSummary = BugzillaSetup.getExampleBugSummary();
 		
 		// go to home base page
 		BugzillaSetup.navigateToHomeBasePage();
@@ -32,23 +34,23 @@ public class SaveSearchTest extends BugzillaTest {
 
 	@Test
 	public void testSaveSearch() throws Exception {
-		bugResultsPage = loggedInBasePage.searchFor(BugzillaSetup.getExampleBugSummary());
+		bugResultsPage = loggedInBasePage.searchFor(currentBugSummary);
 
 		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
-		assertEquals(BugzillaSetup.getExampleBugSummary(), bugResultsPage.getSummaryOfFirstBug());
+		assertEquals(currentBugSummary, bugResultsPage.getSummaryOfFirstBug());
 
 		// optional replacing asserts by errors:
 		// errors.checkThat(myBugsPage.getSummaryOfFirstBug(), is(BugzillaSetup.getExampleBugName()));
 
-		bugResultsPage = bugResultsPage.saveSearch("SearchFor_"+BugzillaSetup.getExampleBugSummary());
+		bugResultsPage = bugResultsPage.saveSearch("SearchFor_" + currentBugSummary);
 		loggedInBasePage = bugResultsPage.navigateToHome();
-		bugResultsPage = loggedInBasePage.getSavedSearch("SearchFor_"+BugzillaSetup.getExampleBugSummary());
+		bugResultsPage = loggedInBasePage.getSavedSearch("SearchFor_" + currentBugSummary);
 
 		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
-		assertEquals(BugzillaSetup.getExampleBugSummary(), bugResultsPage.getSummaryOfFirstBug());
+		assertEquals(currentBugSummary, bugResultsPage.getSummaryOfFirstBug());
 		
 		// forget saved search
-		bugResultsPage.forgetSavedSearch("SearchFor_"+BugzillaSetup.getExampleBugSummary());
+		bugResultsPage.forgetSavedSearch("SearchFor_" + currentBugSummary);
 	}
 
 }

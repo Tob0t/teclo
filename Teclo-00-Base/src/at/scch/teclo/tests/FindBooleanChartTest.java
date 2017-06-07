@@ -16,6 +16,7 @@ import at.scch.teclo.pageobjects.SearchBasePage;
 
 public class FindBooleanChartTest extends BugzillaTest {
 	private int currentBugID;
+	private String currentBugSummary;	
 	private LoggedInBasePage loggedInBasePage;
 	private String originalBugPrio;
 	
@@ -27,6 +28,7 @@ public class FindBooleanChartTest extends BugzillaTest {
 
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBugID();
+		currentBugSummary = BugzillaSetup.getExampleBugSummary();		
 
 		// precondition: bug changed to Priority P3
 		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
@@ -44,12 +46,12 @@ public class FindBooleanChartTest extends BugzillaTest {
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 
 		advancedSearchPage.fillBooleanChart("Priority", "is equal to", "P3");
-		advancedSearchPage.fillSummary(BugzillaSetup.getExampleBugSummary());
+		advancedSearchPage.fillSummary(currentBugSummary);
 		BugResultsPage bugResultsPage = advancedSearchPage.submitSearch();
 
 		assertEquals("No bug found!", 1, bugResultsPage.getAmountOfBugs());
 		assertEquals("P3", bugResultsPage.getPriorityOfFirstBug());
-		assertEquals(BugzillaSetup.getExampleBugSummary(), bugResultsPage.getSummaryOfFirstBug());
+		assertEquals(currentBugSummary, bugResultsPage.getSummaryOfFirstBug());
 	}
 
 	@After

@@ -14,6 +14,7 @@ import at.scch.teclo.pageobjects.EditBugPage;
 
 public class FindQuickSearchTest extends BugzillaTest {
 	private int currentBugID;
+	private String currentBugSummary;
 	private LoggedInBasePage loggedInBasePage;
 
 	@Before
@@ -24,6 +25,7 @@ public class FindQuickSearchTest extends BugzillaTest {
 
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBugID();
+		currentBugSummary = BugzillaSetup.getExampleBugSummary();
 		
 		// go to home base page
 		BugzillaSetup.navigateToHomeBasePage();
@@ -31,22 +33,22 @@ public class FindQuickSearchTest extends BugzillaTest {
 
 	@Test
 	public void testFindBugZarro() throws Exception {
-		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(BugzillaSetup.getExampleBugSummary().replace("_", "-"));
+		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(currentBugSummary.replace("_", "-"));
 		assertEquals("More than 0 bugs found!", 0, bugResultsPage.getAmountOfBugs());
 	}
 	
 	@Test
 	public void testFindBugSingleByName() throws Exception {
-		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(BugzillaSetup.getExampleBugSummary());
+		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(currentBugSummary);
 
 		assertEquals("No bug found!", 1, bugResultsPage.getAmountOfBugs());
-		assertEquals(BugzillaSetup.getExampleBugSummary(), bugResultsPage.getSummaryOfFirstBug());
+		assertEquals(currentBugSummary, bugResultsPage.getSummaryOfFirstBug());
 	}
 	
 	@Test
 	public void testFindBugSingleByID() throws Exception {
 		EditBugPage editBugPage = loggedInBasePage.searchFor(currentBugID);
-		assertEquals("Bug not found by ID", BugzillaSetup.getExampleBugSummary(),editBugPage.getSummary());
+		assertEquals("Bug not found by ID", currentBugSummary, editBugPage.getSummary());
 	}
 	
 	@Test

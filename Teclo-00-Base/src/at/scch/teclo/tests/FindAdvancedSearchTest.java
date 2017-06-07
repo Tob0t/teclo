@@ -18,6 +18,7 @@ import at.scch.teclo.pageobjects.SearchBasePage;
 
 public class FindAdvancedSearchTest extends BugzillaTest {
 	private int currentBugID;
+	private String currentBugSummary;	
 	private LoggedInBasePage loggedInBasePage;
 	private BugResultsPage bugResultsPage;
 
@@ -28,6 +29,7 @@ public class FindAdvancedSearchTest extends BugzillaTest {
 
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBugID();
+		currentBugSummary = BugzillaSetup.getExampleBugSummary();		
 
 		// precondition: bug changed to RESOLVED
 		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
@@ -48,7 +50,7 @@ public class FindAdvancedSearchTest extends BugzillaTest {
 		advancedSearchPage.deselectBugState("REOPENED");
 
 		advancedSearchPage.selectBugState("RESOLVED");
-		advancedSearchPage.fillSummary(BugzillaSetup.getExampleBugSummary().replace("_", "-"));
+		advancedSearchPage.fillSummary(currentBugSummary.replace("_", "-"));
 		bugResultsPage = advancedSearchPage.submitSearch();
 
 		assertEquals("More than 0 bugs found!", 0, bugResultsPage.getAmountOfBugs());
@@ -64,12 +66,12 @@ public class FindAdvancedSearchTest extends BugzillaTest {
 		advancedSearchPage.deselectBugState("REOPENED");
 
 		advancedSearchPage.selectBugState("RESOLVED");
-		advancedSearchPage.fillSummary(BugzillaSetup.getExampleBugSummary());
+		advancedSearchPage.fillSummary(currentBugSummary);
 		bugResultsPage = advancedSearchPage.submitSearch();
 
 		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
 		assertEquals("RESO", bugResultsPage.getStateOfFirstBug());
-		assertEquals(BugzillaSetup.getExampleBugSummary(), bugResultsPage.getSummaryOfFirstBug());
+		assertEquals(currentBugSummary, bugResultsPage.getSummaryOfFirstBug());
 	}
 	
 	@Test
