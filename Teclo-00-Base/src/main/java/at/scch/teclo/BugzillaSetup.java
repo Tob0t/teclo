@@ -23,6 +23,7 @@ import at.scch.teclo.pageobjects.NewBugCreatedPage;
  */
 public class BugzillaSetup {
 
+	private static final String CHROME_DRIVER_PROPERTY = "webdriver.chrome.driver";
 	private static WebDriver driver;
 	private static int driverUsageCounter;
 	private static String BASE_URL = "";
@@ -39,17 +40,19 @@ public class BugzillaSetup {
 		loadConfig();
 
 		// set the variable BASE_URL received from the props file
-		BASE_URL = System.getProperty("BASE_URL").toString();
-		System.out.println("Trying to connect to " + BASE_URL);
+		BASE_URL = System.getProperty("BASE_URL");
 
-		String os = System.getProperty("os.name");
+		String webDriver = System.getProperty(CHROME_DRIVER_PROPERTY);
+		if (webDriver == null) {
+			String os = System.getProperty("os.name");
 
-		if (os.toLowerCase().contains("win")) {
-			System.setProperty("webdriver.chrome.driver", "./chromdriver/chromedriver.exe");
-		} else {
-			// assuming OS is UNIX based (OSX, Linux, etc.) or at least is able
-			// to execute shell scripts
-			System.setProperty("webdriver.chrome.driver", "./chromdriver/chromedriver");
+			if (os.toLowerCase().contains("win")) {
+				System.setProperty(CHROME_DRIVER_PROPERTY, "./../chromdriver/chromedriver.exe");
+			} else {
+				// assuming OS is UNIX based (OSX, Linux, etc.) or at least is
+				// able to execute shell scripts
+				System.setProperty(CHROME_DRIVER_PROPERTY, "./../chromdriver/chromedriver");
+			}
 		}
 	}
 
@@ -57,7 +60,6 @@ public class BugzillaSetup {
 	 * Set IP Adress on config file according to your VM! (config.properties)
 	 */
 	public static void loadConfig() {
-		Properties prop = new Properties(System.getProperties());
 		String filename = "config.properties";
 
 		try (InputStream input = BugzillaSetup.class.getClassLoader().getResourceAsStream(filename)) {
@@ -67,9 +69,11 @@ public class BugzillaSetup {
 			}
 
 			// load a properties file from class path, inside static method
+			Properties prop = new Properties();
 			prop.load(input);
-			System.setProperties(prop);
+			prop.putAll(System.getProperties());
 
+			System.setProperties(prop);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
