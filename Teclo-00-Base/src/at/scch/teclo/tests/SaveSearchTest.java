@@ -13,14 +13,13 @@ import at.scch.teclo.pageobjects.BugResultsPage;
 public class SaveSearchTest extends BugzillaTest {
 	public ErrorCollector errors = new ErrorCollector();
 
-	private int currentBugID;
 	private String currentBugSummary;
 	private BugResultsPage bugResultsPage;
 
 	@Before
 	public void setUp() throws Exception {
 		// precondition: bug inserted
-		currentBugID = BugzillaSetup.getExampleBugID();
+		BugzillaSetup.getExampleBugID();
 		currentBugSummary = BugzillaSetup.getExampleBugSummary();
 	}
 

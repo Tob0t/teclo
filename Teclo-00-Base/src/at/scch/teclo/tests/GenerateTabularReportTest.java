@@ -11,20 +11,17 @@ import at.scch.teclo.pageobjects.ReportsBasePage;
 import at.scch.teclo.pageobjects.TabularReportsResultsPage;
 import at.scch.teclo.pageobjects.TabularReportsSearchPage;
 
-public class GenerateTabularReportTest extends BugzillaTest{
-	private int currentBugID;
-
+public class GenerateTabularReportTest extends BugzillaTest {
 	@Before
 	public void setUp() throws Exception {
 		// precondition: bug inserted
-		currentBugID = BugzillaSetup.getExampleBugID();
+		BugzillaSetup.getExampleBugID();
 	}
 
 	@Test
 	public void testGenerateTabularReport() throws Exception {
 		ReportsBasePage reportsBasePage = loggedInBasePage.navigateToReportsBasePage();
-		TabularReportsSearchPage tabularReportsPage = reportsBasePage
-				.navigateToTabularReportsPage();
+		TabularReportsSearchPage tabularReportsPage = reportsBasePage.navigateToTabularReportsPage();
 		tabularReportsPage.selectHorizontalAxes("Status");
 		tabularReportsPage.selectVeritcalAxes("Assignee");
 
