@@ -1,12 +1,13 @@
 package at.scch.teclo.tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.AbstractBugzillaTestWithLogin;
+import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.BugCommittedPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 
@@ -153,4 +154,9 @@ public class ChangeBugStateTest extends AbstractBugzillaTestWithLogin {
 		assertEquals("NEW", editBugPage.getCurrentBugState());
 	}
 
+	@Test
+	public void testMarkAsDuplicate() {
+		// TODO
+		fail("not yet implemented");
+	}
 }

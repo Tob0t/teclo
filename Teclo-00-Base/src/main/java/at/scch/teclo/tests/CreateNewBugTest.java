@@ -1,6 +1,7 @@
 package at.scch.teclo.tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -11,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import at.scch.teclo.AbstractBugzillaTestWithLogin;
-import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.CreateNewBugPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
 
@@ -37,6 +37,9 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 
 		Logger.info("Created new default bug with summary " + summary + " and ID " + bugId);
 
+		// TODO see email 8.6.
+		fail("needs to be extended");
+		
 		// verify changes including default values
 		// don't verify default values for operating system and platform, which
 		// are client values retrieved from browser by default
@@ -91,5 +94,11 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		assertEquals("Other", newBugCreatedPage.getCurrentPlatform());
 		assertEquals("Linux", newBugCreatedPage.getCurrentOpSys());
 		assertEquals("major", newBugCreatedPage.getCurrentSeverity());
+	}
+	
+	@Test
+	public void testCreateNewBugAdvancedFields() {
+		// TODO
+		fail("not yet implemented");
 	}
 }

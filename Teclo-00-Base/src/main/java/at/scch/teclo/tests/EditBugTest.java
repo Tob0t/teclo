@@ -1,13 +1,14 @@
 package at.scch.teclo.tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.AbstractBugzillaTestWithLogin;
+import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.BugCommittedPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.SummaryNeededErrorPage;
@@ -72,12 +73,19 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		assertEquals("P1", editBugPage.getCurrentPriority());
 		assertEquals("critical", editBugPage.getCurrentSeverity());
 	}
+	
+	@Test
+	public void testAddComment() {
+		// TODO
+		fail("not yet implemented");
+	}
 
 	@Test
 	public void testEditTimes() throws Exception {
 		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
 
 		// TODO: changes see email 8.7.
+		fail("needs to be changed");
 		
 		editBugPage.editTimeEstimatedTime(20);
 		editBugPage.editTimeWorkTime(5);
@@ -110,6 +118,18 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 	@After
 	public void tearDownEditedBug() throws Exception {
 		// postcondition: leave changes as they are as long as there is no interference
+	}
+	
+	@Test
+	public void testEditUrl() {
+		// TODO
+		fail("not yet implemented");
+	}
+	
+	@Test
+	public void testEditDependsOn() {
+		// TODO
+		fail("not yet implemented");
 	}
 
 }
