@@ -7,15 +7,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import at.scch.teclo.AbstractBugzillaTestWithLogin;
+import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.CreateNewBugPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
 
 public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
+	private static final Logger Logger = LoggerFactory.getLogger(CreateNewBugTest.class);
 
 	@Test
-	public void testCreateNewBugDefaultFields() throws Exception {
+	public void testCreateNewBugDefaultValues() throws Exception {
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
 		String summary = "ExampleBugDefault_" + dateFormat.format(new Date());
 		String comment = "This is an example description for ExampleBugDefault created at "
@@ -31,7 +35,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		int bugId = newBugCreatedPage.getBugID();
 		assertEquals("Bug " + bugId + " has been added to the database", newBugCreatedPage.getBugWasAddedText());
 
-		System.out.println("Created new default bug with summary " + summary + " and ID " + bugId);
+		Logger.info("Created new default bug with summary " + summary + " and ID " + bugId);
 
 		// verify changes including default values
 		// don't verify default values for operating system and platform, which
@@ -49,10 +53,21 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 	}
 
 	@Test
-	public void testCreateNewBugAdvancedFields() throws Exception {
+	public void testCreateEmptySummaryResultsInAlertPopup() throws Exception {
+		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
+		createNewBugPage.fillSummary("");
+
+		String alertMsg = createNewBugPage.commitBugWithEmptySummary();
+
+		assertEquals("Please enter a summary sentence for this bug.", alertMsg);
+	}
+	
+	
+	@Test
+	public void testCreateNewBugStandardFields() throws Exception {
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
-		String summary = "ExampleBugAdvanced_" + dateFormat.format(new Date());
-		String comment = "This is an example description for ExampleBugAdvanced created at "
+		String summary = "ExampleBugStandard_" + dateFormat.format(new Date());
+		String comment = "This is an example description for ExampleBugStandard created at "
 				+ dateFormat.format(new Date());
 
 		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
@@ -69,7 +84,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		int bugId = newBugCreatedPage.getBugID();
 		assertEquals("Bug " + bugId + " has been added to the database", newBugCreatedPage.getBugWasAddedText());
 
-		System.out.println("Created new adv.ced bug with summary " + summary + " and ID " + bugId);
+		Logger.info("Created new standard bug with summary " + summary + " and ID " + bugId);
 
 		// verify changes
 		assertEquals(summary, newBugCreatedPage.getSummary());

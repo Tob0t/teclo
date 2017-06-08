@@ -1,5 +1,6 @@
 package at.scch.teclo.pageobjects;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -104,6 +105,21 @@ public class CreateNewBugPage {
 	public NewBugCreatedPage commitBug() {
 		commitButton.click();
 		return PageFactory.initElements(driver, NewBugCreatedPage.class);
+	}
+	
+	/** Summary is empty, commit results in alert popup. */
+	public String commitBugWithEmptySummary() {
+		String alertText;
+		
+		bugSummary.clear();
+		commitButton.click();
+		
+		Alert alert = driver.switchTo().alert();
+		alertText = alert.getText();
+		alert.accept();
+		driver.switchTo().defaultContent();
+
+		return alertText;
 	}
 
 	public NewBugCreatedPage createNewBugSimple(String name) {
