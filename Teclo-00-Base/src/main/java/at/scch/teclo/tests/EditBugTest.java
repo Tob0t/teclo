@@ -24,12 +24,39 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 	}
 
 	@Test
-	public void testEditBug() throws Exception {
+	public void testEditSummary() throws Exception {
+		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
+
+		editBugPage.editSummary("Test Summary !\"§$%&/(=?\\#*1234567890\'.:;,");
+		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		assertEquals("Test Summary !\"§$%&/(=?\\#*1234567890\'.:;,", editBugPage.getSummary());
+		
+		editBugPage.editSummary(currentBugSummary);
+		bugCommittedPage = editBugPage.commitBug();
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		assertEquals(currentBugSummary, editBugPage.getSummary());
+	}
+	
+	@Test
+	public void testEditEmptySummary() throws Exception {
+		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
+		
+		editBugPage.editSummary("");
+		SummaryNeededErrorPage summaryNeededErrorPage = editBugPage.commitBugWithEmptySummary();
+		assertEquals("You must enter a summary for this bug.", summaryNeededErrorPage.getErrorMsg());
+		
+		// verify no changes were made
+		editBugPage = BugzillaSetup.showBug(currentBugID);
+		assertEquals(currentBugSummary, editBugPage.getSummary());
+	}
+	
+	@Test
+	public void testEditBugFields() throws Exception {
 		// browse to the current bug
 		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
 
 		// edit bug
-		editBugPage.editSummary("EditedBug");
 		editBugPage.editPlatform("Other");
 		editBugPage.editOpSys("Linux");
 		editBugPage.editPriority("P1");
@@ -40,7 +67,6 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 
 		// verify changes
-		assertEquals("EditedBug", editBugPage.getSummary());
 		assertEquals("Other", editBugPage.getCurrentPlatform());
 		assertEquals("Linux", editBugPage.getCurrentOpSys());
 		assertEquals("P1", editBugPage.getCurrentPriority());
@@ -49,59 +75,41 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testEditTimes() throws Exception {
-		// browse to the current bug
 		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
 
-		// edit bug
+		// TODO: changes see email 8.7.
+		
 		editBugPage.editTimeEstimatedTime(20);
 		editBugPage.editTimeWorkTime(5);
 		editBugPage.editTimeRemainigTime(2);
-		editBugPage.editTimeDeadline("2017-01-01");
-		editBugPage.editComment("Added time estimation!");
+		editBugPage.editComment("Added time estimation");
 
-		// commit bug
 		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 
-		// verify changes
 		assertEquals("20.0", editBugPage.getTimeEstimatedTime());
 		assertEquals("5.0 +", editBugPage.getTimeWorkTime());
 		assertEquals("2.0", editBugPage.getTimeRemainingTime());
-		assertEquals("2017-01-01", editBugPage.getTimeDeadline());
 	}
-
+	
 	@Test
-	public void testEditEmptySummary() throws Exception {
-		// browse to the current bug
+	public void testEditDeadline() throws Exception {
 		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
 
-		// edit bug
-		editBugPage.editSummary("");
-
-		// commit bug
-		SummaryNeededErrorPage summaryNeededErrorPage = editBugPage.commitBugWithEmptySummary();
-		assertEquals("You must enter a summary for this bug.", summaryNeededErrorPage.getErrorMsg());
-
-		editBugPage = BugzillaSetup.showBug(currentBugID);
-
-		// verify no changes were made
-		assertEquals(currentBugSummary, editBugPage.getSummary());
+		editBugPage.editTimeDeadline("1901-12-17");
+		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		assertEquals("1901-12-17", editBugPage.getTimeDeadline());
+		
+		editBugPage.editTimeDeadline("2038-01-16");
+		bugCommittedPage = editBugPage.commitBug();
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		assertEquals("2038-01-16", editBugPage.getTimeDeadline());
 	}
 
 	@After
 	public void tearDownEditedBug() throws Exception {
-		// postcondition: change bug back to standard
-		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
-
-		editBugPage.editSummary(currentBugSummary);
-		editBugPage.editPlatform("PC");
-		editBugPage.editOpSys("Windows");
-		editBugPage.editPriority("P5");
-		editBugPage.editSeverity("enhancement");
-
-		// commit bug
-		editBugPage.commitBug();
-
+		// postcondition: leave changes as they are as long as there is no interference
 	}
 
 }
