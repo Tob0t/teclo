@@ -11,21 +11,5 @@ import at.scch.teclo.AbstractBugzillaTest;
 		FindQuickSearchTest.class, FindSpecificSearchTest.class, FindAdvancedSearchTest.class,
 		GenerateTabularReportTest.class })
 public class AllTests extends AbstractBugzillaTest { // NOSONAR
-	//
-	// @BeforeClass
-	// public static void setUpDriver() {
-	// // load snapshot
-	//
-	// // initialize web driver
-	// BugzillaSetup.openWebDriver();
-	//
-	// BugzillaSetup.login();
-	// BugzillaSetup.createExampleBug();
-	// }
-	//
-	// @AfterClass
-	// public static void tearDownDriver() {
-	// BugzillaSetup.logout();
-	// BugzillaSetup.closeWebDriver();
-	// }
+
 }
