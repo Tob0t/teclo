@@ -15,7 +15,7 @@ import at.scch.teclo.pageobjects.BugResultsPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 
-public class FindAdvancedSearchTest extends AbstractBugzillaTestWithLogin {
+public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 	private int currentBugID;
 	private String currentBugSummary;
 	private BugResultsPage bugResultsPage;

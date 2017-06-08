@@ -13,7 +13,7 @@ import at.scch.teclo.pageobjects.ParametersRequiredErrorPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 import at.scch.teclo.pageobjects.SpecificSearchPage;
 
-public class FindSpecificSearchTest extends AbstractBugzillaTestWithLogin {
+public class SearchSpecificTest extends AbstractBugzillaTestWithLogin {
 
 	private String currentBugSummary;
 
