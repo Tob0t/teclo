@@ -19,16 +19,22 @@ public class FindAdvancedSearchTest extends AbstractBugzillaTestWithLogin {
 	private int currentBugID;
 	private String currentBugSummary;
 	private BugResultsPage bugResultsPage;
+	
+	private String currentBugState;
+	private String currentBugPriority;
 
 	@Before
 	public void setUp() throws Exception {
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBugID();
 		currentBugSummary = BugzillaSetup.getExampleBugSummary();
-
-		// precondition: bug changed to RESOLVED
+		
+		// precondition: bug changed
 		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
-		editBugPage.changeBugState("RESOLVED");
+		currentBugState = editBugPage.getCurrentBugState();
+		editBugPage.changeBugState("ASSIGNED");
+		currentBugPriority = editBugPage.getCurrentPriority();
+		editBugPage.editPriority("P3");
 		editBugPage.commitBug();
 	}
 
@@ -55,41 +61,55 @@ public class FindAdvancedSearchTest extends AbstractBugzillaTestWithLogin {
 
 		advancedSearchPage.deselectBugState("NEW");
 		advancedSearchPage.deselectBugState("ASSIGNED");
-		advancedSearchPage.deselectBugState("REOPENED");
-
-		advancedSearchPage.selectBugState("RESOLVED");
+		advancedSearchPage.deselectBugState("REOPENED"
+				);
+		advancedSearchPage.selectBugState("ASSIGNED");
 		advancedSearchPage.fillSummary(currentBugSummary);
 		bugResultsPage = advancedSearchPage.submitSearch();
 
 		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
-		assertEquals("RESO", bugResultsPage.getStateOfFirstBug());
+		assertEquals("ASSI", bugResultsPage.getStateOfFirstBug());
 		assertEquals(currentBugSummary, bugResultsPage.getSummaryOfFirstBug());
 	}
 
 	@Test
-	public void testFindBugMultiple() throws Exception {
-		// add one more bug to make sure that there are at least 2 or more bugs
-		// in the database
-		BugzillaSetup.createExampleBug();
-
+	public void testFindBugAll() throws Exception {
 		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 
-		advancedSearchPage.selectBugState("RESOLVED");
+		advancedSearchPage.deselectBugState("NEW");
+		advancedSearchPage.deselectBugState("ASSIGNED");
+		advancedSearchPage.deselectBugState("REOPENED");
+		
+		advancedSearchPage.setSummarySearchType("matches regular expression");
+		advancedSearchPage.fillSummary(".*");
+		
 		bugResultsPage = advancedSearchPage.submitSearch();
 
-		assertTrue("No multiple bugs found", 1 < bugResultsPage.getAmountOfBugs());
+		assertTrue("No bugs found", 1 < bugResultsPage.getAmountOfBugs());
 	}
 
+	@Test
+	public void testBooleanChart() throws Exception {
+		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
+		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
+
+		advancedSearchPage.fillBooleanChart("Priority", "is equal to", "P3");
+		advancedSearchPage.fillSummary(currentBugSummary);
+		BugResultsPage bugResultsPage = advancedSearchPage.submitSearch();
+
+		assertEquals("No bug found!", 1, bugResultsPage.getAmountOfBugs());
+		assertEquals("P3", bugResultsPage.getPriorityOfFirstBug());
+		assertEquals(currentBugSummary, bugResultsPage.getSummaryOfFirstBug());
+	}
+	
 	@After
 	public void tearDown() throws Exception {
 
-		// postcondition: change bug back to state NEW
+		// postcondition: change bug back
 		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
-		editBugPage.changeBugState("REOPENED");
-		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
-		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		editBugPage.changeBugState("NEW");
+		editBugPage.changeBugState(currentBugState);
+		editBugPage.editPriority(currentBugPriority);
 		editBugPage.commitBug();
 	}
 

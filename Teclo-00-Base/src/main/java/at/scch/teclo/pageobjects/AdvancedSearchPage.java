@@ -12,6 +12,9 @@ public class AdvancedSearchPage {
 	@FindBy(id = "bug_status")
 	private WebElement bugState;
 
+	@FindBy(name = "short_desc_type")
+	private WebElement summarySearchType;
+	
 	@FindBy(id = "short_desc")
 	private WebElement summaryTextBox;
 
@@ -55,6 +58,10 @@ public class AdvancedSearchPage {
 	public void fillComment(String commentString) {
 		commentTextBox.clear();
 		commentTextBox.sendKeys(commentString);
+	}
+	
+	public void setSummarySearchType(String searchType)	{
+		new Select(summarySearchType).selectByVisibleText(searchType);
 	}
 
 	public void deselectBugState(String bugStateString) {
