@@ -9,7 +9,7 @@ import at.scch.teclo.AbstractBugzillaTest;
 @RunWith(Suite.class)
 @SuiteClasses({ LoginLogoutTest.class, CreateNewBugTest.class, EditBugTest.class, ChangeBugStateTest.class,
 		FindQuickSearchTest.class, FindSpecificSearchTest.class, FindAdvancedSearchTest.class,
-		GenerateTabularReportTest.class, SaveSearchTest.class })
+		GenerateTabularReportTest.class })
 public class AllTests extends AbstractBugzillaTest { // NOSONAR
 	//
 	// @BeforeClass

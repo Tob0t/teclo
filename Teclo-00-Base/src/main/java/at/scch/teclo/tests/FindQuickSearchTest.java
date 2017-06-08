@@ -17,7 +17,6 @@ public class FindQuickSearchTest extends AbstractBugzillaTestWithLogin {
 
 	@Before
 	public void setUp() throws Exception {
-		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBugID();
 		currentBugSummary = BugzillaSetup.getExampleBugSummary();
 	}
@@ -52,4 +51,22 @@ public class FindQuickSearchTest extends AbstractBugzillaTestWithLogin {
 		assertTrue("No multiple bugs found", 1 < bugResultsPage.getAmountOfBugs());
 	}
 
+	@Test
+	public void testSaveSearch() throws Exception {
+		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(currentBugSummary);
+
+		int numberFoundBugs = bugResultsPage.getAmountOfBugs();
+		String firstBugSummary = bugResultsPage.getSummaryOfFirstBug();
+
+		bugResultsPage = bugResultsPage.saveSearch("SearchFor_" + currentBugSummary);
+		loggedInBasePage = bugResultsPage.navigateToHome();
+		bugResultsPage = loggedInBasePage.getSavedSearch("SearchFor_" + currentBugSummary);
+
+		assertEquals(numberFoundBugs, bugResultsPage.getAmountOfBugs());
+		assertEquals(firstBugSummary, bugResultsPage.getSummaryOfFirstBug());
+
+		// forget saved search
+		bugResultsPage.forgetSavedSearch("SearchFor_" + currentBugSummary);
+	}	
+	
 }
