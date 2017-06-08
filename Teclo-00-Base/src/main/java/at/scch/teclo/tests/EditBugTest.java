@@ -26,7 +26,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testEditSummary() throws Exception {
-		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 
 		editBugPage.editSummary("Test Summary !\"§$%&/(=?\\#*1234567890\'.:;,");
 		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
@@ -41,21 +41,21 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 	
 	@Test
 	public void testEditEmptySummary() throws Exception {
-		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 		
 		editBugPage.editSummary("");
 		SummaryNeededErrorPage summaryNeededErrorPage = editBugPage.commitBugWithEmptySummary();
 		assertEquals("You must enter a summary for this bug.", summaryNeededErrorPage.getErrorMsg());
 		
 		// verify no changes were made
-		editBugPage = BugzillaSetup.showBug(currentBugID);
+		editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 		assertEquals(currentBugSummary, editBugPage.getSummary());
 	}
 	
 	@Test
 	public void testEditBugFields() throws Exception {
 		// browse to the current bug
-		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 
 		// edit bug
 		editBugPage.editPlatform("Other");
@@ -82,7 +82,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testEditTimes() throws Exception {
-		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 
 		// TODO: changes see email 8.7.
 		fail("needs to be changed");
@@ -102,7 +102,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 	
 	@Test
 	public void testEditDeadline() throws Exception {
-		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 
 		editBugPage.editTimeDeadline("1901-12-17");
 		BugCommittedPage bugCommittedPage = editBugPage.commitBug();

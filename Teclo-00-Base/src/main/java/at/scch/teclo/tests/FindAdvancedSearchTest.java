@@ -30,7 +30,7 @@ public class FindAdvancedSearchTest extends AbstractBugzillaTestWithLogin {
 		currentBugSummary = BugzillaSetup.getExampleBugSummary();
 		
 		// precondition: bug changed
-		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 		currentBugState = editBugPage.getCurrentBugState();
 		editBugPage.changeBugState("ASSIGNED");
 		currentBugPriority = editBugPage.getCurrentPriority();
@@ -107,7 +107,7 @@ public class FindAdvancedSearchTest extends AbstractBugzillaTestWithLogin {
 	public void tearDown() throws Exception {
 
 		// postcondition: change bug back
-		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 		editBugPage.changeBugState(currentBugState);
 		editBugPage.editPriority(currentBugPriority);
 		editBugPage.commitBug();

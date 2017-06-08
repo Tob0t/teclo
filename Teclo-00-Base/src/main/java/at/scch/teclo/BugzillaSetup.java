@@ -148,14 +148,14 @@ public class BugzillaSetup {
 		return exampleBugSummary;
 	}
 
-	public static EditBugPage showBug(int bugID) {
+	public static EditBugPage gotoBugPage(int bugID) {
 		checkDriver();
 
 		driver.get(baseUrl + "/show_bug.cgi?id=" + bugID);
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
 
-	public static HomeBasePage navigateToHomeBasePage() {
+	public static HomeBasePage gotoHomeBasePage() {
 		checkDriver();
 
 		driver.get(baseUrl);
@@ -167,7 +167,7 @@ public class BugzillaSetup {
 
 		// if not logged in, do it now
 		if (loggedInBasePage == null) {
-			HomeBasePage homeBasePage = navigateToHomeBasePage();
+			HomeBasePage homeBasePage = gotoHomeBasePage();
 			loggedInBasePage = homeBasePage.login("admin", "admin");
 		}
 		loginUsageCounter++;

@@ -23,7 +23,7 @@ public class ChangeBugStateTest extends AbstractBugzillaTestWithLogin {
 	@Test
 	public void testNormalStateCycle() throws Exception {
 
-		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 
 		assertEquals("NEW", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("ASSIGNED");
@@ -61,7 +61,7 @@ public class ChangeBugStateTest extends AbstractBugzillaTestWithLogin {
 	@Test
 	public void testFastStateCycle() throws Exception {
 
-		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 
 		assertEquals("NEW", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("RESOLVED");
@@ -94,7 +94,7 @@ public class ChangeBugStateTest extends AbstractBugzillaTestWithLogin {
 	@Test
 	public void testLongStateCycle() throws Exception {
 
-		EditBugPage editBugPage = BugzillaSetup.showBug(currentBugID);
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 
 		assertEquals("NEW", editBugPage.getCurrentBugState());
 		editBugPage.changeBugState("ASSIGNED");

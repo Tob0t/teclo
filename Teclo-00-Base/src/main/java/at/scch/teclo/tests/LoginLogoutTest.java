@@ -20,7 +20,7 @@ public class LoginLogoutTest extends AbstractBugzillaTest {
 
 	@Before
 	public void setUp() throws Exception {
-		homeBasePage = BugzillaSetup.navigateToHomeBasePage();
+		homeBasePage = BugzillaSetup.gotoHomeBasePage();
 	}
 
 	@Test
