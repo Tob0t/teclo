@@ -22,6 +22,6 @@ public abstract class AbstractBugzillaTestWithLogin extends AbstractBugzillaTest
 	// as static methods cannot be overridden), this method will be ignored!
 	@AfterClass
 	public static void staticLogout() {
-		BugzillaSetup.logout();
+		// BugzillaSetup.logout();
 	}
 }
