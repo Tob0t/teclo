@@ -1,7 +1,12 @@
 package at.scch.teclo.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,6 +21,7 @@ import at.scch.teclo.pageobjects.SummaryNeededErrorPage;
 public class EditBugTest extends AbstractBugzillaTestWithLogin {
 	private int currentBugID;
 	private String currentBugSummary;
+	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss_SSS");
 
 	@Before
 	public void setUp() throws Exception {
@@ -76,28 +82,61 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testAddComment() {
-		// TODO
-		fail("not yet implemented");
+		String nowText = LocalDateTime.now().format(formatter);
+		String comment = "This is an example comment for testAddComment created at " + nowText;
+				
+		// browse to the current bug
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
+
+		// save current amount of comments and edit comment
+		int currentAmountOfComments = editBugPage.getAmountOfComments();
+		editBugPage.editComment(comment);
+		
+		// commit bug
+		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		
+		// verify change
+		assertEquals(currentAmountOfComments+1, editBugPage.getAmountOfComments());
+		assertEquals(comment, editBugPage.getLastCommentContent());
 	}
 
 	@Test
 	public void testEditTimes() throws Exception {
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 
-		// TODO: changes see email 8.7.
-		fail("needs to be changed");
-
-		editBugPage.editTimeEstimatedTime(20);
-		editBugPage.editTimeWorkTime(5);
-		editBugPage.editTimeRemainigTime(2);
-		editBugPage.editComment("Added time estimation");
-
+		// set time
+		editBugPage.editTimeEstimatedTime(100);
+		editBugPage.editTimeRemainigTime(100);
 		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-
-		assertEquals("20.0", editBugPage.getTimeEstimatedTime());
-		assertEquals("5.0 +", editBugPage.getTimeWorkTime());
-		assertEquals("2.0", editBugPage.getTimeRemainingTime());
+		
+		// verify
+		assertEquals("100.0", editBugPage.getTimeEstimatedTime());
+		assertEquals("100.0", editBugPage.getTimeCurrentEstimation());
+		assertEquals("100.0", editBugPage.getTimeRemainingTime());
+		
+		// change time
+		editBugPage.editTimeWorkTime(50.0);
+		editBugPage.editComment("Edited hours left to 50.0!");
+		bugCommittedPage = editBugPage.commitBug();
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		
+		// verify
+		assertEquals("50.0 +", editBugPage.getTimeWorkTime());
+		assertEquals("50.0", editBugPage.getTimeRemainingTime());
+		assertEquals("50", editBugPage.getTimeCompletedInPercent());
+		
+		// change time
+		editBugPage.editTimeRemainigTime(40.0);
+		bugCommittedPage = editBugPage.commitBug();
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		
+		// verify
+		assertEquals("90.0", editBugPage.getTimeCurrentEstimation());
+		assertEquals("40.0", editBugPage.getTimeRemainingTime());
+		assertEquals("55", editBugPage.getTimeCompletedInPercent());
+		assertEquals("10.0", editBugPage.getTimeGain());
 	}
 
 	@Test
@@ -117,19 +156,64 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testEditUrl() {
-		// TODO
-		fail("not yet implemented");
+		// edit URL
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
+		editBugPage.editURL("http://www.bugzilla.org");
+
+		// commit bug
+		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		
+		// verify
+		assertNotNull(editBugPage.verifyURL("http://www.bugzilla.org"));
+		
+		// clear url & commit
+		editBugPage.clearURL();
+		bugCommittedPage = editBugPage.commitBug();
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		
+		// verify
+		assertEquals("", editBugPage.getCurrentURL());
 	}
 
 	@Test
 	public void testEditDependsOn() {
-		// TODO
-		fail("not yet implemented");
-	}
+		BugzillaSetup.createExampleBug();
+		int dependingOnBugID = BugzillaSetup.getExampleBugID();
+		
+		// set dependency
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
+		editBugPage.editDependsOn(dependingOnBugID);
+		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
+		
+		// select committed bug
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 
+		// check if existing
+		assertNotNull(editBugPage.verifyDependsOn(dependingOnBugID));
+		
+		// select depending bug
+		editBugPage = editBugPage.clickDependsOn(dependingOnBugID);
+		
+		// check if existing
+		assertNotNull(editBugPage.verifyBlocksOn(currentBugID));
+		
+		// remove blocks & commit
+		editBugPage.clearBlocksOn();
+		editBugPage.commitBug();
+		
+		// verify removed dependency
+		editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
+		assertEquals("", editBugPage.getCurrentDependsOn());
+		assertEquals("", editBugPage.getCurrentBlocks());
+		
+		editBugPage = BugzillaSetup.gotoBugPage(dependingOnBugID);
+		assertEquals("", editBugPage.getCurrentDependsOn());
+		assertEquals("", editBugPage.getCurrentBlocks());
+	}
+	
 	@After
 	public void tearDownEditedBug() throws Exception {
-		// postcondition: leave changes as they are as long as there is no
-		// interference
+		// postcondition: leave changes as they are as long as there is no interference
 	}
 }
