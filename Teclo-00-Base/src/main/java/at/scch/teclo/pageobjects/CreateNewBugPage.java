@@ -10,9 +10,9 @@ import org.openqa.selenium.support.ui.Select;
 public class CreateNewBugPage {
 
 	private final WebDriver driver;
-
-	@FindBy(name = "short_desc")
-	private WebElement bugSummary;
+	
+	@FindBy(id = "expert_fields_controller")
+	private WebElement linkToggleAdvancedFields;
 
 	@FindBy(id = "rep_platform")
 	private WebElement bugPlatform;
@@ -22,27 +22,30 @@ public class CreateNewBugPage {
 
 	@FindBy(id = "bug_severity")
 	private WebElement bugSeverity;
+	
+	@FindBy(id = "priority")
+	private WebElement bugPriority;
+	
+	@FindBy(id = "bug_status")
+	private WebElement bugState;
+	
+	@FindBy(name = "cc")
+	private WebElement bugCC;
+	
+	@FindBy(name = "short_desc")
+	private WebElement bugSummary;
 
 	@FindBy(id = "comment")
 	private WebElement bugComment;
 
-	@FindBy(id = "estimated_time")
+	@FindBy(name = "estimated_time")
 	private WebElement timeEstimatedTime;
-
-	@FindBy(id = "work_time")
-	private WebElement timeWorkTime;
-
-	@FindBy(xpath = "//div[@id='bugzilla-body']/form/table[2]/tbody/tr[2]/td[3]")
-	private WebElement timeWorkTimeReadOnly;
-
-	@FindBy(id = "remaining_time")
-	private WebElement timeRemainingTime;
-
-	@FindBy(id = "deadline")
+	
+	@FindBy(name = "deadline")
 	private WebElement timeDeadline;
-
-	@FindBy(id = "bug_status")
-	private WebElement bugState;
+	
+	@FindBy(name = "bug_file_loc")
+	private WebElement bugURL;
 
 	@FindBy(id = "commit")
 	private WebElement commitButton;
@@ -54,6 +57,10 @@ public class CreateNewBugPage {
 		if (!(driver.getTitle().matches("Enter Bug: .*"))) {
 			throw new IllegalStateException("This is not the create new bug page (Title: " + driver.getTitle() + ")!");
 		}
+	}
+	
+	public void toggleAdvancedFields(){
+		linkToggleAdvancedFields.click();
 	}
 
 	public void fillSummary(String summary) {
@@ -72,25 +79,29 @@ public class CreateNewBugPage {
 	public void fillSeverity(String severity) {
 		new Select(bugSeverity).selectByVisibleText(severity);
 	}
+	
+	public void fillPriority(String priority) {
+		new Select(bugPriority).selectByVisibleText(priority);
+	}
+	
+	public void fillCC(String cc) {
+		bugCC.clear();
+		bugCC.sendKeys(cc);
+	}
 
 	public void fillTimeEstimatedTime(double estimatedTime) {
 		timeEstimatedTime.clear();
 		timeEstimatedTime.sendKeys(String.valueOf(estimatedTime));
 	}
 
-	public void fillTimeWorkTime(double workTime) {
-		timeWorkTime.clear();
-		timeWorkTime.sendKeys(String.valueOf(workTime));
-	}
-
-	public void fillTimeRemainigTime(double remainingTime) {
-		timeRemainingTime.clear();
-		timeRemainingTime.sendKeys(String.valueOf(remainingTime));
-	}
-
 	public void fillTimeDeadline(String deadline) {
 		timeDeadline.clear();
 		timeDeadline.sendKeys(String.valueOf(deadline));
+	}
+	
+	public void fillURL(String url) {
+		bugURL.clear();
+		bugURL.sendKeys(url);
 	}
 
 	public void fillComment(String comment) {
@@ -129,4 +140,6 @@ public class CreateNewBugPage {
 
 		return PageFactory.initElements(driver, NewBugCreatedPage.class);
 	}
+
+	
 }

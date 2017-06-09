@@ -22,13 +22,10 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 	public void testCreateNewBugDefaultValues() throws Exception {
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
 		String summary = "ExampleBugDefault_" + dateFormat.format(new Date());
-		String comment = "This is an example description for ExampleBugDefault created at "
-				+ dateFormat.format(new Date());
-
+		
 		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
 		createNewBugPage.fillSummary(summary);
-		createNewBugPage.fillComment(comment);
-
+		
 		NewBugCreatedPage newBugCreatedPage = createNewBugPage.commitBug();
 
 		// Check if creating bug was successful
@@ -36,23 +33,34 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		assertEquals("Bug " + bugId + " has been added to the database", newBugCreatedPage.getBugWasAddedText());
 
 		Logger.info("Created new default bug with summary " + summary + " and ID " + bugId);
-
-		// TODO see email 8.6.
-		fail("needs to be extended");
 		
 		// verify changes including default values
 		// don't verify default values for operating system and platform, which
 		// are client values retrieved from browser by default
 
 		assertEquals(summary, newBugCreatedPage.getSummary());
+		
+		assertEquals("TestProduct", newBugCreatedPage.getCurrentProduct());
+		assertEquals("TestComponent", newBugCreatedPage.getCurrentComponent());
+		assertEquals("unspecified", newBugCreatedPage.getCurrentVersion());
 
 		assertEquals("P5", newBugCreatedPage.getCurrentPriority());
 		assertEquals("enhancement", newBugCreatedPage.getCurrentSeverity());
+		assertEquals("", newBugCreatedPage.getCurrentURL());
+		assertEquals("", newBugCreatedPage.getCurrentDependsOn());
+		assertEquals("", newBugCreatedPage.getCurrentBlocks());
 
 		assertEquals("0.0", newBugCreatedPage.getTimeEstimatedTime());
+		assertEquals("0.0", newBugCreatedPage.getTimeCurrentEstimation());
 		assertEquals("0.0 +", newBugCreatedPage.getTimeWorkTime());
 		assertEquals("0.0", newBugCreatedPage.getTimeRemainingTime());
+		assertEquals("0", newBugCreatedPage.getTimeCompletedInPercent());
+		assertEquals("0.0", newBugCreatedPage.getTimeGain());
 		assertEquals("", newBugCreatedPage.getTimeDeadline());
+		
+		assertEquals("", newBugCreatedPage.getCurrentComment());
+		assertEquals("NEW", newBugCreatedPage.getCurrentBugState());
+		assertEquals("", newBugCreatedPage.getCommentOfFirstBug());
 	}
 
 	@Test
@@ -98,7 +106,62 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 	
 	@Test
 	public void testCreateNewBugAdvancedFields() {
-		// TODO
-		fail("not yet implemented");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
+		String summary = "ExampleBugStandard_" + dateFormat.format(new Date());
+		String comment = "This is an example description for ExampleBugStandard created at "+ dateFormat.format(new Date())+"";
+		
+		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
+		createNewBugPage.toggleAdvancedFields();
+		
+		createNewBugPage.fillSeverity("blocker");
+		createNewBugPage.fillPlatform("All");
+		createNewBugPage.fillOpSys("All");
+		createNewBugPage.fillPriority("P1");
+		
+		createNewBugPage.changeBugState("ASSIGNED");
+		createNewBugPage.fillCC("admin");
+		
+		createNewBugPage.fillTimeEstimatedTime(100);
+		createNewBugPage.fillTimeDeadline("2016-06-12");
+		createNewBugPage.fillURL("http://www.bugzilla.org");
+		
+		createNewBugPage.fillSummary(summary);
+		createNewBugPage.fillComment(comment);
+		
+		NewBugCreatedPage newBugCreatedPage = createNewBugPage.commitBug();
+
+		// Check if creating bug was successful
+		int bugId = newBugCreatedPage.getBugID();
+		assertEquals("Bug " + bugId + " has been added to the database", newBugCreatedPage.getBugWasAddedText());
+
+		Logger.info("Created new default bug with summary " + summary + " and ID " + bugId);
+		System.out.println(newBugCreatedPage.getCommentOfFirstBug());
+		
+		// verify changes including default values
+		assertEquals(summary, newBugCreatedPage.getSummary());
+		
+		assertEquals("TestProduct", newBugCreatedPage.getCurrentProduct());
+		assertEquals("TestComponent", newBugCreatedPage.getCurrentComponent());
+		assertEquals("unspecified", newBugCreatedPage.getCurrentVersion());
+
+		assertEquals("P1", newBugCreatedPage.getCurrentPriority());
+		assertEquals("blocker", newBugCreatedPage.getCurrentSeverity());
+		assertEquals("http://www.bugzilla.org", newBugCreatedPage.getCurrentURL());
+		assertEquals("", newBugCreatedPage.getCurrentDependsOn());
+		assertEquals("", newBugCreatedPage.getCurrentBlocks());
+
+		assertEquals("100.0", newBugCreatedPage.getTimeEstimatedTime());
+		assertEquals("100.0", newBugCreatedPage.getTimeCurrentEstimation());
+		assertEquals("0.0 +", newBugCreatedPage.getTimeWorkTime());
+		assertEquals("100.0", newBugCreatedPage.getTimeRemainingTime());
+		assertEquals("0", newBugCreatedPage.getTimeCompletedInPercent());
+		assertEquals("0.0", newBugCreatedPage.getTimeGain());
+		assertEquals("2016-06-12", newBugCreatedPage.getTimeDeadline());
+		
+		assertEquals("", newBugCreatedPage.getCurrentComment());
+		assertEquals("ASSIGNED", newBugCreatedPage.getCurrentBugState());
+		assertEquals(comment, newBugCreatedPage.getCommentOfFirstBug());
+		
+		
 	}
 }
