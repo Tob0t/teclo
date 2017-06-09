@@ -156,7 +156,30 @@ public class ChangeBugStateTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testMarkAsDuplicate() {
-		// TODO
-		fail("not yet implemented");
+		
+		// create second bug to mark as duplicate
+		BugzillaSetup.createExampleBug();
+		int duplicateBugID = BugzillaSetup.getExampleBugID();
+		
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
+				
+		// mark the bug as duplicate of current bug
+		editBugPage.clickMarkAsDuplicate();
+		editBugPage.editBugDuplicateOf(duplicateBugID);
+		
+		// commit
+		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		
+		// verify on duplicated bug
+		assertEquals("RESOLVED", editBugPage.getCurrentBugState());
+		assertEquals("DUPLICATE", editBugPage.getCurrentBugResolution());
+		assertEquals("*** This bug has been marked as a duplicate of bug "+duplicateBugID+" ***", editBugPage.getLastCommentContent());
+		
+		// go to original bug
+		editBugPage = BugzillaSetup.gotoBugPage(duplicateBugID);
+		
+		// verify on current bug
+		assertEquals("*** Bug "+currentBugID+" has been marked as a duplicate of this bug. ***", editBugPage.getLastCommentContent());
 	}
 }

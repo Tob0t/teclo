@@ -78,6 +78,15 @@ public class EditBugPage {
 
 	@FindBy(id = "bug_status")
 	private WebElement bugState;
+	
+	@FindBy(id = "resolution")
+	private WebElement bugResolution;
+	
+	@FindBy(id = "dup_id_discoverable_action")
+	private WebElement markAsDuplicateLink;
+	
+	@FindBy(id = "dup_id")
+	private WebElement bugDuplicateID;
 
 	@FindBy(id = "commit")
 	private WebElement commitButton;
@@ -217,10 +226,6 @@ public class EditBugPage {
 		return bugBlocked.getText();
 	}
 
-	public String getCurrentBugState() {
-		return Helper.getSelectedOptionValue(bugState);
-	}
-
 	public String getTimeEstimatedTime() {
 		return timeEstimatedTime.getAttribute("value");
 	}
@@ -249,8 +254,25 @@ public class EditBugPage {
 		return timeDeadline.getAttribute("value");
 	}
 	
+	public String getCurrentBugState() {
+		return Helper.getSelectedOptionValue(bugState);
+	}
+	
+	public String getCurrentBugResolution() {
+		return Helper.getSelectedOptionValue(bugResolution);
+	}
+	
 	public String getCurrentComment(){
 		return bugComment.getText();
+	}
+	
+	public void clickMarkAsDuplicate(){
+		markAsDuplicateLink.click();
+	}
+	
+	public void editBugDuplicateOf(int bugID){
+		bugDuplicateID.clear();
+		bugDuplicateID.sendKeys(String.valueOf(bugID));
 	}
 
 	public BugCommittedPage commitBug() {
@@ -261,16 +283,6 @@ public class EditBugPage {
 	public SummaryNeededErrorPage commitBugWithEmptySummary() {
 		commitButton.click();
 		return PageFactory.initElements(driver, SummaryNeededErrorPage.class);
-	}
-
-	public LoggedInBasePage navigateToMyHomePage() {
-		homeLink.click();
-		return PageFactory.initElements(driver, LoggedInBasePage.class);
-	}
-
-	public BugResultsPage navigateToBugResultsPage() {
-		myBugsLink.click();
-		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
 	
 	/**
@@ -285,9 +297,23 @@ public class EditBugPage {
 		return driver.findElements(By.xpath("//div[contains(concat(' ', @class, ' '), ' bz_comment ')]")).size();	
 	}
 	
+	/**
+	 * Returns the content of the last comment
+	 * @return content of the last comment
+	 */
 	public String getLastCommentContent(){
 		int lastCommentID = driver.findElements(By.xpath("//div[contains(concat(' ', @class, ' '), ' bz_comment ')]")).size()-1;
 		return driver.findElement(By.id("comment_text_"+lastCommentID)).getText();
+	}
+	
+	public LoggedInBasePage navigateToMyHomePage() {
+		homeLink.click();
+		return PageFactory.initElements(driver, LoggedInBasePage.class);
+	}
+
+	public BugResultsPage navigateToBugResultsPage() {
+		myBugsLink.click();
+		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
 
 }

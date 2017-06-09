@@ -134,7 +134,6 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		assertEquals("Bug " + bugId + " has been added to the database", newBugCreatedPage.getBugWasAddedText());
 
 		Logger.info("Created new default bug with summary " + summary + " and ID " + bugId);
-		System.out.println(newBugCreatedPage.getCommentOfFirstBug());
 		
 		// verify changes including default values
 		assertEquals(summary, newBugCreatedPage.getSummary());
