@@ -9,7 +9,6 @@ import org.openqa.selenium.support.PageFactory;
 public class HomeBasePage {
 
 	private final WebDriver driver;
-	private LoggedInBasePage loggedInBasePage;
 
 	public HomeBasePage(WebDriver driver) {
 		this.driver = driver;
@@ -23,6 +22,8 @@ public class HomeBasePage {
 	/***
 	 * Method to log in (if not already logged in)
 	 * 
+	 * @param username
+	 * @param password
 	 * @return LoggedIn page
 	 */
 	public LoggedInBasePage login(String username, String password) {
@@ -36,42 +37,33 @@ public class HomeBasePage {
 				throw new IllegalStateException("No 'Log In' button found!");
 			}
 
-			loggedInBasePage = logInBasePage.login(username, password);
+			return logInBasePage.login(username, password);
 		} finally {
 			// change the waiting time back to 10 seconds
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		}
-
-		return PageFactory.initElements(driver, LoggedInBasePage.class);
 	}
 
 	/***
 	 * Method to log out the current user (if not already logged out)
-	 * 
-	 * @param loggedOut
-	 *            page
 	 */
 	public LoggedOutBasePage logout() {
 		// change the waiting time 0 seconds if the element is not found
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
 		try {
-			if (loggedInBasePage == null) {
-				throw new IllegalStateException("Not logged in via this page object!");
-			}
+			LoggedInBasePage loggedInBasePage = PageFactory.initElements(driver, LoggedInBasePage.class);
 
 			// check if the log out button is existing
 			if (driver.findElements(By.linkText("Log out")).isEmpty()) {
 				throw new IllegalStateException("No 'Log out' button found!");
 			}
 
-			loggedInBasePage.logout();
+			return loggedInBasePage.logout();
 		} finally {
 			// change the waiting time back to 10 seconds
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		}
-
-		return PageFactory.initElements(driver, LoggedOutBasePage.class);
 	}
 
 	public LogInBasePage navigateToLoginBasePage() {
