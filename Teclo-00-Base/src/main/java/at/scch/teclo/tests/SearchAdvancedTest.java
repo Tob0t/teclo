@@ -61,8 +61,8 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 
 		advancedSearchPage.deselectBugState("NEW");
 		advancedSearchPage.deselectBugState("ASSIGNED");
-		advancedSearchPage.deselectBugState("REOPENED"
-				);
+		advancedSearchPage.deselectBugState("REOPENED");
+		
 		advancedSearchPage.selectBugState("ASSIGNED");
 		advancedSearchPage.fillSummary(currentBugSummary);
 		bugResultsPage = advancedSearchPage.submitSearch();
