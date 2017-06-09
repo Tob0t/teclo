@@ -22,6 +22,12 @@ public class EditBugPage {
 	@FindBy(id = "short_desc_nonedit_display")
 	private WebElement bugSummary;
 	
+	@FindBy(id = "bug_file_loc")
+	private WebElement bugURL;
+	
+	@FindBy(id = "bz_url_edit_action")
+	private WebElement bugEditURLLink;
+	
 	@FindBy(id = "dependson")
 	private WebElement bugDependsOn;
 	
@@ -113,6 +119,20 @@ public class EditBugPage {
 		new Select(bugSeverity).selectByVisibleText(severity);
 	}
 	
+	public void editURL(String url) {
+		bugURL.clear();
+		bugURL.sendKeys(url);
+	}
+	
+	public WebElement verifyURL(String url){
+		return driver.findElement(By.linkText(url));
+	}
+	
+	public void clearURL() {
+		bugEditURLLink.click();
+		bugURL.clear();
+	}
+	
 	public void editDependsOn(int bugID) {
 		bugDependsOn.click();
 		bugDependsOn.sendKeys(String.valueOf(bugID));
@@ -183,6 +203,10 @@ public class EditBugPage {
 
 	public String getCurrentSeverity() {
 		return Helper.getSelectedOptionValue(bugSeverity);
+	}
+	
+	public String getCurrentURL() {
+		return bugURL.getAttribute("value");
 	}
 	
 	public String getCurrentDependsOn() {

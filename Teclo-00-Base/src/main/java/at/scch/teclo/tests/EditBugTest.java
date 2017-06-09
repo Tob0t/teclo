@@ -131,16 +131,21 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
 		assertEquals("2038-01-16", editBugPage.getTimeDeadline());
 	}
-
-	@After
-	public void tearDownEditedBug() throws Exception {
-		// postcondition: leave changes as they are as long as there is no interference
-	}
 	
 	@Test
 	public void testEditUrl() {
-		// TODO
-		fail("not yet implemented");
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
+		editBugPage.editURL("http://www.bugzilla.org");
+		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
+		
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		assertNotNull(editBugPage.verifyURL("http://www.bugzilla.org"));
+		
+		editBugPage.clearURL();
+		bugCommittedPage = editBugPage.commitBug();
+		
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		assertEquals("", editBugPage.getCurrentURL());
 	}
 	
 	@Test
@@ -177,7 +182,11 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		editBugPage = BugzillaSetup.gotoBugPage(dependingOnBugID);
 		assertEquals("", editBugPage.getCurrentDependsOn());
 		assertEquals("", editBugPage.getCurrentBlocks());
-		
+	}
+	
+	@After
+	public void tearDownEditedBug() throws Exception {
+		// postcondition: leave changes as they are as long as there is no interference
 	}
 
 }
