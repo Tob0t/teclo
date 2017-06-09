@@ -6,8 +6,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.AbstractBugzillaTestWithLogin;
+import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.BugResultsPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 
@@ -67,6 +67,6 @@ public class SearchQuickTest extends AbstractBugzillaTestWithLogin {
 
 		// forget saved search
 		bugResultsPage.forgetSavedSearch("SearchFor_" + currentBugSummary);
-	}	
-	
+	}
+
 }

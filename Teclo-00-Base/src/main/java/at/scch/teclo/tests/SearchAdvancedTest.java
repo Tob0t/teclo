@@ -7,10 +7,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.AbstractBugzillaTestWithLogin;
+import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.AdvancedSearchPage;
-import at.scch.teclo.pageobjects.BugCommittedPage;
 import at.scch.teclo.pageobjects.BugResultsPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
@@ -19,7 +18,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 	private int currentBugID;
 	private String currentBugSummary;
 	private BugResultsPage bugResultsPage;
-	
+
 	private String currentBugState;
 	private String currentBugPriority;
 
@@ -28,7 +27,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		// precondition: bug inserted
 		currentBugID = BugzillaSetup.getExampleBugID();
 		currentBugSummary = BugzillaSetup.getExampleBugSummary();
-		
+
 		// precondition: bug changed
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 		currentBugState = editBugPage.getCurrentBugState();
@@ -62,7 +61,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		advancedSearchPage.deselectBugState("NEW");
 		advancedSearchPage.deselectBugState("ASSIGNED");
 		advancedSearchPage.deselectBugState("REOPENED");
-		
+
 		advancedSearchPage.selectBugState("ASSIGNED");
 		advancedSearchPage.fillSummary(currentBugSummary);
 		bugResultsPage = advancedSearchPage.submitSearch();
@@ -80,10 +79,10 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		advancedSearchPage.deselectBugState("NEW");
 		advancedSearchPage.deselectBugState("ASSIGNED");
 		advancedSearchPage.deselectBugState("REOPENED");
-		
+
 		advancedSearchPage.setSummarySearchType("matches regular expression");
 		advancedSearchPage.fillSummary(".*");
-		
+
 		bugResultsPage = advancedSearchPage.submitSearch();
 
 		assertTrue("No bugs found", 1 < bugResultsPage.getAmountOfBugs());
@@ -102,7 +101,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		assertEquals("P3", bugResultsPage.getPriorityOfFirstBug());
 		assertEquals(currentBugSummary, bugResultsPage.getSummaryOfFirstBug());
 	}
-	
+
 	@After
 	public void tearDown() throws Exception {
 

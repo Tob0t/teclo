@@ -106,14 +106,14 @@ public class CreateNewBugPage {
 		commitButton.click();
 		return PageFactory.initElements(driver, NewBugCreatedPage.class);
 	}
-	
+
 	/** Summary is empty, commit results in alert popup. */
 	public String commitBugWithEmptySummary() {
 		String alertText;
-		
+
 		bugSummary.clear();
 		commitButton.click();
-		
+
 		Alert alert = driver.switchTo().alert();
 		alertText = alert.getText();
 		alert.accept();

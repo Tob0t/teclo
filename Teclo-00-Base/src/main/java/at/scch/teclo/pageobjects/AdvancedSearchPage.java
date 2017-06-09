@@ -14,7 +14,7 @@ public class AdvancedSearchPage {
 
 	@FindBy(name = "short_desc_type")
 	private WebElement summarySearchType;
-	
+
 	@FindBy(id = "short_desc")
 	private WebElement summaryTextBox;
 
@@ -59,8 +59,8 @@ public class AdvancedSearchPage {
 		commentTextBox.clear();
 		commentTextBox.sendKeys(commentString);
 	}
-	
-	public void setSummarySearchType(String searchType)	{
+
+	public void setSummarySearchType(String searchType) {
 		new Select(summarySearchType).selectByVisibleText(searchType);
 	}
 

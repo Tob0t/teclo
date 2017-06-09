@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.AbstractBugzillaTestWithLogin;
+import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.ReportsBasePage;
 import at.scch.teclo.pageobjects.TabularReportsResultsPage;
 import at.scch.teclo.pageobjects.TabularReportsSearchPage;
