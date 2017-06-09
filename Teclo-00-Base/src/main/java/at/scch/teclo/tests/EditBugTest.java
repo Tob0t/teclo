@@ -1,7 +1,6 @@
 package at.scch.teclo.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -128,8 +127,39 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 	
 	@Test
 	public void testEditDependsOn() {
-		// TODO
-		fail("not yet implemented");
+		BugzillaSetup.createExampleBug();
+		int dependingOnBugID = BugzillaSetup.getExampleBugID();
+		
+		// set dependency
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
+		editBugPage.editDependsOn(dependingOnBugID);
+		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
+		
+		// select committed bug
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+
+		// check if existing
+		assertNotNull(editBugPage.verifyDependsOn(dependingOnBugID));
+		
+		// select depending bug
+		editBugPage = editBugPage.clickDependsOn(dependingOnBugID);
+		
+		// check if existing
+		assertNotNull(editBugPage.verifyBlocksOn(currentBugID));
+		
+		// remove blocks & commit
+		editBugPage.clearBlocksOn();
+		editBugPage.commitBug();
+		
+		// verify removed dependency
+		editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
+		assertEquals("", editBugPage.getCurrentDependsOn());
+		assertEquals("", editBugPage.getCurrentBlocks());
+		
+		editBugPage = BugzillaSetup.gotoBugPage(dependingOnBugID);
+		assertEquals("", editBugPage.getCurrentDependsOn());
+		assertEquals("", editBugPage.getCurrentBlocks());
+		
 	}
 
 }

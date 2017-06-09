@@ -1,5 +1,6 @@
 package at.scch.teclo.pageobjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,6 +21,15 @@ public class EditBugPage {
 
 	@FindBy(id = "short_desc_nonedit_display")
 	private WebElement bugSummary;
+	
+	@FindBy(id = "dependson")
+	private WebElement bugDependsOn;
+	
+	@FindBy(id = "blocked_edit_action")
+	private WebElement bugEditBlocksLink;
+	
+	@FindBy(id = "blocked")
+	private WebElement bugBlocked;
 
 	@FindBy(id = "rep_platform")
 	private WebElement bugPlatform;
@@ -93,7 +103,30 @@ public class EditBugPage {
 	public void editSeverity(String severity) {
 		new Select(bugSeverity).selectByVisibleText(severity);
 	}
-
+	
+	public void editDependsOn(int bugID) {
+		bugDependsOn.click();
+		bugDependsOn.sendKeys(String.valueOf(bugID));
+	}
+	
+	public WebElement verifyDependsOn(int bugID){
+		return driver.findElement(By.linkText(String.valueOf(bugID)));
+	}
+	
+	public EditBugPage clickDependsOn(int bugID) {
+		driver.findElement(By.linkText(String.valueOf(bugID))).click();
+		return PageFactory.initElements(driver, EditBugPage.class);
+	}
+	
+	public void clearBlocksOn() {
+		bugEditBlocksLink.click();
+		bugBlocked.clear();
+	}
+	
+	public WebElement verifyBlocksOn(int bugID){
+		return driver.findElement(By.linkText(String.valueOf(bugID)));
+	}
+	
 	public void editTimeEstimatedTime(double estimatedTime) {
 		timeEstimatedTime.clear();
 		timeEstimatedTime.sendKeys(String.valueOf(estimatedTime));
@@ -141,6 +174,14 @@ public class EditBugPage {
 
 	public String getCurrentSeverity() {
 		return Helper.getSelectedOptionValue(bugSeverity);
+	}
+	
+	public String getCurrentDependsOn() {
+		return bugDependsOn.getText();
+	}
+	
+	public String getCurrentBlocks() {
+		return bugBlocked.getText();
 	}
 
 	public String getCurrentBugState() {
