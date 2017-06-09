@@ -115,12 +115,6 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		assertEquals("2038-01-16", editBugPage.getTimeDeadline());
 	}
 
-	@After
-	public void tearDownEditedBug() throws Exception {
-		// postcondition: leave changes as they are as long as there is no
-		// interference
-	}
-
 	@Test
 	public void testEditUrl() {
 		// TODO
@@ -133,4 +127,9 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		fail("not yet implemented");
 	}
 
+	@After
+	public void tearDownEditedBug() throws Exception {
+		// postcondition: leave changes as they are as long as there is no
+		// interference
+	}
 }
