@@ -2,9 +2,8 @@ package at.scch.teclo;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -120,8 +119,8 @@ public class BugzillaSetup {
 		checkLogin();
 
 		// set the bug summary
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
-		exampleBugSummary = "Bug_" + dateFormat.format(new Date());
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss_SSS");
+		exampleBugSummary = "Bug_" + LocalDateTime.now().format(formatter);
 
 		// create bug
 		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();

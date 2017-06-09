@@ -3,9 +3,8 @@ package at.scch.teclo.tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -18,12 +17,13 @@ import at.scch.teclo.pageobjects.NewBugCreatedPage;
 public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 	private static final Logger Logger = LoggerFactory.getLogger(CreateNewBugTest.class);
 
+	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss_SSS");
+
 	@Test
 	public void testCreateNewBugDefaultValues() throws Exception {
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
-		String summary = "ExampleBugDefault_" + dateFormat.format(new Date());
-		String comment = "This is an example description for ExampleBugDefault created at "
-				+ dateFormat.format(new Date());
+		String nowText = LocalDateTime.now().format(formatter);
+		String summary = "ExampleBugDefault_" + nowText;
+		String comment = "This is an example description for ExampleBugDefault created at " + nowText;
 
 		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
 		createNewBugPage.fillSummary(summary);
@@ -39,7 +39,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 
 		// TODO see email 8.6.
 		fail("needs to be extended");
-		
+
 		// verify changes including default values
 		// don't verify default values for operating system and platform, which
 		// are client values retrieved from browser by default
@@ -64,14 +64,12 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 
 		assertEquals("Please enter a summary sentence for this bug.", alertMsg);
 	}
-	
-	
+
 	@Test
 	public void testCreateNewBugStandardFields() throws Exception {
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
-		String summary = "ExampleBugStandard_" + dateFormat.format(new Date());
-		String comment = "This is an example description for ExampleBugStandard created at "
-				+ dateFormat.format(new Date());
+		String nowText = LocalDateTime.now().format(formatter);
+		String summary = "ExampleBugStandard_" + nowText;
+		String comment = "This is an example description for ExampleBugStandard created at " + nowText;
 
 		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
 		createNewBugPage.fillSummary(summary);
@@ -95,7 +93,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		assertEquals("Linux", newBugCreatedPage.getCurrentOpSys());
 		assertEquals("major", newBugCreatedPage.getCurrentSeverity());
 	}
-	
+
 	@Test
 	public void testCreateNewBugAdvancedFields() {
 		// TODO
