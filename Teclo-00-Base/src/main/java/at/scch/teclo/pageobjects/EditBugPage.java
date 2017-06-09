@@ -49,14 +49,23 @@ public class EditBugPage {
 	@FindBy(id = "estimated_time")
 	private WebElement timeEstimatedTime;
 
-	@FindBy(id = "work_time")
-	private WebElement timeWorkTime;
+	@FindBy(xpath = "//div[@id='bugzilla-body']/form/table[2]/tbody/tr[2]/td[2]")
+	private WebElement timeCurrentEstimation;
 
 	@FindBy(xpath = "//div[@id='bugzilla-body']/form/table[2]/tbody/tr[2]/td[3]")
 	private WebElement timeWorkTimeReadOnly;
+	
+	@FindBy(id = "work_time")
+	private WebElement timeWorkTime;
 
 	@FindBy(id = "remaining_time")
 	private WebElement timeRemainingTime;
+	
+	@FindBy(xpath = "//div[@id='bugzilla-body']/form/table[2]/tbody/tr[2]/td[5]")
+	private WebElement timeCompletedInPercent;
+	
+	@FindBy(xpath = "//div[@id='bugzilla-body']/form/table[2]/tbody/tr[2]/td[6]")
+	private WebElement timeGain;
 
 	@FindBy(id = "deadline")
 	private WebElement timeDeadline;
@@ -191,6 +200,10 @@ public class EditBugPage {
 	public String getTimeEstimatedTime() {
 		return timeEstimatedTime.getAttribute("value");
 	}
+	
+	public String getTimeCurrentEstimation() {
+		return timeCurrentEstimation.getText();
+	}
 
 	public String getTimeWorkTime() {
 		return timeWorkTimeReadOnly.getText();
@@ -199,9 +212,21 @@ public class EditBugPage {
 	public String getTimeRemainingTime() {
 		return timeRemainingTime.getAttribute("value");
 	}
+	
+	public String getTimeCompletedInPercent() {
+		return timeCompletedInPercent.getText();
+	}
+	
+	public String getTimeGain() {
+		return timeGain.getText();
+	}
 
 	public String getTimeDeadline() {
 		return timeDeadline.getAttribute("value");
+	}
+	
+	public String getCurrentComment(){
+		return bugComment.getText();
 	}
 
 	public BugCommittedPage commitBug() {

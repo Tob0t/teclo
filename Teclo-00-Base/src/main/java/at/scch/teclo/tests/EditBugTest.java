@@ -83,20 +83,38 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 	public void testEditTimes() throws Exception {
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 
-		// TODO: changes see email 8.7.
-		fail("needs to be changed");
-		
-		editBugPage.editTimeEstimatedTime(20);
-		editBugPage.editTimeWorkTime(5);
-		editBugPage.editTimeRemainigTime(2);
-		editBugPage.editComment("Added time estimation");
-
+		// set time
+		editBugPage.editTimeEstimatedTime(100);
+		editBugPage.editTimeRemainigTime(100);
 		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-
-		assertEquals("20.0", editBugPage.getTimeEstimatedTime());
-		assertEquals("5.0 +", editBugPage.getTimeWorkTime());
-		assertEquals("2.0", editBugPage.getTimeRemainingTime());
+		
+		// verify
+		assertEquals("100.0", editBugPage.getTimeEstimatedTime());
+		assertEquals("100.0", editBugPage.getTimeCurrentEstimation());
+		assertEquals("100.0", editBugPage.getTimeRemainingTime());
+		
+		// change time
+		editBugPage.editTimeWorkTime(50.0);
+		editBugPage.editComment("Edited hours left to 50.0!");
+		bugCommittedPage = editBugPage.commitBug();
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		
+		// verify
+		assertEquals("50.0 +", editBugPage.getTimeWorkTime());
+		assertEquals("50.0", editBugPage.getTimeRemainingTime());
+		assertEquals("50", editBugPage.getTimeCompletedInPercent());
+		
+		// change time
+		editBugPage.editTimeRemainigTime(40.0);
+		bugCommittedPage = editBugPage.commitBug();
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		
+		// verify
+		assertEquals("90.0", editBugPage.getTimeCurrentEstimation());
+		assertEquals("40.0", editBugPage.getTimeRemainingTime());
+		assertEquals("55", editBugPage.getTimeCompletedInPercent());
+		assertEquals("10.0", editBugPage.getTimeGain());
 	}
 	
 	@Test
