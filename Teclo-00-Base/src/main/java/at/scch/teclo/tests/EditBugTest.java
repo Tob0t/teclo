@@ -2,6 +2,10 @@ package at.scch.teclo.tests;
 
 import static org.junit.Assert.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -75,8 +79,24 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 	
 	@Test
 	public void testAddComment() {
-		// TODO
-		fail("not yet implemented");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
+		String comment = "This is an example comment for testAddComment created at "
+				+ dateFormat.format(new Date());
+		
+		// browse to the current bug
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
+
+		// save current amount of comments and edit comment
+		int currentAmountOfComments = editBugPage.getAmountOfComments();
+		editBugPage.editComment(comment);
+		
+		// commit bug
+		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
+		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		
+		// verify change
+		assertEquals(currentAmountOfComments+1, editBugPage.getAmountOfComments());
+		assertEquals(comment, editBugPage.getLastCommentContent());
 	}
 
 	@Test
@@ -134,17 +154,23 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 	
 	@Test
 	public void testEditUrl() {
+		// edit URL
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 		editBugPage.editURL("http://www.bugzilla.org");
+
+		// commit bug
 		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
-		
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		
+		// verify
 		assertNotNull(editBugPage.verifyURL("http://www.bugzilla.org"));
 		
+		// clear url & commit
 		editBugPage.clearURL();
 		bugCommittedPage = editBugPage.commitBug();
-		
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		
+		// verify
 		assertEquals("", editBugPage.getCurrentURL());
 	}
 	

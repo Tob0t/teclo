@@ -272,5 +272,22 @@ public class EditBugPage {
 		myBugsLink.click();
 		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
+	
+	/**
+	 * Get the amount of comments
+	 * @return number of comments
+	 */
+	public int getAmountOfComments(){
+		// this returns one element too less since the very first comment is containing two classes ('bz_comment' and 'bz_first_comment')
+		// return driver.findElements(By.xpath("//div[@class='bz_comment']")).size();
+		
+		// Get the amount of div-elements with the class containing 'bz_comment' 
+		return driver.findElements(By.xpath("//div[contains(concat(' ', @class, ' '), ' bz_comment ')]")).size();	
+	}
+	
+	public String getLastCommentContent(){
+		int lastCommentID = driver.findElements(By.xpath("//div[contains(concat(' ', @class, ' '), ' bz_comment ')]")).size()-1;
+		return driver.findElement(By.id("comment_text_"+lastCommentID)).getText();
+	}
 
 }
