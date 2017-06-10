@@ -20,7 +20,7 @@ public class GenerateTabularReportTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testGenerateTabularReport() throws Exception {
-		ReportsBasePage reportsBasePage = loggedInBasePage.navigateToReportsBasePage();
+		ReportsBasePage reportsBasePage = startPage.navigateToReportsBasePage();
 		TabularReportsSearchPage tabularReportsPage = reportsBasePage.navigateToTabularReportsPage();
 		tabularReportsPage.selectHorizontalAxes("Status");
 		tabularReportsPage.selectVeritcalAxes("Assignee");

@@ -23,13 +23,13 @@ public class SearchQuickTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testFindBugZarro() throws Exception {
-		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(currentBugSummary.replace("_", "-"));
+		BugResultsPage bugResultsPage = startPage.searchFor(currentBugSummary.replace("_", "-"));
 		assertEquals("More than 0 bugs found!", 0, bugResultsPage.getAmountOfBugs());
 	}
 
 	@Test
 	public void testFindBugSingleByName() throws Exception {
-		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(currentBugSummary);
+		BugResultsPage bugResultsPage = startPage.searchFor(currentBugSummary);
 
 		assertEquals("No bug found!", 1, bugResultsPage.getAmountOfBugs());
 		assertEquals(currentBugSummary, bugResultsPage.getSummaryOfFirstBug());
@@ -37,7 +37,7 @@ public class SearchQuickTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testFindBugSingleByID() throws Exception {
-		EditBugPage editBugPage = loggedInBasePage.searchFor(currentBugID);
+		EditBugPage editBugPage = startPage.searchFor(currentBugID);
 		assertEquals("Bug not found by ID", currentBugSummary, editBugPage.getSummary());
 	}
 
@@ -47,20 +47,20 @@ public class SearchQuickTest extends AbstractBugzillaTestWithLogin {
 		// in the database
 		BugzillaSetup.createExampleBug();
 
-		BugResultsPage bugResultsPage = loggedInBasePage.searchFor("Bug");
+		BugResultsPage bugResultsPage = startPage.searchFor("Bug");
 		assertTrue("No multiple bugs found", 1 < bugResultsPage.getAmountOfBugs());
 	}
 
 	@Test
 	public void testSaveSearch() throws Exception {
-		BugResultsPage bugResultsPage = loggedInBasePage.searchFor(currentBugSummary);
+		BugResultsPage bugResultsPage = startPage.searchFor(currentBugSummary);
 
 		int numberFoundBugs = bugResultsPage.getAmountOfBugs();
 		String firstBugSummary = bugResultsPage.getSummaryOfFirstBug();
 
 		bugResultsPage = bugResultsPage.saveSearch("SearchFor_" + currentBugSummary);
-		loggedInBasePage = bugResultsPage.navigateToHome();
-		bugResultsPage = loggedInBasePage.getSavedSearch("SearchFor_" + currentBugSummary);
+		bugResultsPage.gotoStartPage();
+		bugResultsPage = startPage.gotoSavedSearch("SearchFor_" + currentBugSummary);
 
 		assertEquals(numberFoundBugs, bugResultsPage.getAmountOfBugs());
 		assertEquals(firstBugSummary, bugResultsPage.getSummaryOfFirstBug());

@@ -360,16 +360,4 @@ public class EditBugPage extends AbstractLoggedinBugzillaPage {
 		return driver.findElement(By.id("comment_text_"+lastCommentID)).getText().replace("\n", " ");
 	}
 	
-	// TODO remove
-	public LoggedInBasePage navigateToMyHomePage() {
-		homeLink.click();
-		return PageFactory.initElements(driver, LoggedInBasePage.class);
-	}
-
-	// TODO remove
-	public BugResultsPage navigateToBugResultsPage() {
-		myBugsLink.click();
-		return PageFactory.initElements(driver, BugResultsPage.class);
-	}
-
 }

@@ -94,10 +94,4 @@ public class BugResultsPage extends AbstractLoggedinBugzillaPage {
 		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
 
-	// TODO remove
-	public LoggedInBasePage navigateToHome() {
-		homeLink.click();
-		return PageFactory.initElements(driver, LoggedInBasePage.class);
-	}
-
 }

@@ -7,6 +7,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import at.scch.teclo.BugzillaSetup;
@@ -14,6 +15,20 @@ import at.scch.teclo.BugzillaSetup;
 public abstract class AbstractBugzillaPage {
 
 	protected final WebDriver driver;
+
+
+	@FindBy(linkText = "New")
+	private WebElement newLink;
+
+	@FindBy(linkText = "My Bugs")
+	private WebElement myBugsLink;
+
+	@FindBy(linkText = "Search")
+	private WebElement searchLink;
+
+	@FindBy(linkText = "Reports")
+	private WebElement reportsLink;
+	
 
 	public AbstractBugzillaPage(WebDriver driver) {
 		this.driver = driver;
@@ -36,14 +51,27 @@ public abstract class AbstractBugzillaPage {
 //	}
 	
 	
+	protected boolean isElementPresent(By by) {
+		boolean elementFound = false;
+		// change the waiting time 0 seconds if the element is not found
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+		try {
+			driver.findElement(by);
+			elementFound = true;
+		} catch (NoSuchElementException e) {
+			elementFound = false;
+		} finally {
+			// change the waiting time back to 10 seconds
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		}
+		return elementFound;
+	}
+	
+	
 	public String getTitle() {
 		return driver.getTitle();
 	}
-	
-	public StartPage gotoStartPage() {
-		return BugzillaSetup.gotoStartPage();
-	}
-	
+
 	public boolean isLoggedin() {
 		return isElementPresent(By.linkText("Log out"));
 	}
@@ -92,19 +120,35 @@ public abstract class AbstractBugzillaPage {
 	}
 	
 	
-	protected boolean isElementPresent(By by) {
-		boolean elementFound = false;
-		// change the waiting time 0 seconds if the element is not found
-		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-		try {
-			driver.findElement(by);
-			elementFound = true;
-		} catch (NoSuchElementException e) {
-			elementFound = false;
-		} finally {
-			// change the waiting time back to 10 seconds
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		}
-		return elementFound;
+	public StartPage gotoStartPage() {
+		return BugzillaSetup.gotoStartPage();
 	}
+	
+	public CreateNewBugPage navigateToCreateNewBugPage() {
+		newLink.click();
+		return PageFactory.initElements(driver, CreateNewBugPage.class);
+	}
+
+	public BugResultsPage navigateToBugResultsPage() {
+		myBugsLink.click();
+		return PageFactory.initElements(driver, BugResultsPage.class);
+	}
+
+	public SearchBasePage navigateToSearchBasePage() {
+		searchLink.click();
+		return PageFactory.initElements(driver, SearchBasePage.class);
+	}
+
+	public ReportsBasePage navigateToReportsBasePage() {
+		reportsLink.click();
+		return PageFactory.initElements(driver, ReportsBasePage.class);
+	}
+
+
+	public BugResultsPage gotoSavedSearch(String savedSearchName) {
+		// TODO By.xpath("//li[@id='links-saved']/ul/li/a[text()='remember bug']")
+		driver.findElement(By.linkText(savedSearchName)).click();
+		return PageFactory.initElements(driver, BugResultsPage.class);
+	}
+	
 }

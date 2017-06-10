@@ -23,7 +23,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 	public void testCreateNewBugDefaultValues() throws Exception {
 		String summary = "ExampleBugDefault_" + LocalDateTime.now().format(formatter);
 
-		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
+		CreateNewBugPage createNewBugPage = startPage.navigateToCreateNewBugPage();
 		createNewBugPage.fillSummary(summary);
 		
 		NewBugCreatedPage newBugCreatedPage = createNewBugPage.commitBug();
@@ -71,7 +71,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testCreateEmptySummaryResultsInAlertPopup() throws Exception {
-		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
+		CreateNewBugPage createNewBugPage = startPage.navigateToCreateNewBugPage();
 		createNewBugPage.fillSummary("");
 
 		String alertMsg = createNewBugPage.commitBugWithEmptySummary();
@@ -85,7 +85,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		String summary = "ExampleBugStandard_" + nowText;
 		String comment = "This is an example description for ExampleBugStandard created at " + nowText;
 
-		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
+		CreateNewBugPage createNewBugPage = startPage.navigateToCreateNewBugPage();
 		createNewBugPage.fillSummary(summary);
 		createNewBugPage.fillComment(comment);
 
@@ -117,7 +117,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		String summary = "ExampleBugStandard_" + nowText;
 		String comment = "This is an example description for ExampleBugAdvanced created at " + nowText;
 			
-		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
+		CreateNewBugPage createNewBugPage = startPage.navigateToCreateNewBugPage();
 		createNewBugPage.toggleAdvancedFields();
 		
 		createNewBugPage.fillSeverity("blocker");

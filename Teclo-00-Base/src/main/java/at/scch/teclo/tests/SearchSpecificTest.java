@@ -25,7 +25,7 @@ public class SearchSpecificTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testFindBugZarro() throws Exception {
-		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
+		SearchBasePage searchPage = startPage.navigateToSearchBasePage();
 		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 
 		specificSearchPage.selectBugState("Closed");
@@ -36,7 +36,7 @@ public class SearchSpecificTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testFindBugSingle() throws Exception {
-		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
+		SearchBasePage searchPage = startPage.navigateToSearchBasePage();
 		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 
 		specificSearchPage.selectBugState("All");
@@ -52,7 +52,7 @@ public class SearchSpecificTest extends AbstractBugzillaTestWithLogin {
 		// in the database
 		BugzillaSetup.createExampleBug();
 
-		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
+		SearchBasePage searchPage = startPage.navigateToSearchBasePage();
 		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 
 		specificSearchPage.selectBugState("All");
@@ -63,7 +63,7 @@ public class SearchSpecificTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testSearchBlanksResultsInError() {
-		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
+		SearchBasePage searchPage = startPage.navigateToSearchBasePage();
 		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 
 		ParametersRequiredErrorPage parametersRequiredErrorPage = specificSearchPage.searchForBlanks();
@@ -74,7 +74,7 @@ public class SearchSpecificTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testSearchEmptyResultsInAlertPopup() {
-		SearchBasePage searchPage = loggedInBasePage.navigateToSearchBasePage();
+		SearchBasePage searchPage = startPage.navigateToSearchBasePage();
 		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 
 		String alertMsg = specificSearchPage.searchForEmpty();

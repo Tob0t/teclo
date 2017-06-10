@@ -15,8 +15,6 @@ import org.slf4j.LoggerFactory;
 
 import at.scch.teclo.pageobjects.CreateNewBugPage;
 import at.scch.teclo.pageobjects.EditBugPage;
-import at.scch.teclo.pageobjects.HomeBasePage;
-import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
 import at.scch.teclo.pageobjects.StartPage;
 
@@ -32,7 +30,7 @@ public class BugzillaSetup {
 	private static int driverUsageCounter;
 
 	private static int loginUsageCounter;
-	private static LoggedInBasePage loggedInBasePage;
+	private static StartPage startPage;
 	private static int currentbugID;
 	private static String exampleBugSummary;
 
@@ -124,7 +122,7 @@ public class BugzillaSetup {
 		exampleBugSummary = "Bug_" + LocalDateTime.now().format(formatter);
 
 		// create bug
-		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
+		CreateNewBugPage createNewBugPage = startPage.navigateToCreateNewBugPage();
 		NewBugCreatedPage newBugCreatedPage = createNewBugPage.createNewBug(exampleBugSummary, "test data");
 
 		// save the id of the bug
@@ -164,41 +162,46 @@ public class BugzillaSetup {
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
 
-	public static HomeBasePage gotoHomeBasePage() {
-		checkDriver();
-
-		driver.get(baseUrl);
-		return PageFactory.initElements(driver, HomeBasePage.class);
+	public static StartPage login() {
+		startPage = gotoStartPage();
+		startPage.login("admin", "admin");
+		return startPage;
 	}
-
-	public static LoggedInBasePage login() {
-		checkDriver();
-
-		// if not logged in, do it now
-		if (loggedInBasePage == null) {
-			HomeBasePage homeBasePage = gotoHomeBasePage();
-			loggedInBasePage = homeBasePage.login("admin", "admin");
-		}
-		loginUsageCounter++;
-		return loggedInBasePage;
+	
+	public static StartPage logout() {
+		startPage = gotoStartPage();
+		return startPage.logout();
 	}
+	
+	
+//	public static LoggedInBasePage login() {
+//		checkDriver();
+//
+//		// if not logged in, do it now
+//		if (loggedInBasePage == null) {
+//			HomeBasePage homeBasePage = gotoHomeBasePage();
+//			loggedInBasePage = homeBasePage.login("admin", "admin");
+//		}
+//		loginUsageCounter++;
+//		return loggedInBasePage;
+//	}
 
-	public static void logout() {
-		checkDriver();
-
-		loginUsageCounter--;
-		if (loginUsageCounter > 0)
-			return;
-
-		// if logged in, do logout
-		if (loggedInBasePage != null) {
-			loggedInBasePage.logout();
-			loggedInBasePage = null;
-		}
-	}
+//	public static void logout() {
+//		checkDriver();
+//
+//		loginUsageCounter--;
+//		if (loginUsageCounter > 0)
+//			return;
+//
+//		// if logged in, do logout
+//		if (loggedInBasePage != null) {
+//			loggedInBasePage.logout();
+//			loggedInBasePage = null;
+//		}
+//	}
 
 	private static void checkLogin() {
-		if (loggedInBasePage == null) {
+		if (startPage == null) {
 			throw new IllegalStateException("User not logged in!");
 		}
 	}
