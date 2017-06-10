@@ -5,23 +5,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import at.scch.teclo.Helper;
-
-public class NewBugCreatedPage {
-
-	private final WebDriver driver;
+public class NewBugCreatedPage extends AbstractLoggedinBugzillaPage {
 
 	@FindBy(id = "title")
 	private WebElement bugTitle;
 
 	public NewBugCreatedPage(WebDriver driver) {
-		this.driver = driver;
-
-		// Check that we're on the right page.
-		if (!(driver.getTitle().matches("Bug \\d+ Submitted.*"))) {
-			throw new IllegalStateException("This is not the new bug created page (Title: " + driver.getTitle() + ")!");
-		}
+		super(driver);
 	}
+	
+	@Override
+	protected boolean matchingPageIsDisplayed() {
+		return getTitle().matches("Bug \\d+ Submitted.*");
+	}
+	
 
 	public int getNewBugId() {
 		return Integer.parseInt(bugTitle.getText().replaceAll("[^0-9]", ""));

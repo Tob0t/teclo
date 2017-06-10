@@ -125,7 +125,7 @@ public class BugzillaSetup {
 
 		// create bug
 		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
-		NewBugCreatedPage newBugCreatedPage = createNewBugPage.createNewBugSimple(exampleBugSummary);
+		NewBugCreatedPage newBugCreatedPage = createNewBugPage.createNewBug(exampleBugSummary, "test data");
 
 		// save the id of the bug
 		currentbugID = newBugCreatedPage.getNewBugId();

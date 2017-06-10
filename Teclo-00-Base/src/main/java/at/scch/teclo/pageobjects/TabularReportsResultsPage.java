@@ -4,20 +4,24 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class TabularReportsResultsPage {
+public class TabularReportsResultsPage extends AbstractLoggedinBugzillaPage {
+	
 	@FindBy(xpath = "//div[@id='bugzilla-body']/div/table/tbody/tr/td[2]/strong")
 	private WebElement xAxesDescription;
 
 	@FindBy(xpath = "//div[@id='bugzilla-body']/div/table/tbody/tr[2]/td/strong")
 	private WebElement yAxesDescription;
 
+	
 	public TabularReportsResultsPage(WebDriver driver) {
-		// Check that we're on the right page
-		if (!(driver.getTitle().matches("Report: .+"))) {
-			throw new IllegalStateException(
-					"This is not the tabular reports results page (Title: " + driver.getTitle() + ")!");
-		}
+		super(driver);
 	}
+	
+	@Override
+	protected boolean matchingPageIsDisplayed() {
+		return getTitle().matches("Report: .+");
+	}
+	
 
 	public String getXAxesDescription() {
 		return xAxesDescription.getText();

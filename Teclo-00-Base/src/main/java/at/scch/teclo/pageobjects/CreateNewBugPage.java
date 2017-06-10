@@ -7,9 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-public class CreateNewBugPage {
-
-	private final WebDriver driver;
+public class CreateNewBugPage extends AbstractLoggedinBugzillaPage {
 	
 	@FindBy(id = "expert_fields_controller")
 	private WebElement linkToggleAdvancedFields;
@@ -50,14 +48,16 @@ public class CreateNewBugPage {
 	@FindBy(id = "commit")
 	private WebElement commitButton;
 
+	
 	public CreateNewBugPage(WebDriver driver) {
-		this.driver = driver;
-
-		// Check that we're on the right page.
-		if (!(driver.getTitle().matches("Enter Bug: .*"))) {
-			throw new IllegalStateException("This is not the create new bug page (Title: " + driver.getTitle() + ")!");
-		}
+		super(driver);
 	}
+	
+	@Override
+	protected boolean matchingPageIsDisplayed() {
+		return getTitle().matches("Enter Bug: .*");
+	}
+	
 	
 	public void toggleAdvancedFields(){
 		linkToggleAdvancedFields.click();
@@ -133,10 +133,11 @@ public class CreateNewBugPage {
 		return alertText;
 	}
 
-	public NewBugCreatedPage createNewBugSimple(String name) {
-		bugSummary.clear();
-		bugSummary.sendKeys(name);
-		commitButton.click();
+	
+	public NewBugCreatedPage createNewBug(String summary, String description) {
+		fillSummary(summary);
+		fillComment(description);
+		commitBug();
 
 		return PageFactory.initElements(driver, NewBugCreatedPage.class);
 	}

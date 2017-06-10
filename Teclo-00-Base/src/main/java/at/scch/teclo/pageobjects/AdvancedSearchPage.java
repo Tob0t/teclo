@@ -6,8 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-public class AdvancedSearchPage {
-	private WebDriver driver;
+public class AdvancedSearchPage extends SearchBasePage {
 
 	@FindBy(id = "bug_status")
 	private WebElement bugState;
@@ -33,14 +32,16 @@ public class AdvancedSearchPage {
 	@FindBy(name = "value0-0-0")
 	private WebElement booleanChartValue;
 
+	
 	public AdvancedSearchPage(WebDriver driver) {
-		this.driver = driver;
-
-		// Check that we're on the right page.
-		if (!("Search for bugs").equals(driver.getTitle())) {
-			throw new IllegalStateException("This is not the advanced search page (Title: " + driver.getTitle() + ")!");
-		}
+		super(driver);
 	}
+	
+	@Override
+	protected boolean matchingPageIsDisplayed() {
+		return "Search for bugs".equals(driver.getTitle());
+	}
+	
 
 	public BugResultsPage searchFor(String summaryString, String commentString) {
 		summaryTextBox.clear();

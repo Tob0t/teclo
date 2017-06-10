@@ -5,8 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class SearchBasePage {
-	private WebDriver driver;
+public class SearchBasePage extends AbstractLoggedinBugzillaPage {
 
 	@FindBy(css = "td.selected")
 	private WebElement currentActiveTab;
@@ -14,14 +13,16 @@ public class SearchBasePage {
 	@FindBy(css = "td.clickable_area")
 	private WebElement clickableTab;
 
+	
 	public SearchBasePage(WebDriver driver) {
-		this.driver = driver;
-
-		// Check that we're on the right page
-		if (!(driver.getTitle().matches("Find a Specific Bug|Search for bugs"))) {
-			throw new IllegalStateException("This is not the search base page (Title: " + driver.getTitle() + ")!");
-		}
+		super(driver);
 	}
+	
+	@Override
+	protected boolean matchingPageIsDisplayed() {
+		return getTitle().matches("Find a Specific Bug|Search for bugs");
+	}
+	
 
 	public SpecificSearchPage navigateToSpecificSearchPage() {
 		// change tab if the wrong search is pre-selected
@@ -36,7 +37,6 @@ public class SearchBasePage {
 		if (currentActiveTab.getText().equals("Find a Specific Bug")) {
 			clickableTab.click();
 		}
-
 		return PageFactory.initElements(driver, AdvancedSearchPage.class);
 	}
 }

@@ -6,9 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class BugResultsPage {
-
-	private final WebDriver driver;
+public class BugResultsPage extends AbstractLoggedinBugzillaPage {
 
 	@FindBy(css = "span.bz_result_count")
 	private WebElement amountOfBugs;
@@ -34,18 +32,18 @@ public class BugResultsPage {
 	@FindBy(linkText = "Home")
 	private WebElement homeLink;
 
+	
 	public BugResultsPage(WebDriver driver) {
-		this.driver = driver;
-
-		// Check that we're on the right page, "Bug List" for all the searches
-		// and "Search created|Search is gone" if a search is saved|forgot
-		if (!(driver.getTitle().matches("Bug List.*|Search created|Search is gone"))) {
-			throw new IllegalStateException("This is not the bug results page (Title: " + driver.getTitle() + ")!");
-		}
+		super(driver);
 	}
 
+	@Override
+	protected boolean matchingPageIsDisplayed() {
+		return getTitle().matches("Bug List.*|Search created|Search is gone");
+	}
+	
+	
 	public EditBugPage goToEditBug(int currentBugID) {
-
 		driver.findElement(By.linkText(String.valueOf(currentBugID))).click();
 
 		return PageFactory.initElements(driver, EditBugPage.class);
@@ -96,6 +94,7 @@ public class BugResultsPage {
 		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
 
+	// TODO remove
 	public LoggedInBasePage navigateToHome() {
 		homeLink.click();
 		return PageFactory.initElements(driver, LoggedInBasePage.class);

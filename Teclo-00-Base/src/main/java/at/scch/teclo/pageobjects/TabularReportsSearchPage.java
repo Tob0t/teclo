@@ -6,8 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-public class TabularReportsSearchPage {
-	private WebDriver driver;
+public class TabularReportsSearchPage extends AbstractLoggedinBugzillaPage {
 
 	@FindBy(name = "x_axis_field")
 	private WebElement horizontalAxesField;
@@ -18,16 +17,17 @@ public class TabularReportsSearchPage {
 	@FindBy(id = "Generate_Report_top")
 	private WebElement generateReportButton;
 
+	
 	public TabularReportsSearchPage(WebDriver driver) {
-		this.driver = driver;
-
-		// Check that we're on the right page
-		if (!("Generate Tabular Report").equals(driver.getTitle())) {
-			throw new IllegalStateException(
-					"This is not the tabular reports search page (Title: " + driver.getTitle() + ")!");
-		}
+		super(driver);
 	}
 
+	@Override
+	protected boolean matchingPageIsDisplayed() {
+		return "Generate Tabular Report".equals(getTitle());
+	}
+	
+	
 	public void selectHorizontalAxes(String horizontalValue) {
 		new Select(horizontalAxesField).selectByVisibleText(horizontalValue);
 	}

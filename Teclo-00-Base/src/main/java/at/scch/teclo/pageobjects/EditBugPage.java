@@ -9,9 +9,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import at.scch.teclo.Helper;
 
-public class EditBugPage {
-
-	private final WebDriver driver;
+public class EditBugPage extends AbstractLoggedinBugzillaPage {
 	
 	@FindBy(id = "short_desc_nonedit_display")
 	private WebElement bugSummary;
@@ -125,14 +123,14 @@ public class EditBugPage {
 
 	
 	public EditBugPage(WebDriver driver) {
-		this.driver = driver;
-
-		// Check that we're on the right page.
-		if (!(driver.getTitle().matches("Bug \\d+ .*"))) {
-			throw new IllegalStateException("This is not the edit bug page (Title: " + driver.getTitle() + ")!");
-		}
+		super(driver);
 	}
 
+	@Override
+	protected boolean matchingPageIsDisplayed() {
+		return getTitle().matches("Bug \\d+ .*");
+	}
+	
 	
 	public String getSummary() {
 		return bugSummary.getText();
@@ -362,16 +360,16 @@ public class EditBugPage {
 		return driver.findElement(By.id("comment_text_"+lastCommentID)).getText().replace("\n", " ");
 	}
 	
-	
+	// TODO remove
 	public LoggedInBasePage navigateToMyHomePage() {
 		homeLink.click();
 		return PageFactory.initElements(driver, LoggedInBasePage.class);
 	}
 
+	// TODO remove
 	public BugResultsPage navigateToBugResultsPage() {
 		myBugsLink.click();
 		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
-
 
 }

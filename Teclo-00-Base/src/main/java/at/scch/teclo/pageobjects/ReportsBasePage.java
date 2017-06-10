@@ -5,21 +5,20 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class ReportsBasePage {
-
-	private WebDriver driver;
+public class ReportsBasePage extends AbstractLoggedinBugzillaPage {
 
 	@FindBy(linkText = "Tabular reports")
 	private WebElement TabularReportsLink;
 
 	public ReportsBasePage(WebDriver driver) {
-		this.driver = driver;
-
-		// Check that we're on the right page
-		if (!("Reporting and Charting Kitchen").equals(driver.getTitle())) {
-			throw new IllegalStateException("This is not the reports base page (Title: " + driver.getTitle() + ")!");
-		}
+		super(driver);
 	}
+	
+	@Override
+	protected boolean matchingPageIsDisplayed() {
+		return "Reporting and Charting Kitchen".equals(getTitle());
+	}
+	
 
 	public TabularReportsSearchPage navigateToTabularReportsPage() {
 		TabularReportsLink.click();
