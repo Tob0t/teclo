@@ -18,6 +18,7 @@ import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.HomeBasePage;
 import at.scch.teclo.pageobjects.LoggedInBasePage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
+import at.scch.teclo.pageobjects.StartPage;
 
 /**
  * @author fabianbouchal
@@ -85,7 +86,7 @@ public class BugzillaSetup {
 		}
 	}
 
-	public static String getBaseURL() {
+	public static String getBaseUrl() {
 		return baseUrl;
 	}
 
@@ -147,6 +148,13 @@ public class BugzillaSetup {
 			createExampleBug();
 		}
 		return exampleBugSummary;
+	}
+	
+	public static StartPage gotoStartPage() {
+		checkDriver();		
+		
+		driver.get(BugzillaSetup.getBaseUrl());
+		return PageFactory.initElements(driver, StartPage.class);
 	}
 
 	public static EditBugPage gotoBugPage(int bugID) {
