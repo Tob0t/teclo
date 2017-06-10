@@ -10,7 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import at.scch.teclo.AbstractBugzillaTestWithLogin;
+import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.CreateNewBugPage;
+import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
 
 public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
@@ -27,38 +29,44 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		NewBugCreatedPage newBugCreatedPage = createNewBugPage.commitBug();
 
 		// Check if creating bug was successful
-		int bugId = newBugCreatedPage.getBugID();
-		assertEquals("Bug " + bugId + " has been added to the database", newBugCreatedPage.getBugWasAddedText());
+		int newBugId = newBugCreatedPage.getNewBugId();
+		assertEquals("Bug " + newBugId + " has been added to the database", newBugCreatedPage.getCreateSuccessMessage());
 
-		Logger.info("Created new default bug with summary " + summary + " and ID " + bugId);
+		Logger.info("Created new default bug with summary " + summary + " and ID " + newBugId);
 		
 		// verify changes including default values
 		// don't verify default values for operating system and platform, which
 		// are client values retrieved from browser by default
 
-		assertEquals(summary, newBugCreatedPage.getSummary());
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(newBugId);
 		
-		assertEquals("TestProduct", newBugCreatedPage.getCurrentProduct());
-		assertEquals("TestComponent", newBugCreatedPage.getCurrentComponent());
-		assertEquals("unspecified", newBugCreatedPage.getCurrentVersion());
-
-		assertEquals("P5", newBugCreatedPage.getCurrentPriority());
-		assertEquals("enhancement", newBugCreatedPage.getCurrentSeverity());
-		assertEquals("", newBugCreatedPage.getCurrentURL());
-		assertEquals("", newBugCreatedPage.getCurrentDependsOn());
-		assertEquals("", newBugCreatedPage.getCurrentBlocks());
-
-		assertEquals("0.0", newBugCreatedPage.getTimeEstimatedTime());
-		assertEquals("0.0", newBugCreatedPage.getTimeCurrentEstimation());
-		assertEquals("0.0 +", newBugCreatedPage.getTimeWorkTime());
-		assertEquals("0.0", newBugCreatedPage.getTimeRemainingTime());
-		assertEquals("0", newBugCreatedPage.getTimeCompletedInPercent());
-		assertEquals("0.0", newBugCreatedPage.getTimeGain());
-		assertEquals("", newBugCreatedPage.getTimeDeadline());
+		assertEquals(summary, editBugPage.getSummary());
 		
-		assertEquals("", newBugCreatedPage.getCurrentComment());
-		assertEquals("NEW", newBugCreatedPage.getCurrentBugState());
-		assertEquals("", newBugCreatedPage.getCommentOfFirstBug());
+		assertEquals("TestProduct", editBugPage.getProduct());
+		assertEquals("TestComponent", editBugPage.getComponent());
+		assertEquals("unspecified", editBugPage.getVersion());
+
+		assertEquals("P5", editBugPage.getPriority());
+		assertEquals("enhancement", editBugPage.getSeverity());
+		assertEquals("", editBugPage.getUrl());
+		assertEquals("", editBugPage.getDependsOn());
+		assertEquals("", editBugPage.getBlocks());
+
+		assertEquals("0.0", editBugPage.getTimeEstimated());
+		assertEquals("0.0", editBugPage.getTimeCurrentEstimation());
+		assertEquals("0.0 +", editBugPage.getTimeWorkCompleted());
+		assertEquals("0", editBugPage.getTimeWorked());
+		assertEquals("0.0", editBugPage.getTimeHoursLeft());
+		assertEquals("0", editBugPage.getTimeCompletedInPercent());
+		assertEquals("0.0", editBugPage.getTimeGain());
+		assertEquals("", editBugPage.getTimeDeadline());
+		
+		assertEquals("NEW", editBugPage.getBugStatus());
+		
+		assertEquals("", editBugPage.getComment());
+		assertEquals("", editBugPage.getFirstComment());
+		assertEquals("", editBugPage.getLastComment());
+		assertEquals(1, editBugPage.getNumberOfComments());
 	}
 
 	@Test
@@ -88,16 +96,19 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		NewBugCreatedPage newBugCreatedPage = createNewBugPage.commitBug();
 
 		// Check if creating bug was successful
-		int bugId = newBugCreatedPage.getBugID();
-		assertEquals("Bug " + bugId + " has been added to the database", newBugCreatedPage.getBugWasAddedText());
+		int newBugId = newBugCreatedPage.getNewBugId();
+		assertEquals("Bug " + newBugId + " has been added to the database", newBugCreatedPage.getCreateSuccessMessage());
 
-		Logger.info("Created new standard bug with summary " + summary + " and ID " + bugId);
+		Logger.info("Created new standard bug with summary " + summary + " and ID " + newBugId);
 
-		// verify changes
-		assertEquals(summary, newBugCreatedPage.getSummary());
-		assertEquals("Other", newBugCreatedPage.getCurrentPlatform());
-		assertEquals("Linux", newBugCreatedPage.getCurrentOpSys());
-		assertEquals("major", newBugCreatedPage.getCurrentSeverity());
+		// verify values of set fields
+		
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(newBugId);
+		
+		assertEquals(summary, editBugPage.getSummary());
+		assertEquals("Other", editBugPage.getPlatform());
+		assertEquals("Linux", editBugPage.getOpSys());
+		assertEquals("major", editBugPage.getSeverity());
 	}
 
 	@Test
@@ -119,7 +130,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		
 		createNewBugPage.fillTimeEstimatedTime(100);
 		createNewBugPage.fillTimeDeadline("2016-06-12");
-		createNewBugPage.fillURL("http://www.bugzilla.org");
+		createNewBugPage.fillURL("http://www.test-bugzilla.org");
 		
 		createNewBugPage.fillSummary(summary);
 		createNewBugPage.fillComment(comment);
@@ -127,34 +138,40 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		NewBugCreatedPage newBugCreatedPage = createNewBugPage.commitBug();
 
 		// Check if creating bug was successful
-		int bugId = newBugCreatedPage.getBugID();
-		assertEquals("Bug " + bugId + " has been added to the database", newBugCreatedPage.getBugWasAddedText());
+		int newBugId = newBugCreatedPage.getNewBugId();
+		assertEquals("Bug " + newBugId + " has been added to the database", newBugCreatedPage.getCreateSuccessMessage());
 
-		Logger.info("Created new default bug with summary " + summary + " and ID " + bugId);
+		Logger.info("Created new default bug with summary " + summary + " and ID " + newBugId);
 		
-		// verify changes including default values
-		assertEquals(summary, newBugCreatedPage.getSummary());
+		// verify values including default values
 		
-		assertEquals("TestProduct", newBugCreatedPage.getCurrentProduct());
-		assertEquals("TestComponent", newBugCreatedPage.getCurrentComponent());
-		assertEquals("unspecified", newBugCreatedPage.getCurrentVersion());
+		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(newBugId);
+		
+		assertEquals(summary, editBugPage.getSummary());
+		
+		assertEquals("TestProduct", editBugPage.getProduct());
+		assertEquals("TestComponent", editBugPage.getComponent());
+		assertEquals("unspecified", editBugPage.getVersion());
 
-		assertEquals("P1", newBugCreatedPage.getCurrentPriority());
-		assertEquals("blocker", newBugCreatedPage.getCurrentSeverity());
-		assertEquals("http://www.bugzilla.org", newBugCreatedPage.getCurrentURL());
-		assertEquals("", newBugCreatedPage.getCurrentDependsOn());
-		assertEquals("", newBugCreatedPage.getCurrentBlocks());
+		assertEquals("P1", editBugPage.getPriority());
+		assertEquals("blocker", editBugPage.getSeverity());
+		assertEquals("http://www.test-bugzilla.org", editBugPage.getUrl());
+		assertEquals("", editBugPage.getDependsOn());
+		assertEquals("", editBugPage.getBlocks());
 
-		assertEquals("100.0", newBugCreatedPage.getTimeEstimatedTime());
-		assertEquals("100.0", newBugCreatedPage.getTimeCurrentEstimation());
-		assertEquals("0.0 +", newBugCreatedPage.getTimeWorkTime());
-		assertEquals("100.0", newBugCreatedPage.getTimeRemainingTime());
-		assertEquals("0", newBugCreatedPage.getTimeCompletedInPercent());
-		assertEquals("0.0", newBugCreatedPage.getTimeGain());
-		assertEquals("2016-06-12", newBugCreatedPage.getTimeDeadline());
+		assertEquals("100.0", editBugPage.getTimeEstimated());
+		assertEquals("100.0", editBugPage.getTimeCurrentEstimation());
+		assertEquals("0.0 +", editBugPage.getTimeWorkCompleted());
+		assertEquals("0", editBugPage.getTimeWorked());
+		assertEquals("100.0", editBugPage.getTimeHoursLeft());
+		assertEquals("0", editBugPage.getTimeCompletedInPercent());
+		assertEquals("0.0", editBugPage.getTimeGain());
+		assertEquals("2016-06-12", editBugPage.getTimeDeadline());
 		
-		assertEquals("", newBugCreatedPage.getCurrentComment());
-		assertEquals("ASSIGNED", newBugCreatedPage.getCurrentBugState());
-		assertEquals(comment, newBugCreatedPage.getCommentOfFirstBug());
+		assertEquals("", editBugPage.getComment());
+		assertEquals("ASSIGNED", editBugPage.getBugStatus());
+		assertEquals(comment, editBugPage.getFirstComment());
+		assertEquals(comment, editBugPage.getLastComment());
+		assertEquals(1, editBugPage.getNumberOfComments());
 	}
 }

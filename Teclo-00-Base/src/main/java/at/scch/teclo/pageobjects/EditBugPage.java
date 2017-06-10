@@ -113,6 +113,10 @@ public class EditBugPage {
 	private WebElement commitButton;
 
 	
+	@FindBy(id = "comment_text_0")
+	private WebElement bugFirstComment;
+	
+	
 	@FindBy(linkText = "Home")
 	private WebElement homeLink;
 
@@ -283,7 +287,7 @@ public class EditBugPage {
 
 
 	public String getComment() {
-		return bugComment.getAttribute("value");
+		return bugComment.getText();
 	}
 	
 	public void setComment(String comment) {
@@ -327,12 +331,15 @@ public class EditBugPage {
 		return PageFactory.initElements(driver, BugCommittedPage.class);
 	}
 
-	
 	public SummaryNeededErrorPage commitBugWithEmptySummary() {
 		commitButton.click();
 		return PageFactory.initElements(driver, SummaryNeededErrorPage.class);
 	}
 	
+	
+	public String getFirstComment(){
+		return bugFirstComment.getText().replace("\n", " ");
+	}
 	
 	/**
 	 * Get the amount of comments.
@@ -352,7 +359,7 @@ public class EditBugPage {
 	 */
 	public String getLastComment(){
 		int lastCommentID = driver.findElements(By.xpath("//div[contains(concat(' ', @class, ' '), ' bz_comment ')]")).size()-1;
-		return driver.findElement(By.id("comment_text_"+lastCommentID)).getText();
+		return driver.findElement(By.id("comment_text_"+lastCommentID)).getText().replace("\n", " ");
 	}
 	
 	
