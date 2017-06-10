@@ -1,7 +1,6 @@
 package at.scch.teclo.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,37 +24,37 @@ public class ChangeBugStateTest extends AbstractBugzillaTestWithLogin {
 
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 
-		assertEquals("NEW", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("ASSIGNED");
+		assertEquals("NEW", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("ASSIGNED");
 		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("ASSIGNED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("RESOLVED");
+		assertEquals("ASSIGNED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("RESOLVED");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("RESOLVED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("VERIFIED");
+		assertEquals("RESOLVED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("VERIFIED");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("VERIFIED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("CLOSED");
+		assertEquals("VERIFIED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("CLOSED");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("CLOSED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("REOPENED");
+		assertEquals("CLOSED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("REOPENED");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("REOPENED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("NEW");
+		assertEquals("REOPENED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("NEW");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("NEW", editBugPage.getCurrentBugState());
+		assertEquals("NEW", editBugPage.getBugStatus());
 	}
 
 	@Test
@@ -63,32 +62,32 @@ public class ChangeBugStateTest extends AbstractBugzillaTestWithLogin {
 
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 
-		assertEquals("NEW", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("RESOLVED");
+		assertEquals("NEW", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("RESOLVED");
 		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("RESOLVED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("RESOLVED");
+		assertEquals("RESOLVED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("RESOLVED");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("RESOLVED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("CLOSED");
+		assertEquals("RESOLVED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("CLOSED");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("CLOSED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("REOPENED");
+		assertEquals("CLOSED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("REOPENED");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("REOPENED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("NEW");
+		assertEquals("REOPENED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("NEW");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("NEW", editBugPage.getCurrentBugState());
+		assertEquals("NEW", editBugPage.getBugStatus());
 	}
 
 	@Test
@@ -96,90 +95,88 @@ public class ChangeBugStateTest extends AbstractBugzillaTestWithLogin {
 
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 
-		assertEquals("NEW", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("ASSIGNED");
+		assertEquals("NEW", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("ASSIGNED");
 		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("ASSIGNED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("NEW");
+		assertEquals("ASSIGNED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("NEW");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("NEW", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("ASSIGNED");
+		assertEquals("NEW", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("ASSIGNED");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("ASSIGNED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("RESOLVED");
+		assertEquals("ASSIGNED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("RESOLVED");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("RESOLVED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("REOPENED");
+		assertEquals("RESOLVED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("REOPENED");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("REOPENED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("ASSIGNED");
+		assertEquals("REOPENED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("ASSIGNED");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("ASSIGNED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("RESOLVED");
+		assertEquals("ASSIGNED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("RESOLVED");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("RESOLVED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("VERIFIED");
+		assertEquals("RESOLVED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("VERIFIED");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("VERIFIED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("CLOSED");
+		assertEquals("VERIFIED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("CLOSED");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("CLOSED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("REOPENED");
+		assertEquals("CLOSED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("REOPENED");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("REOPENED", editBugPage.getCurrentBugState());
-		editBugPage.changeBugState("NEW");
+		assertEquals("REOPENED", editBugPage.getBugStatus());
+		editBugPage.setBugStatus("NEW");
 		bugCommittedPage = editBugPage.commitBug();
 
 		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
-		assertEquals("NEW", editBugPage.getCurrentBugState());
+		assertEquals("NEW", editBugPage.getBugStatus());
 	}
 
 	@Test
 	public void testMarkAsDuplicate() {
 		
 		// create second bug to mark as duplicate
-		BugzillaSetup.createExampleBug();
-		int duplicateBugID = BugzillaSetup.getExampleBugID();
+		int duplicateBugID = BugzillaSetup.createExampleBug();
 		
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
 				
 		// mark the bug as duplicate of current bug
 		editBugPage.clickMarkAsDuplicate();
-		editBugPage.editBugDuplicateOf(duplicateBugID);
+		editBugPage.setBugDuplicateOf(duplicateBugID);
 		
 		// commit
-		BugCommittedPage bugCommittedPage = editBugPage.commitBug();
-		editBugPage = bugCommittedPage.selectCommittedBug(currentBugID);
+		editBugPage = editBugPage.commitBug().selectCommittedBug(currentBugID);
 		
 		// verify on duplicated bug
-		assertEquals("RESOLVED", editBugPage.getCurrentBugState());
-		assertEquals("DUPLICATE", editBugPage.getCurrentBugResolution());
-		assertEquals("*** This bug has been marked as a duplicate of bug "+duplicateBugID+" ***", editBugPage.getLastCommentContent());
+		assertEquals("RESOLVED", editBugPage.getBugStatus());
+		assertEquals("DUPLICATE", editBugPage.getBugResolution());
+		assertEquals("*** This bug has been marked as a duplicate of bug "+duplicateBugID+" ***", editBugPage.getLastComment());
 		
 		// go to original bug
 		editBugPage = BugzillaSetup.gotoBugPage(duplicateBugID);
 		
 		// verify on current bug
-		assertEquals("*** Bug "+currentBugID+" has been marked as a duplicate of this bug. ***", editBugPage.getLastCommentContent());
+		assertEquals("*** Bug "+currentBugID+" has been marked as a duplicate of this bug. ***", editBugPage.getLastComment());
 	}
 }

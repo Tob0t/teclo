@@ -30,10 +30,10 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 
 		// precondition: bug changed
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
-		currentBugState = editBugPage.getCurrentBugState();
-		editBugPage.changeBugState("ASSIGNED");
-		currentBugPriority = editBugPage.getCurrentPriority();
-		editBugPage.editPriority("P3");
+		currentBugState = editBugPage.getBugStatus();
+		editBugPage.setBugStatus("ASSIGNED");
+		currentBugPriority = editBugPage.getPriority();
+		editBugPage.setPriority("P3");
 		editBugPage.commitBug();
 	}
 
@@ -107,8 +107,8 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 
 		// postcondition: change bug back
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
-		editBugPage.changeBugState(currentBugState);
-		editBugPage.editPriority(currentBugPriority);
+		editBugPage.setBugStatus(currentBugState);
+		editBugPage.setPriority(currentBugPriority);
 		editBugPage.commitBug();
 	}
 

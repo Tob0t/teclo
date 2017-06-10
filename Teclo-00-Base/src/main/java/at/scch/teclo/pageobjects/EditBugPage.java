@@ -12,60 +12,76 @@ import at.scch.teclo.Helper;
 public class EditBugPage {
 
 	private final WebDriver driver;
+	
+	@FindBy(id = "short_desc_nonedit_display")
+	private WebElement bugSummary;
+	
+	@FindBy(id = "editme_action")
+	private WebElement editBugSummaryLink;
 
 	@FindBy(id = "short_desc")
 	private WebElement bugSummaryEdit;
 
-	@FindBy(id = "editme_action")
-	private WebElement editBugSummaryLink;
+	
+	@FindBy(id = "product")
+	private WebElement bugProduct;
+	
+	@FindBy(xpath = "//td[@id='bz_show_bug_column_1']/table/tbody/tr[4]/td[2]")
+	private WebElement bugComponent;
+	
+	@FindBy(xpath = "//td[@id='bz_show_bug_column_1']/table/tbody/tr[5]/td[2]")
+	private WebElement bugVersion;
 
-	@FindBy(id = "short_desc_nonedit_display")
-	private WebElement bugSummary;
+	
+	@FindBy(id = "rep_platform")
+	private WebElement bugPlatform;
+	
+	@FindBy(id = "op_sys")
+	private WebElement bugOpSys;
+	
+	@FindBy(id = "priority")
+	private WebElement bugPriority;
+	
+	@FindBy(id = "bug_severity")
+	private WebElement bugSeverity;
+
+	 // TODO bugAssignedTo
+
 	
 	@FindBy(id = "bug_file_loc")
-	private WebElement bugURL;
+	private WebElement bugUrl;
 	
 	@FindBy(id = "bz_url_edit_action")
-	private WebElement bugEditURLLink;
+	private WebElement bugEditUrlLink;
+
 	
 	@FindBy(id = "dependson")
 	private WebElement bugDependsOn;
 	
-	@FindBy(id = "blocked_edit_action")
-	private WebElement bugEditBlocksLink;
+	@FindBy(id = "dependson_edit_action")
+	private WebElement bugEditDependsOnLink;	
 	
 	@FindBy(id = "blocked")
 	private WebElement bugBlocked;
+	
+	@FindBy(id = "blocked_edit_action")
+	private WebElement bugEditBlockedLink;
 
-	@FindBy(id = "rep_platform")
-	private WebElement bugPlatform;
-
-	@FindBy(id = "op_sys")
-	private WebElement bugOpSys;
-
-	@FindBy(id = "priority")
-	private WebElement bugPriority;
-
-	@FindBy(id = "bug_severity")
-	private WebElement bugSeverity;
-
-	@FindBy(id = "comment")
-	private WebElement bugComment;
 
 	@FindBy(id = "estimated_time")
-	private WebElement timeEstimatedTime;
+	private WebElement timeEstimated;
 
 	@FindBy(xpath = "//div[@id='bugzilla-body']/form/table[2]/tbody/tr[2]/td[2]")
 	private WebElement timeCurrentEstimation;
 
 	@FindBy(xpath = "//div[@id='bugzilla-body']/form/table[2]/tbody/tr[2]/td[3]")
-	private WebElement timeWorkTimeReadOnly;
+	private WebElement timeWorkTimeCompleted;
 	
 	@FindBy(id = "work_time")
-	private WebElement timeWorkTime;
+	private WebElement timeWork;
 
 	@FindBy(id = "remaining_time")
-	private WebElement timeRemainingTime;
+	private WebElement timeRemaining;
 	
 	@FindBy(xpath = "//div[@id='bugzilla-body']/form/table[2]/tbody/tr[2]/td[5]")
 	private WebElement timeCompletedInPercent;
@@ -76,8 +92,12 @@ public class EditBugPage {
 	@FindBy(id = "deadline")
 	private WebElement timeDeadline;
 
+	
+	@FindBy(id = "comment")
+	private WebElement bugComment;
+	
 	@FindBy(id = "bug_status")
-	private WebElement bugState;
+	private WebElement bugStatus;
 	
 	@FindBy(id = "resolution")
 	private WebElement bugResolution;
@@ -88,15 +108,18 @@ public class EditBugPage {
 	@FindBy(id = "dup_id")
 	private WebElement bugDuplicateID;
 
+	
 	@FindBy(id = "commit")
 	private WebElement commitButton;
 
+	
 	@FindBy(linkText = "Home")
 	private WebElement homeLink;
 
 	@FindBy(linkText = "My Bugs")
 	private WebElement myBugsLink;
 
+	
 	public EditBugPage(WebDriver driver) {
 		this.driver = driver;
 
@@ -106,140 +129,139 @@ public class EditBugPage {
 		}
 	}
 
-	public void editSummary(String summary) {
+	
+	public String getSummary() {
+		return bugSummary.getText();
+	}
+	
+	public void setSummary(String summary) {
 		editBugSummaryLink.click();
 		bugSummaryEdit.clear();
 		bugSummaryEdit.sendKeys(summary);
 	}
 
-	public void editPlatform(String platform) {
+	
+	public String getProduct() {
+		return Helper.getSelectedOptionValue(bugProduct);
+	}
+	
+	public void setProduct(String product) {
+		new Select(bugProduct).selectByVisibleText(product);
+	}
+	
+	public String getComponent() {
+		return bugComponent.getText();
+	}
+	
+	public String getVersion() {
+		return bugVersion.getText();
+	}
+	
+	
+	public String getPlatform() {
+		return Helper.getSelectedOptionValue(bugPlatform);
+	}
+	
+	public void setPlatform(String platform) {
 		new Select(bugPlatform).selectByVisibleText(platform);
 	}
 
-	public void editOpSys(String opSys) {
-		new Select(bugOpSys).selectByVisibleText(opSys);
-	}
-
-	public void editPriority(String priority) {
-		new Select(bugPriority).selectByVisibleText(priority);
-	}
-
-	public void editSeverity(String severity) {
-		new Select(bugSeverity).selectByVisibleText(severity);
-	}
-	
-	public void editURL(String url) {
-		bugURL.clear();
-		bugURL.sendKeys(url);
-	}
-	
-	public WebElement verifyURL(String url){
-		return driver.findElement(By.linkText(url));
-	}
-	
-	public void clearURL() {
-		bugEditURLLink.click();
-		bugURL.clear();
-	}
-	
-	public void editDependsOn(int bugID) {
-		bugDependsOn.click();
-		bugDependsOn.sendKeys(String.valueOf(bugID));
-	}
-	
-	public WebElement verifyDependsOn(int bugID){
-		return driver.findElement(By.linkText(String.valueOf(bugID)));
-	}
-	
-	public EditBugPage clickDependsOn(int bugID) {
-		driver.findElement(By.linkText(String.valueOf(bugID))).click();
-		return PageFactory.initElements(driver, EditBugPage.class);
-	}
-	
-	public void clearBlocksOn() {
-		bugEditBlocksLink.click();
-		bugBlocked.clear();
-	}
-	
-	public WebElement verifyBlocksOn(int bugID){
-		return driver.findElement(By.linkText(String.valueOf(bugID)));
-	}
-	
-	public void editTimeEstimatedTime(double estimatedTime) {
-		timeEstimatedTime.clear();
-		timeEstimatedTime.sendKeys(String.valueOf(estimatedTime));
-	}
-
-	public void editTimeWorkTime(double workTime) {
-		timeWorkTime.clear();
-		timeWorkTime.sendKeys(String.valueOf(workTime));
-	}
-
-	public void editTimeRemainigTime(double remainingTime) {
-		timeRemainingTime.clear();
-		timeRemainingTime.sendKeys(String.valueOf(remainingTime));
-	}
-
-	public void editTimeDeadline(String deadline) {
-		timeDeadline.clear();
-		timeDeadline.sendKeys(String.valueOf(deadline));
-	}
-
-	public void editComment(String comment) {
-		bugComment.clear();
-		bugComment.sendKeys(comment);
-	}
-
-	public void changeBugState(String bugStateString) {
-		new Select(bugState).selectByVisibleText(bugStateString);
-	}
-
-	public String getSummary() {
-		return bugSummary.getText();
-	}
-
-	public String getCurrentPlatform() {
-		return Helper.getSelectedOptionValue(bugPlatform);
-	}
-
-	public String getCurrentOpSys() {
+	public String getOpSys() {
 		return Helper.getSelectedOptionValue(bugOpSys);
 	}
 
-	public String getCurrentPriority() {
+	public void setOpSys(String opSys) {
+		new Select(bugOpSys).selectByVisibleText(opSys);
+	}
+
+	public String getPriority() {
 		return Helper.getSelectedOptionValue(bugPriority);
 	}
 
-	public String getCurrentSeverity() {
+	public void setPriority(String priority) {
+		new Select(bugPriority).selectByVisibleText(priority);
+	}
+
+	public String getSeverity() {
 		return Helper.getSelectedOptionValue(bugSeverity);
 	}
 	
-	public String getCurrentURL() {
-		return bugURL.getAttribute("value");
-	}
-	
-	public String getCurrentDependsOn() {
-		return bugDependsOn.getText();
-	}
-	
-	public String getCurrentBlocks() {
-		return bugBlocked.getText();
+	public void setSeverity(String severity) {
+		new Select(bugSeverity).selectByVisibleText(severity);
 	}
 
-	public String getTimeEstimatedTime() {
-		return timeEstimatedTime.getAttribute("value");
+	
+	public String getUrl() {
+		return bugUrl.getAttribute("value");
+	}
+	
+	public void setUrl(String url) {
+		if (!bugUrl.isDisplayed()) {
+			bugEditUrlLink.click();
+		}
+		bugUrl.clear();
+		bugUrl.sendKeys(url);
+	}
+	
+	
+	public String getDependsOn() {
+		return bugDependsOn.getAttribute("value");		
+	}
+	
+	public void setDependsOn(int bugId) {
+		if (!bugDependsOn.isDisplayed()) {
+			bugEditDependsOnLink.click();
+		}		
+		bugDependsOn.clear();
+		bugDependsOn.sendKeys(String.valueOf(bugId));
+	}
+	
+	public String getBlocks() {
+		return bugBlocked.getAttribute("value");
+	}
+	
+	public void setBlocks(String bugId) {
+		if (!bugBlocked.isDisplayed()) {
+			bugEditBlockedLink.click();
+		}		
+		bugBlocked.clear();
+		bugBlocked.sendKeys(String.valueOf(bugId));		
+	}
+
+	
+	public String getTimeEstimated() {
+		return timeEstimated.getAttribute("value");
+	}
+	
+	public void setTimeEstimated(double estimatedTime) {
+		timeEstimated.clear();
+		timeEstimated.sendKeys(String.valueOf(estimatedTime));
 	}
 	
 	public String getTimeCurrentEstimation() {
 		return timeCurrentEstimation.getText();
 	}
 
-	public String getTimeWorkTime() {
-		return timeWorkTimeReadOnly.getText();
+	public String getTimeWorkCompleted() {
+		return timeWorkTimeCompleted.getText();
+	}
+	
+	public String getTimeWorked() {
+		return timeWork.getAttribute("value");
+	}
+	
+	public void setTimeWorked(double workTime) {
+		timeWork.clear();
+		timeWork.sendKeys(String.valueOf(workTime));
 	}
 
-	public String getTimeRemainingTime() {
-		return timeRemainingTime.getAttribute("value");
+	public String getTimeHoursLeft() {
+		return timeRemaining.getAttribute("value");
+	}
+	
+	public void setTimeHoursLeft(double remainingTime) {
+		timeRemaining.clear();
+		timeRemaining.sendKeys(String.valueOf(remainingTime));
 	}
 	
 	public String getTimeCompletedInPercent() {
@@ -252,44 +274,71 @@ public class EditBugPage {
 
 	public String getTimeDeadline() {
 		return timeDeadline.getAttribute("value");
+	}	
+
+	public void setTimeDeadline(String deadline) {
+		timeDeadline.clear();
+		timeDeadline.sendKeys(String.valueOf(deadline));
+	}
+
+
+	public String getComment() {
+		return bugComment.getAttribute("value");
 	}
 	
-	public String getCurrentBugState() {
-		return Helper.getSelectedOptionValue(bugState);
+	public void setComment(String comment) {
+		bugComment.clear();
+		bugComment.sendKeys(comment);
+	}
+
+	
+	public String getBugStatus() {
+		return Helper.getSelectedOptionValue(bugStatus);
 	}
 	
-	public String getCurrentBugResolution() {
+	public void setBugStatus(String bugStatusName) {
+		new Select(bugStatus).selectByVisibleText(bugStatusName);
+	}
+	
+	public String getBugResolution() {
 		return Helper.getSelectedOptionValue(bugResolution);
 	}
 	
-	public String getCurrentComment(){
-		return bugComment.getText();
+	public void setBugResolution(String bugResolutionName) {
+		new Select(bugResolution).selectByVisibleText(bugResolutionName);
+	}
+
+	public String getBugDuplicateOf(){
+		return bugDuplicateID.getAttribute("value");
 	}
 	
-	public void clickMarkAsDuplicate(){
-		markAsDuplicateLink.click();
-	}
-	
-	public void editBugDuplicateOf(int bugID){
+	public void setBugDuplicateOf(int bugID){
 		bugDuplicateID.clear();
 		bugDuplicateID.sendKeys(String.valueOf(bugID));
 	}
 
+	public void clickMarkAsDuplicate(){
+			markAsDuplicateLink.click();
+	}
+
+	
 	public BugCommittedPage commitBug() {
 		commitButton.click();
 		return PageFactory.initElements(driver, BugCommittedPage.class);
 	}
 
+	
 	public SummaryNeededErrorPage commitBugWithEmptySummary() {
 		commitButton.click();
 		return PageFactory.initElements(driver, SummaryNeededErrorPage.class);
 	}
 	
+	
 	/**
-	 * Get the amount of comments
+	 * Get the amount of comments.
 	 * @return number of comments
 	 */
-	public int getAmountOfComments(){
+	public int getNumberOfComments(){
 		// this returns one element too less since the very first comment is containing two classes ('bz_comment' and 'bz_first_comment')
 		// return driver.findElements(By.xpath("//div[@class='bz_comment']")).size();
 		
@@ -298,13 +347,14 @@ public class EditBugPage {
 	}
 	
 	/**
-	 * Returns the content of the last comment
+	 * Returns the content of the last comment.
 	 * @return content of the last comment
 	 */
-	public String getLastCommentContent(){
+	public String getLastComment(){
 		int lastCommentID = driver.findElements(By.xpath("//div[contains(concat(' ', @class, ' '), ' bz_comment ')]")).size()-1;
 		return driver.findElement(By.id("comment_text_"+lastCommentID)).getText();
 	}
+	
 	
 	public LoggedInBasePage navigateToMyHomePage() {
 		homeLink.click();
@@ -315,5 +365,6 @@ public class EditBugPage {
 		myBugsLink.click();
 		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
+
 
 }

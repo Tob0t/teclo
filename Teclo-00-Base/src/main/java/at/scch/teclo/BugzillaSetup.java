@@ -114,7 +114,7 @@ public class BugzillaSetup {
 		}
 	}
 
-	public static void createExampleBug() {
+	public static int createExampleBug() {
 		checkDriver();
 		checkLogin();
 
@@ -129,6 +129,8 @@ public class BugzillaSetup {
 		// save the id of the bug
 		currentbugID = newBugCreatedPage.getBugID();
 		Logger.info("Created new example bug with summary {} and ID {}.", exampleBugSummary, currentbugID);
+		
+		return currentbugID;
 	}
 
 	public static int getExampleBugID() {
