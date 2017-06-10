@@ -89,7 +89,7 @@ public class BugResultsPage extends AbstractLoggedinBugzillaPage {
 	}
 
 	public BugResultsPage forgetSavedSearch(String savedSearchName) {
-		driver.findElement(By.linkText(savedSearchName)).click();
+		gotoSavedSearch(savedSearchName);
 		driver.findElement(By.linkText("Forget Search '" + savedSearchName + "'")).click();
 		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
