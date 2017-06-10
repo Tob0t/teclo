@@ -1,7 +1,6 @@
 package at.scch.teclo.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,9 +19,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testCreateNewBugDefaultValues() throws Exception {
-		String nowText = LocalDateTime.now().format(formatter);
-		String summary = "ExampleBugDefault_" + nowText;
-		String comment = "This is an example description for ExampleBugDefault created at " + nowText;
+		String summary = "ExampleBugDefault_" + LocalDateTime.now().format(formatter);
 
 		CreateNewBugPage createNewBugPage = loggedInBasePage.navigateToCreateNewBugPage();
 		createNewBugPage.fillSummary(summary);
@@ -159,7 +156,5 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		assertEquals("", newBugCreatedPage.getCurrentComment());
 		assertEquals("ASSIGNED", newBugCreatedPage.getCurrentBugState());
 		assertEquals(comment, newBugCreatedPage.getCommentOfFirstBug());
-		
-		
 	}
 }
