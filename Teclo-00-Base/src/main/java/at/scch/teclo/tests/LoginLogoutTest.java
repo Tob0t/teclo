@@ -53,28 +53,4 @@ public class LoginLogoutTest extends AbstractBugzillaTest {
 //		assertEquals("Invalid Username Or Password", loginErrorPage.getTitle());
 	}
 	
-	@Test
-	public void testLoginLogoutDeprecated() {
-
-		LogInBasePage logInBasePage = homeBasePage.navigateToLoginBasePage();
-		LoggedInBasePage loggedInBasePage = logInBasePage.login("admin", "admin");
-
-		// check if user is logged in
-		assertTrue(loggedInBasePage.isLogoutLinkPresent());
-
-		// check if correct user is logged in
-		assertEquals("| Log out admin", loggedInBasePage.getLogoutTextPlusUserName());
-
-		LoggedOutBasePage loggedOutBasePage = loggedInBasePage.logout();
-
-		// check if login link is being displayed again
-		assertTrue(loggedOutBasePage.isLoginLinkTopPresent());
-
-		assertEquals("Logged Out", loggedOutBasePage.getDriverTitle());
-
-		LogInErrorPage logInErrorPage = loggedOutBasePage.logInWithWrongUsernameAndWrongPassword("wrongUsername",
-				"wrongPassword");
-
-		assertEquals("Invalid Username Or Password", logInErrorPage.getDriverTitle());
-	}
 }
