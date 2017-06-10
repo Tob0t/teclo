@@ -16,7 +16,6 @@ public abstract class AbstractBugzillaPage {
 
 	protected final WebDriver driver;
 
-
 	@FindBy(linkText = "New")
 	private WebElement newLink;
 
@@ -28,7 +27,6 @@ public abstract class AbstractBugzillaPage {
 
 	@FindBy(linkText = "Reports")
 	private WebElement reportsLink;
-	
 
 	public AbstractBugzillaPage(WebDriver driver) {
 		this.driver = driver;
@@ -38,19 +36,20 @@ public abstract class AbstractBugzillaPage {
 					+ " does not match the displayed page (title: " + driver.getTitle() + ")!");
 		}
 	}
-	
-	/** Check that we're on the right page.
-	 *  The page object has to match the displayed page, otherwise a navigation error has occurred.
-	 *  The default implementation is checking the title of the page matching a given regular expression.
-	 *  
+
+	/**
+	 * Check that we're on the right page. The page object has to match the
+	 * displayed page, otherwise a navigation error has occurred. The default
+	 * implementation is checking the title of the page matching a given regular
+	 * expression.
+	 * 
 	 * @return true if the displayed page fits to this page object.
 	 */
 	abstract protected boolean matchingPageIsDisplayed();
-//		String expectedPageTitleRegex = ".*"; 
-//		return driver.getTitle().matches(expectedPageTitleRegex);
-//	}
-	
-	
+	// String expectedPageTitleRegex = ".*";
+	// return driver.getTitle().matches(expectedPageTitleRegex);
+	// }
+
 	protected boolean isElementPresent(By by) {
 		boolean elementFound = false;
 		// change the waiting time 0 seconds if the element is not found
@@ -66,8 +65,7 @@ public abstract class AbstractBugzillaPage {
 		}
 		return elementFound;
 	}
-	
-	
+
 	public String getTitle() {
 		return driver.getTitle();
 	}
@@ -75,14 +73,14 @@ public abstract class AbstractBugzillaPage {
 	public boolean isLoggedin() {
 		return isElementPresent(By.linkText("Log out"));
 	}
-	
+
 	public String getLoggedinUser() {
 		// find the li that contains the link "Log out"
 		WebElement liLogoutUser = driver.findElement(By.xpath("//li[a[text()[contains(.,'Log')]]]"));
 		String liText = liLogoutUser.getText();
-		return liText.substring(liText.lastIndexOf(" ")+1);
+		return liText.substring(liText.lastIndexOf(" ") + 1);
 	}
-	
+
 	public boolean login(String username, String password) {
 		driver.findElement(By.id("login_link_top")).click();
 		driver.findElement(By.id("Bugzilla_login_top")).click();
@@ -110,20 +108,19 @@ public abstract class AbstractBugzillaPage {
 
 		return isLoggedin();
 	}
-	
+
 	public StartPage logout() {
 		if (isLoggedin()) {
 			WebElement logoutLink = driver.findElement(By.linkText("Log out"));
 			logoutLink.click();
 		}
-		return PageFactory.initElements(driver, StartPage.class); 
+		return PageFactory.initElements(driver, StartPage.class);
 	}
-	
-	
+
 	public StartPage gotoStartPage() {
 		return BugzillaSetup.gotoStartPage();
 	}
-	
+
 	public CreateNewBugPage navigateToCreateNewBugPage() {
 		newLink.click();
 		return PageFactory.initElements(driver, CreateNewBugPage.class);
@@ -143,18 +140,18 @@ public abstract class AbstractBugzillaPage {
 		reportsLink.click();
 		return PageFactory.initElements(driver, ReportsBasePage.class);
 	}
-	
+
 	/** Goto login page if logged out. */
 	public LoginPage gotoLoginPage() {
 		newLink.click();
-		return PageFactory.initElements(driver, LoginPage.class);	
+		return PageFactory.initElements(driver, LoginPage.class);
 	}
-
 
 	public BugResultsPage gotoSavedSearch(String savedSearchName) {
-		// TODO By.xpath("//li[@id='links-saved']/ul/li/a[text()='remember bug']")
-		driver.findElement(By.linkText(savedSearchName)).click();
+		WebElement linkToSavedSearch = driver
+				.findElement(By.xpath("//li[@id='links-saved']/ul/li/a[text()='" + savedSearchName + "']"));
+		linkToSavedSearch.click();
 		return PageFactory.initElements(driver, BugResultsPage.class);
 	}
-	
+
 }
