@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public abstract class AbstractErrorPage extends AbstractLoggedinBugzillaPage {
+public abstract class AbstractErrorPage extends AbstractBugzillaPage {
 	
 	@FindBy(id = "error_msg")
 	private WebElement errorMsg;

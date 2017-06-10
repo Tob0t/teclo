@@ -8,12 +8,15 @@ import org.junit.Test;
 
 import at.scch.teclo.AbstractBugzillaTest;
 import at.scch.teclo.BugzillaSetup;
+import at.scch.teclo.pageobjects.CreateNewBugPage;
+import at.scch.teclo.pageobjects.LoginErrorPage;
+import at.scch.teclo.pageobjects.LoginPage;
 import at.scch.teclo.pageobjects.StartPage;
 
 public class LoginLogoutTest extends AbstractBugzillaTest {
 
 	@Test
-	public void testLoginLogoutSuccessful() {
+	public void testLoginLogoutTopOfPage() {
 		StartPage startPage = BugzillaSetup.gotoStartPage();
 		assertFalse(startPage.isLoggedin());
 		
@@ -28,16 +31,31 @@ public class LoginLogoutTest extends AbstractBugzillaTest {
 	}
 	
 	@Test
-	public void testLoginWrongUser() {
+	public void testLoginSuccessful() {
 		StartPage startPage = BugzillaSetup.gotoStartPage();
 		assertFalse(startPage.isLoggedin());
 		
-		assertFalse(startPage.login("wrongUsername", "wrongPassword"));
+		LoginPage loginPage = startPage.gotoLoginPage();
+		CreateNewBugPage createNewBugPage = loginPage.loginSuccessful("admin", "admin");
+		
+		assertTrue(createNewBugPage.isLoggedin());
+		assertEquals("admin", createNewBugPage.getLoggedinUser());
+		
+		startPage = createNewBugPage.logout();
 		
 		assertFalse(startPage.isLoggedin());
+	}
+	
+	@Test
+	public void testLoginFailing() {
+		StartPage startPage = BugzillaSetup.gotoStartPage();
+		assertFalse(startPage.isLoggedin());
 		
-//		LoginErrorPage loginErrorPage = new LoginErrorPage();
-//		assertEquals("Invalid Username Or Password", loginErrorPage.getTitle());
+		LoginPage loginPage = startPage.gotoLoginPage();
+		LoginErrorPage loginErrorPage = loginPage.loginFailing("wrongUsername", "wrongPassword");
+		
+		assertEquals("The username or password you entered is not valid.", loginErrorPage.getErrorMsg());
+		assertFalse(loginErrorPage.isLoggedin());
 	}
 	
 }

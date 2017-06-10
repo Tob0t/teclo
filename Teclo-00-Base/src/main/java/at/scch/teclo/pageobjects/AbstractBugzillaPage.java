@@ -143,6 +143,12 @@ public abstract class AbstractBugzillaPage {
 		reportsLink.click();
 		return PageFactory.initElements(driver, ReportsBasePage.class);
 	}
+	
+	/** Goto login page if logged out. */
+	public LoginPage gotoLoginPage() {
+		newLink.click();
+		return PageFactory.initElements(driver, LoginPage.class);	
+	}
 
 
 	public BugResultsPage gotoSavedSearch(String savedSearchName) {
