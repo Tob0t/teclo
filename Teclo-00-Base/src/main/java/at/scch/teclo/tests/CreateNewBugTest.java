@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import at.scch.teclo.AbstractBugzillaTestWithLogin;
 import at.scch.teclo.BugzillaSetup;
-import at.scch.teclo.pageobjects.CreateNewBugPage;
+import at.scch.teclo.pageobjects.CreateBugPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
 
@@ -20,13 +20,13 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss_SSS");
 
 	@Test
-	public void testCreateNewBugDefaultValues() throws Exception {
+	public void testCreateBugDefaultValues() throws Exception {
 		String summary = "ExampleBugDefault_" + LocalDateTime.now().format(formatter);
 
-		CreateNewBugPage createNewBugPage = startPage.navigateToCreateNewBugPage();
-		createNewBugPage.fillSummary(summary);
+		CreateBugPage createBugPage = startPage.gotoCreateBugPage();
+		createBugPage.fillSummary(summary);
 		
-		NewBugCreatedPage newBugCreatedPage = createNewBugPage.commitBug();
+		NewBugCreatedPage newBugCreatedPage = createBugPage.commitBug();
 
 		// Check if creating bug was successful
 		int newBugId = newBugCreatedPage.getNewBugId();
@@ -71,29 +71,29 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testCreateEmptySummaryResultsInAlertPopup() throws Exception {
-		CreateNewBugPage createNewBugPage = startPage.navigateToCreateNewBugPage();
-		createNewBugPage.fillSummary("");
+		CreateBugPage createBugPage = startPage.gotoCreateBugPage();
+		createBugPage.fillSummary("");
 
-		String alertMsg = createNewBugPage.commitBugWithEmptySummary();
+		String alertMsg = createBugPage.commitBugWithEmptySummary();
 
 		assertEquals("Please enter a summary sentence for this bug.", alertMsg);
 	}
 
 	@Test
-	public void testCreateNewBugStandardFields() throws Exception {
+	public void testCreateBugStandardFields() throws Exception {
 		String nowText = LocalDateTime.now().format(formatter);
 		String summary = "ExampleBugStandard_" + nowText;
 		String comment = "This is an example description for ExampleBugStandard created at " + nowText;
 
-		CreateNewBugPage createNewBugPage = startPage.navigateToCreateNewBugPage();
-		createNewBugPage.fillSummary(summary);
-		createNewBugPage.fillComment(comment);
+		CreateBugPage createBugPage = startPage.gotoCreateBugPage();
+		createBugPage.fillSummary(summary);
+		createBugPage.fillComment(comment);
 
-		createNewBugPage.fillPlatform("Other");
-		createNewBugPage.fillOpSys("Linux");
-		createNewBugPage.fillSeverity("major");
+		createBugPage.fillPlatform("Other");
+		createBugPage.fillOpSys("Linux");
+		createBugPage.fillSeverity("major");
 
-		NewBugCreatedPage newBugCreatedPage = createNewBugPage.commitBug();
+		NewBugCreatedPage newBugCreatedPage = createBugPage.commitBug();
 
 		// Check if creating bug was successful
 		int newBugId = newBugCreatedPage.getNewBugId();
@@ -112,30 +112,30 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 	}
 
 	@Test
-	public void testCreateNewBugAdvancedFields() {
+	public void testCreateBugAdvancedFields() {
 		String nowText = LocalDateTime.now().format(formatter);
 		String summary = "ExampleBugStandard_" + nowText;
 		String comment = "This is an example description for ExampleBugAdvanced created at " + nowText;
 			
-		CreateNewBugPage createNewBugPage = startPage.navigateToCreateNewBugPage();
-		createNewBugPage.toggleAdvancedFields();
+		CreateBugPage createBugPage = startPage.gotoCreateBugPage();
+		createBugPage.toggleAdvancedFields();
 		
-		createNewBugPage.fillSeverity("blocker");
-		createNewBugPage.fillPlatform("All");
-		createNewBugPage.fillOpSys("All");
-		createNewBugPage.fillPriority("P1");
+		createBugPage.fillSeverity("blocker");
+		createBugPage.fillPlatform("All");
+		createBugPage.fillOpSys("All");
+		createBugPage.fillPriority("P1");
 		
-		createNewBugPage.changeBugState("ASSIGNED");
-		createNewBugPage.fillCC("admin");
+		createBugPage.changeBugState("ASSIGNED");
+		createBugPage.fillCC("admin");
 		
-		createNewBugPage.fillTimeEstimatedTime(100);
-		createNewBugPage.fillTimeDeadline("2016-06-12");
-		createNewBugPage.fillURL("http://www.test-bugzilla.org");
+		createBugPage.fillTimeEstimatedTime(100);
+		createBugPage.fillTimeDeadline("2016-06-12");
+		createBugPage.fillURL("http://www.test-bugzilla.org");
 		
-		createNewBugPage.fillSummary(summary);
-		createNewBugPage.fillComment(comment);
+		createBugPage.fillSummary(summary);
+		createBugPage.fillComment(comment);
 		
-		NewBugCreatedPage newBugCreatedPage = createNewBugPage.commitBug();
+		NewBugCreatedPage newBugCreatedPage = createBugPage.commitBug();
 
 		// Check if creating bug was successful
 		int newBugId = newBugCreatedPage.getNewBugId();

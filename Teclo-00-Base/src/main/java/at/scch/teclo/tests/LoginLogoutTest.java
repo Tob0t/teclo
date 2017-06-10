@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import at.scch.teclo.AbstractBugzillaTest;
 import at.scch.teclo.BugzillaSetup;
-import at.scch.teclo.pageobjects.CreateNewBugPage;
+import at.scch.teclo.pageobjects.CreateBugPage;
 import at.scch.teclo.pageobjects.LoginErrorPage;
 import at.scch.teclo.pageobjects.LoginPage;
 import at.scch.teclo.pageobjects.StartPage;
@@ -36,12 +36,12 @@ public class LoginLogoutTest extends AbstractBugzillaTest {
 		assertFalse(startPage.isLoggedin());
 		
 		LoginPage loginPage = startPage.gotoLoginPage();
-		CreateNewBugPage createNewBugPage = loginPage.loginSuccessful("admin", "admin");
+		CreateBugPage createBugPage = loginPage.loginSuccessful("admin", "admin");
 		
-		assertTrue(createNewBugPage.isLoggedin());
-		assertEquals("admin", createNewBugPage.getLoggedinUser());
+		assertTrue(createBugPage.isLoggedin());
+		assertEquals("admin", createBugPage.getLoggedinUser());
 		
-		startPage = createNewBugPage.logout();
+		startPage = createBugPage.logout();
 		
 		assertFalse(startPage.isLoggedin());
 	}

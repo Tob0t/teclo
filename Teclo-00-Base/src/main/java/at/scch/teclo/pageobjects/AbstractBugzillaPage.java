@@ -121,14 +121,9 @@ public abstract class AbstractBugzillaPage {
 		return BugzillaSetup.gotoStartPage();
 	}
 
-	public CreateNewBugPage navigateToCreateNewBugPage() {
+	public CreateBugPage gotoCreateBugPage() {
 		newLink.click();
-		return PageFactory.initElements(driver, CreateNewBugPage.class);
-	}
-
-	public BugResultsPage navigateToBugResultsPage() {
-		myBugsLink.click();
-		return PageFactory.initElements(driver, BugResultsPage.class);
+		return PageFactory.initElements(driver, CreateBugPage.class);
 	}
 
 	public SearchBasePage navigateToSearchBasePage() {

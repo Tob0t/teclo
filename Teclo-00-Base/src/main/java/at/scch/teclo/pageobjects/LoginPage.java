@@ -27,14 +27,14 @@ public class LoginPage extends AbstractBugzillaPage {
 	}
 
 		
-	public CreateNewBugPage loginSuccessful(String username, String password) {
+	public CreateBugPage loginSuccessful(String username, String password) {
 		bugzillaLogin.clear();
 		bugzillaLogin.sendKeys(username);
 		bugzillaPassword.clear();
 		bugzillaPassword.sendKeys(password);
 		loginButton.click();
 		
-		return PageFactory.initElements(driver, CreateNewBugPage.class); 
+		return PageFactory.initElements(driver, CreateBugPage.class); 
 	}
 	
 	public LoginErrorPage loginFailing(String username, String password) {

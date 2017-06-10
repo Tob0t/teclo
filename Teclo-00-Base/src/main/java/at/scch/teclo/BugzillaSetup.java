@@ -13,7 +13,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import at.scch.teclo.pageobjects.CreateNewBugPage;
+import at.scch.teclo.pageobjects.CreateBugPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.NewBugCreatedPage;
 import at.scch.teclo.pageobjects.StartPage;
@@ -122,8 +122,8 @@ public class BugzillaSetup {
 		exampleBugSummary = "Bug_" + LocalDateTime.now().format(formatter);
 
 		// create bug
-		CreateNewBugPage createNewBugPage = startPage.navigateToCreateNewBugPage();
-		NewBugCreatedPage newBugCreatedPage = createNewBugPage.createNewBug(exampleBugSummary, "test data");
+		CreateBugPage createBugPage = startPage.gotoCreateBugPage();
+		NewBugCreatedPage newBugCreatedPage = createBugPage.createNewBug(exampleBugSummary, "test data");
 
 		// save the id of the bug
 		currentbugID = newBugCreatedPage.getNewBugId();

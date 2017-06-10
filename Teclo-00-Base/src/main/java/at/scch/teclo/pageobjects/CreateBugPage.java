@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-public class CreateNewBugPage extends AbstractLoggedinBugzillaPage {
+public class CreateBugPage extends AbstractLoggedinBugzillaPage {
 	
 	@FindBy(id = "expert_fields_controller")
 	private WebElement linkToggleAdvancedFields;
@@ -49,7 +49,7 @@ public class CreateNewBugPage extends AbstractLoggedinBugzillaPage {
 	private WebElement commitButton;
 
 	
-	public CreateNewBugPage(WebDriver driver) {
+	public CreateBugPage(WebDriver driver) {
 		super(driver);
 	}
 	
