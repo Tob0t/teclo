@@ -38,6 +38,9 @@ public class BugzillaSetup {
 
 		// set the variable BASE_URL received from the props file
 		baseUrl = System.getProperty("BASE_URL");
+		if (!baseUrl.endsWith("/")) {
+			baseUrl = baseUrl + "/";
+		}
 
 		String webDriver = System.getProperty(CHROME_DRIVER_PROPERTY);
 		if (webDriver == null) {
@@ -154,7 +157,7 @@ public class BugzillaSetup {
 	public static EditBugPage gotoBugPage(int bugID) {
 		checkDriver();
 
-		driver.get(baseUrl + "/show_bug.cgi?id=" + bugID);
+		driver.get(baseUrl + "show_bug.cgi?id=" + bugID);
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
 

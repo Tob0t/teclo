@@ -1,16 +1,14 @@
 package at.scch.teclo.pageobjects;
 
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import at.scch.teclo.BugzillaSetup;
+import at.scch.teclo.Helper;
 
 public abstract class AbstractBugzillaPage {
 
@@ -28,6 +26,13 @@ public abstract class AbstractBugzillaPage {
 	@FindBy(linkText = "Reports")
 	private WebElement reportsLink;
 
+	@FindBy(id = "quicksearch_top")
+	private WebElement quickSearch;
+
+	@FindBy(id = "find_top")
+	private WebElement quickFindButton;
+	
+	
 	public AbstractBugzillaPage(WebDriver driver) {
 		this.driver = driver;
 
@@ -50,29 +55,13 @@ public abstract class AbstractBugzillaPage {
 	// return driver.getTitle().matches(expectedPageTitleRegex);
 	// }
 
-	protected boolean isElementPresent(By by) {
-		boolean elementFound = false;
-		// change the waiting time 0 seconds if the element is not found
-		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-		try {
-			driver.findElement(by);
-			elementFound = true;
-		} catch (NoSuchElementException e) {
-			elementFound = false;
-		} finally {
-			// change the waiting time back to 10 seconds
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		}
-		return elementFound;
-	}
-
 	
 	public String getTitle() {
 		return driver.getTitle();
 	}
 
 	public boolean isLoggedin() {
-		return isElementPresent(By.linkText("Log out"));
+		return Helper.isElementPresent(driver, By.linkText("Log out"));
 	}
 
 	public String getLoggedinUser() {
@@ -143,6 +132,22 @@ public abstract class AbstractBugzillaPage {
 		return PageFactory.initElements(driver, LoginPage.class);
 	}
 
+	public BugResultsPage searchFor(String searchTerm) {
+		quickSearch.clear();
+		quickSearch.sendKeys(searchTerm);
+		quickFindButton.click();
+
+		return PageFactory.initElements(driver, BugResultsPage.class);
+	}
+
+	public EditBugPage searchFor(int bugId) {
+		quickSearch.clear();
+		quickSearch.sendKeys(String.valueOf(bugId));
+		quickFindButton.click();
+
+		return PageFactory.initElements(driver, EditBugPage.class);
+	}	
+	
 	public BugResultsPage gotoSavedSearch(String savedSearchName) {
 		WebElement linkToSavedSearch = driver
 				.findElement(By.xpath("//li[@id='links-saved']/ul/li/a[text()='" + savedSearchName + "']"));
