@@ -4,13 +4,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
-public class NewBugCreatedPage extends AbstractLoggedinBugzillaPage {
+public class BugCreatedPage extends AbstractLoggedinBugzillaPage {
 
 	@FindBy(id = "title")
 	private WebElement bugTitle;
 
-	public NewBugCreatedPage(WebDriver driver) {
+	public BugCreatedPage(WebDriver driver) {
 		super(driver);
 	}
 	
@@ -20,11 +21,16 @@ public class NewBugCreatedPage extends AbstractLoggedinBugzillaPage {
 	}
 	
 
-	public int getNewBugId() {
+	public int getCreatedBugId() {
 		return Integer.parseInt(bugTitle.getText().replaceAll("[^0-9]", ""));
 	}
 
-	public String getCreateSuccessMessage() {
+	public EditBugPage gotoCreatedBug() {
+		driver.findElement(By.linkText("Bug " + getCreatedBugId())).click();
+		return PageFactory.initElements(driver, EditBugPage.class);
+	}
+	
+	public String getSuccessMsg() {
 		return driver.findElement(By.cssSelector("dt")).getText();
 	}
 }

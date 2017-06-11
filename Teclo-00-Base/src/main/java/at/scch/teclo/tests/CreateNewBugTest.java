@@ -10,10 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import at.scch.teclo.AbstractBugzillaTestWithLogin;
-import at.scch.teclo.BugzillaSetup;
+import at.scch.teclo.pageobjects.BugCreatedPage;
 import at.scch.teclo.pageobjects.CreateBugPage;
 import at.scch.teclo.pageobjects.EditBugPage;
-import at.scch.teclo.pageobjects.NewBugCreatedPage;
 
 public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 	private static final Logger Logger = LoggerFactory.getLogger(CreateNewBugTest.class);
@@ -26,11 +25,11 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		CreateBugPage createBugPage = startPage.gotoCreateBugPage();
 		createBugPage.fillSummary(summary);
 		
-		NewBugCreatedPage newBugCreatedPage = createBugPage.commitBug();
+		BugCreatedPage bugCreatedPage = createBugPage.commitBug();
 
 		// Check if creating bug was successful
-		int newBugId = newBugCreatedPage.getNewBugId();
-		assertEquals("Bug " + newBugId + " has been added to the database", newBugCreatedPage.getCreateSuccessMessage());
+		int newBugId = bugCreatedPage.getCreatedBugId();
+		assertEquals("Bug " + newBugId + " has been added to the database", bugCreatedPage.getSuccessMsg());
 
 		Logger.info("Created new default bug with summary " + summary + " and ID " + newBugId);
 		
@@ -38,7 +37,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		// don't verify default values for operating system and platform, which
 		// are client values retrieved from browser by default
 
-		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(newBugId);
+		EditBugPage editBugPage = bugCreatedPage.gotoCreatedBug();
 		
 		assertEquals(summary, editBugPage.getSummary());
 		
@@ -93,17 +92,17 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		createBugPage.fillOpSys("Linux");
 		createBugPage.fillSeverity("major");
 
-		NewBugCreatedPage newBugCreatedPage = createBugPage.commitBug();
+		BugCreatedPage bugCreatedPage = createBugPage.commitBug();
 
 		// Check if creating bug was successful
-		int newBugId = newBugCreatedPage.getNewBugId();
-		assertEquals("Bug " + newBugId + " has been added to the database", newBugCreatedPage.getCreateSuccessMessage());
+		int newBugId = bugCreatedPage.getCreatedBugId();
+		assertEquals("Bug " + newBugId + " has been added to the database", bugCreatedPage.getSuccessMsg());
 
 		Logger.info("Created new standard bug with summary " + summary + " and ID " + newBugId);
 
 		// verify values of set fields
 		
-		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(newBugId);
+		EditBugPage editBugPage = bugCreatedPage.gotoCreatedBug();
 		
 		assertEquals(summary, editBugPage.getSummary());
 		assertEquals("Other", editBugPage.getPlatform());
@@ -135,17 +134,17 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		createBugPage.fillSummary(summary);
 		createBugPage.fillComment(comment);
 		
-		NewBugCreatedPage newBugCreatedPage = createBugPage.commitBug();
+		BugCreatedPage bugCreatedPage = createBugPage.commitBug();
 
 		// Check if creating bug was successful
-		int newBugId = newBugCreatedPage.getNewBugId();
-		assertEquals("Bug " + newBugId + " has been added to the database", newBugCreatedPage.getCreateSuccessMessage());
+		int newBugId = bugCreatedPage.getCreatedBugId();
+		assertEquals("Bug " + newBugId + " has been added to the database", bugCreatedPage.getSuccessMsg());
 
 		Logger.info("Created new default bug with summary " + summary + " and ID " + newBugId);
 		
 		// verify values including default values
 		
-		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(newBugId);
+		EditBugPage editBugPage = bugCreatedPage.gotoCreatedBug();
 		
 		assertEquals(summary, editBugPage.getSummary());
 		

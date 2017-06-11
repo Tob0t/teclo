@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import at.scch.teclo.pageobjects.CreateBugPage;
 import at.scch.teclo.pageobjects.EditBugPage;
-import at.scch.teclo.pageobjects.NewBugCreatedPage;
+import at.scch.teclo.pageobjects.BugCreatedPage;
 import at.scch.teclo.pageobjects.StartPage;
 
 /**
@@ -123,10 +123,10 @@ public class BugzillaSetup {
 
 		// create bug
 		CreateBugPage createBugPage = startPage.gotoCreateBugPage();
-		NewBugCreatedPage newBugCreatedPage = createBugPage.createNewBug(exampleBugSummary, "test data");
+		BugCreatedPage bugCreatedPage = createBugPage.createNewBug(exampleBugSummary, "test data");
 
 		// save the id of the bug
-		currentbugID = newBugCreatedPage.getNewBugId();
+		currentbugID = bugCreatedPage.getCreatedBugId();
 		Logger.info("Created new example bug with summary {} and ID {}.", exampleBugSummary, currentbugID);
 		
 		return currentbugID;

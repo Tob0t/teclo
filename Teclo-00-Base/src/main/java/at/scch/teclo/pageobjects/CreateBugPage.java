@@ -113,9 +113,9 @@ public class CreateBugPage extends AbstractLoggedinBugzillaPage {
 		new Select(bugState).selectByVisibleText(bugStateString);
 	}
 
-	public NewBugCreatedPage commitBug() {
+	public BugCreatedPage commitBug() {
 		commitButton.click();
-		return PageFactory.initElements(driver, NewBugCreatedPage.class);
+		return PageFactory.initElements(driver, BugCreatedPage.class);
 	}
 
 	/** Summary is empty, commit results in alert popup. */
@@ -134,12 +134,12 @@ public class CreateBugPage extends AbstractLoggedinBugzillaPage {
 	}
 
 	
-	public NewBugCreatedPage createNewBug(String summary, String description) {
+	public BugCreatedPage createNewBug(String summary, String description) {
 		fillSummary(summary);
 		fillComment(description);
 		commitBug();
 
-		return PageFactory.initElements(driver, NewBugCreatedPage.class);
+		return PageFactory.initElements(driver, BugCreatedPage.class);
 	}
 
 	
