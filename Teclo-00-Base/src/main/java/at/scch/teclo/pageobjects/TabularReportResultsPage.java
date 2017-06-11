@@ -7,10 +7,10 @@ import org.openqa.selenium.support.FindBy;
 public class TabularReportResultsPage extends AbstractLoggedinBugzillaPage {
 	
 	@FindBy(xpath = "//div[@id='bugzilla-body']/div/table/tbody/tr/td[2]/strong")
-	private WebElement xAxesDescription;
+	private WebElement horizontalAxisLabel;
 
 	@FindBy(xpath = "//div[@id='bugzilla-body']/div/table/tbody/tr[2]/td/strong")
-	private WebElement yAxesDescription;
+	private WebElement verticalAxisLabel;
 
 	
 	public TabularReportResultsPage(WebDriver driver) {
@@ -23,12 +23,12 @@ public class TabularReportResultsPage extends AbstractLoggedinBugzillaPage {
 	}
 	
 
-	public String getXAxesDescription() {
-		return xAxesDescription.getText();
+	public String getHorizontalAxisLabel() {
+		return horizontalAxisLabel.getText();
 	}
 
-	public String getYAxesDescription() {
-		return yAxesDescription.getText();
+	public String getVerticalAxisLabel() {
+		return verticalAxisLabel.getText();
 	}
 
 }

@@ -9,10 +9,10 @@ import org.openqa.selenium.support.ui.Select;
 public class TabularReportGeneratePage extends AbstractLoggedinBugzillaPage {
 
 	@FindBy(name = "x_axis_field")
-	private WebElement horizontalAxesField;
+	private WebElement horizontalAxisField;
 
 	@FindBy(name = "y_axis_field")
-	private WebElement verticalAxesField;
+	private WebElement verticalAxisField;
 
 	@FindBy(id = "Generate_Report_top")
 	private WebElement generateReportButton;
@@ -28,12 +28,12 @@ public class TabularReportGeneratePage extends AbstractLoggedinBugzillaPage {
 	}
 	
 	
-	public void selectHorizontalAxes(String horizontalValue) {
-		new Select(horizontalAxesField).selectByVisibleText(horizontalValue);
+	public void setHorizontalAxis(String horizontalValue) {
+		new Select(horizontalAxisField).selectByVisibleText(horizontalValue);
 	}
 
-	public void selectVeritcalAxes(String verticalValue) {
-		new Select(verticalAxesField).selectByVisibleText(verticalValue);
+	public void setVeritcalAxis(String verticalValue) {
+		new Select(verticalAxisField).selectByVisibleText(verticalValue);
 	}
 
 	public TabularReportResultsPage generateReport() {

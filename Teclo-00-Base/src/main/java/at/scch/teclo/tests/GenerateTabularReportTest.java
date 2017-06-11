@@ -22,12 +22,12 @@ public class GenerateTabularReportTest extends AbstractBugzillaTestWithLogin {
 	public void testGenerateTabularReport() throws Exception {
 		ReportsBasePage reportsBasePage = startPage.gotoReportsBasePage();
 		TabularReportGeneratePage tabularReportGeneratePage = reportsBasePage.gotoGenerateTabularReportPage();
-		tabularReportGeneratePage.selectHorizontalAxes("Status");
-		tabularReportGeneratePage.selectVeritcalAxes("Assignee");
+		tabularReportGeneratePage.setHorizontalAxis("Status");
+		tabularReportGeneratePage.setVeritcalAxis("Assignee");
 
 		TabularReportResultsPage tabularReportResultsPage = tabularReportGeneratePage.generateReport();
 
-		assertEquals("Status", tabularReportResultsPage.getXAxesDescription());
-		assertEquals("Assignee", tabularReportResultsPage.getYAxesDescription());
+		assertEquals("Status", tabularReportResultsPage.getHorizontalAxisLabel());
+		assertEquals("Assignee", tabularReportResultsPage.getVerticalAxisLabel());
 	}
 }
