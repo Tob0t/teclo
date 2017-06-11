@@ -24,7 +24,7 @@ public class SearchBasePage extends AbstractLoggedinBugzillaPage {
 	}
 	
 
-	public SpecificSearchPage navigateToSpecificSearchPage() {
+	public SpecificSearchPage gotoSpecificSearchPage() {
 		// change tab if the wrong search is pre-selected
 		if (currentActiveTab.getText().equals("Advanced Search")) {
 			clickableTab.click();
@@ -32,7 +32,7 @@ public class SearchBasePage extends AbstractLoggedinBugzillaPage {
 		return PageFactory.initElements(driver, SpecificSearchPage.class);
 	}
 
-	public AdvancedSearchPage navigateToAdvancedSearchPage() {
+	public AdvancedSearchPage gotoAdvancedSearchPage() {
 		// change tab if the wrong search is pre-selected
 		if (currentActiveTab.getText().equals("Find a Specific Bug")) {
 			clickableTab.click();
