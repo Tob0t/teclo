@@ -27,7 +27,7 @@ public abstract class AbstractBugzillaPage {
 	private WebElement reportsLink;
 
 	@FindBy(id = "quicksearch_top")
-	private WebElement quickSearch;
+	private WebElement quickFindText;
 
 	@FindBy(id = "find_top")
 	private WebElement quickFindButton;
@@ -132,21 +132,13 @@ public abstract class AbstractBugzillaPage {
 		return PageFactory.initElements(driver, LoginPage.class);
 	}
 
-	public SearchResultsPage searchFor(String searchTerm) {
-		quickSearch.clear();
-		quickSearch.sendKeys(searchTerm);
-		quickFindButton.click();
-
-		return PageFactory.initElements(driver, SearchResultsPage.class);
-	}
-
-	public EditBugPage searchFor(int bugId) {
-		quickSearch.clear();
-		quickSearch.sendKeys(String.valueOf(bugId));
+	public EditBugPage findBug(int bugId) {
+		quickFindText.clear();
+		quickFindText.sendKeys(String.valueOf(bugId));
 		quickFindButton.click();
 
 		return PageFactory.initElements(driver, EditBugPage.class);
-	}	
+	}
 	
 	public SearchResultsPage performSavedSearch(String savedSearchName) {
 		WebElement linkToSavedSearch = driver

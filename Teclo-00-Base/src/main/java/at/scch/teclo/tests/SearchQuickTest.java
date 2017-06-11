@@ -19,6 +19,7 @@ public class SearchQuickTest extends AbstractBugzillaTestWithLogin {
 	public void setUp() throws Exception {
 		currentBugId = BugzillaSetup.getExampleBugId();
 		currentBugSummary = BugzillaSetup.getExampleBugSummary();
+		startPage = BugzillaSetup.gotoStartPage();
 	}
 
 	@Test
@@ -43,9 +44,9 @@ public class SearchQuickTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testFindBugMultiple() throws Exception {
-		// add one more bug to make sure that there are at least 2 or more bugs
-		// in the database
+		// add one more bug to make sure there are at least 2 or more bugs in the DB
 		BugzillaSetup.createExampleBug();
+		startPage = BugzillaSetup.gotoStartPage();
 
 		SearchResultsPage searchResultsPage = startPage.searchFor("Bug");
 		assertTrue("No multiple bugs found", 1 < searchResultsPage.getAmountOfBugs());
