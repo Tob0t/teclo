@@ -58,9 +58,9 @@ public class SearchQuickTest extends AbstractBugzillaTestWithLogin {
 		int numberFoundBugs = searchResultsPage.getAmountOfBugs();
 		String firstBugSummary = searchResultsPage.getSummaryOfFirstBug();
 
-		searchResultsPage = searchResultsPage.saveSearch("SearchFor_" + currentBugSummary);
+		searchResultsPage = searchResultsPage.rememberSavedSearch("SearchFor_" + currentBugSummary);
 		searchResultsPage.gotoStartPage();
-		searchResultsPage = startPage.gotoSavedSearch("SearchFor_" + currentBugSummary);
+		searchResultsPage = startPage.performSavedSearch("SearchFor_" + currentBugSummary);
 
 		assertEquals(numberFoundBugs, searchResultsPage.getAmountOfBugs());
 		assertEquals(firstBugSummary, searchResultsPage.getSummaryOfFirstBug());

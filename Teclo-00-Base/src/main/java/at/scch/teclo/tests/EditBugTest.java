@@ -29,7 +29,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testEditSummary() throws Exception {
-		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
+		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 
 		editBugPage.setSummary("Test Summary !\"�$%&/(=?\\#*1234567890\'.:;,");
 		BugChangedPage bugChangedPage = editBugPage.commitBug();
@@ -46,21 +46,21 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testEditEmptySummary() throws Exception {
-		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
+		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 
 		editBugPage.setSummary("");
 		ErrorSummaryNeededPage errorSummaryNeededPage = editBugPage.commitBugWithEmptySummary();
 		assertEquals("You must enter a summary for this bug.", errorSummaryNeededPage.getErrorMsg());
 
 		// verify no changes were made
-		editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
+		editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 		assertEquals(currentBugSummary, editBugPage.getSummary());
 	}
 
 	@Test
 	public void testEditBugFields() throws Exception {
 		// browse to the current bug
-		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
+		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 
 		// edit bug
 		editBugPage.setPlatform("Other");
@@ -85,7 +85,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		String nowText = LocalDateTime.now().format(formatter);
 		String comment = "This is an example comment for testAddComment created at " + nowText;
 				
-		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
+		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 		int currentAmountOfComments = editBugPage.getNumberOfComments();
 		
 		editBugPage.setComment(comment);
@@ -100,7 +100,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testEditTimes() throws Exception {
-		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
+		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 
 		// set time
 		editBugPage.setTimeEstimated(100);
@@ -135,7 +135,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testEditDeadline() throws Exception {
-		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
+		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 
 		editBugPage.setTimeDeadline("1901-12-17");
 		editBugPage = editBugPage.commitBug().gotoChangedBugPage();
@@ -148,7 +148,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testEditUrl() {
-		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
+		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 		
 		editBugPage.setUrl("http://www.test-bugzilla.org");
 		editBugPage = editBugPage.commitBug().gotoChangedBugPage();
@@ -162,14 +162,14 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 	@Test
 	public void testEditDependsOn() {
 		int dependingOnBugId = BugzillaSetup.createExampleBug();
-		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
+		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 		
 		editBugPage.setDependsOn(dependingOnBugId);
 		editBugPage = editBugPage.commitBug().gotoChangedBugPage();
 		assertEquals("edited page (currentBugId) should show dependsOnId as depending on", 
 				dependingOnBugId, Integer.parseInt(editBugPage.getDependsOn()));
 
-		editBugPage = BugzillaSetup.gotoBugPage(dependingOnBugId);
+		editBugPage = BugzillaSetup.gotoEditBugPage(dependingOnBugId);
 		assertEquals("dependingOn page should show currentBugId (edited page) as blocks", 
 				currentBugId, Integer.parseInt(editBugPage.getBlocks()));
 		
@@ -178,7 +178,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		assertEquals("dependingOn page should have cleared blocks", 
 				"", editBugPage.getBlocks());
 		
-		editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
+		editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 		assertEquals("edited page (currentBugId) should have cleared depending on", 
 				"", editBugPage.getDependsOn());
 	}

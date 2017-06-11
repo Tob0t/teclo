@@ -29,7 +29,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		currentBugSummary = BugzillaSetup.getExampleBugSummary();
 
 		// precondition: bug changed
-		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
+		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugID);
 		currentBugStatus = editBugPage.getBugStatus();
 		editBugPage.setBugStatus("ASSIGNED");
 		currentBugPriority = editBugPage.getPriority();
@@ -39,8 +39,8 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testFindBugZarro() throws Exception {
-		SearchBasePage searchPage = startPage.gotoSearchBasePage();
-		SearchAdvancedPage searchAdvancedPage = searchPage.gotoAdvancedSearchPage();
+		SearchBasePage searchBasePage = startPage.gotoSearchBasePage();
+		SearchAdvancedPage searchAdvancedPage = searchBasePage.gotoAdvancedSearchPage();
 
 		searchAdvancedPage.deselectBugStatus("NEW");
 		searchAdvancedPage.deselectBugStatus("ASSIGNED");
@@ -48,15 +48,15 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 
 		searchAdvancedPage.selectBugStatus("RESOLVED");
 		searchAdvancedPage.fillSummary(currentBugSummary.replace("_", "-"));
-		searchResultsPage = searchAdvancedPage.submitSearch();
+		searchResultsPage = searchAdvancedPage.submit();
 
 		assertEquals("More than 0 bugs found!", 0, searchResultsPage.getAmountOfBugs());
 	}
 
 	@Test
 	public void testFindBugSingle() throws Exception {
-		SearchBasePage searchPage = startPage.gotoSearchBasePage();
-		SearchAdvancedPage searchAdvancedPage = searchPage.gotoAdvancedSearchPage();
+		SearchBasePage searchBasePage = startPage.gotoSearchBasePage();
+		SearchAdvancedPage searchAdvancedPage = searchBasePage.gotoAdvancedSearchPage();
 
 		searchAdvancedPage.deselectBugStatus("NEW");
 		searchAdvancedPage.deselectBugStatus("ASSIGNED");
@@ -64,7 +64,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 
 		searchAdvancedPage.selectBugStatus("ASSIGNED");
 		searchAdvancedPage.fillSummary(currentBugSummary);
-		searchResultsPage = searchAdvancedPage.submitSearch();
+		searchResultsPage = searchAdvancedPage.submit();
 
 		assertEquals("Not exactly one bug found!", 1, searchResultsPage.getAmountOfBugs());
 		assertEquals("ASSI", searchResultsPage.getStatusOfFirstBug());
@@ -73,8 +73,8 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testFindBugAll() throws Exception {
-		SearchBasePage searchPage = startPage.gotoSearchBasePage();
-		SearchAdvancedPage searchAdvancedPage = searchPage.gotoAdvancedSearchPage();
+		SearchBasePage searchBasePage = startPage.gotoSearchBasePage();
+		SearchAdvancedPage searchAdvancedPage = searchBasePage.gotoAdvancedSearchPage();
 
 		searchAdvancedPage.deselectBugStatus("NEW");
 		searchAdvancedPage.deselectBugStatus("ASSIGNED");
@@ -83,19 +83,19 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		searchAdvancedPage.setSummarySearchType("matches regular expression");
 		searchAdvancedPage.fillSummary(".*");
 
-		searchResultsPage = searchAdvancedPage.submitSearch();
+		searchResultsPage = searchAdvancedPage.submit();
 
 		assertTrue("No bugs found", 1 < searchResultsPage.getAmountOfBugs());
 	}
 
 	@Test
 	public void testBooleanChart() throws Exception {
-		SearchBasePage searchPage = startPage.gotoSearchBasePage();
-		SearchAdvancedPage searchAdvancedPage = searchPage.gotoAdvancedSearchPage();
+		SearchBasePage searchBasePage = startPage.gotoSearchBasePage();
+		SearchAdvancedPage searchAdvancedPage = searchBasePage.gotoAdvancedSearchPage();
 
 		searchAdvancedPage.fillBooleanChart("Priority", "is equal to", "P3");
 		searchAdvancedPage.fillSummary(currentBugSummary);
-		SearchResultsPage searchResultsPage = searchAdvancedPage.submitSearch();
+		SearchResultsPage searchResultsPage = searchAdvancedPage.submit();
 
 		assertEquals("No bug found!", 1, searchResultsPage.getAmountOfBugs());
 		assertEquals("P3", searchResultsPage.getPriorityOfFirstBug());
@@ -104,9 +104,8 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 
 	@After
 	public void tearDown() throws Exception {
-
 		// postcondition: change bug back
-		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
+		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugID);
 		editBugPage.setBugStatus(currentBugStatus);
 		editBugPage.setPriority(currentBugPriority);
 		editBugPage.commitBug();

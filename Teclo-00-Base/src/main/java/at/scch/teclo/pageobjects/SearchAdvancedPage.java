@@ -48,7 +48,7 @@ public class SearchAdvancedPage extends SearchBasePage {
 		summaryTextBox.sendKeys(summaryString);
 		commentTextBox.clear();
 		commentTextBox.sendKeys(commentString);
-		return submitSearch();
+		return submit();
 	}
 
 	public void fillSummary(String summaryString) {
@@ -80,7 +80,7 @@ public class SearchAdvancedPage extends SearchBasePage {
 		booleanChartValue.sendKeys(chartValue);
 	}
 
-	public SearchResultsPage submitSearch() {
+	public SearchResultsPage submit() {
 		searchButton.click();
 		return PageFactory.initElements(driver, SearchResultsPage.class);
 	}

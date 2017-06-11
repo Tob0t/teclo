@@ -25,8 +25,8 @@ public class SearchSpecificTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testFindBugZarro() throws Exception {
-		SearchBasePage searchPage = startPage.gotoSearchBasePage();
-		SearchSpecificPage searchSpecificPage = searchPage.gotoSpecificSearchPage();
+		SearchBasePage searchBasePage = startPage.gotoSearchBasePage();
+		SearchSpecificPage searchSpecificPage = searchBasePage.gotoSpecificSearchPage();
 
 		searchSpecificPage.selectBugStatus("Closed");
 		SearchResultsPage searchResultsPage = searchSpecificPage.searchFor(currentBugSummary.replace("_", "-"));
@@ -36,8 +36,8 @@ public class SearchSpecificTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testFindBugSingle() throws Exception {
-		SearchBasePage searchPage = startPage.gotoSearchBasePage();
-		SearchSpecificPage searchSpecificPage = searchPage.gotoSpecificSearchPage();
+		SearchBasePage searchBasePage = startPage.gotoSearchBasePage();
+		SearchSpecificPage searchSpecificPage = searchBasePage.gotoSpecificSearchPage();
 
 		searchSpecificPage.selectBugStatus("All");
 		SearchResultsPage searchResultsPage = searchSpecificPage.searchFor(currentBugSummary);
@@ -52,8 +52,8 @@ public class SearchSpecificTest extends AbstractBugzillaTestWithLogin {
 		// in the database
 		BugzillaSetup.createExampleBug();
 
-		SearchBasePage searchPage = startPage.gotoSearchBasePage();
-		SearchSpecificPage searchSpecificPage = searchPage.gotoSpecificSearchPage();
+		SearchBasePage searchBasePage = startPage.gotoSearchBasePage();
+		SearchSpecificPage searchSpecificPage = searchBasePage.gotoSpecificSearchPage();
 
 		searchSpecificPage.selectBugStatus("All");
 		SearchResultsPage searchResultsPage = searchSpecificPage.searchFor("Bug*");
@@ -63,8 +63,8 @@ public class SearchSpecificTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testSearchBlanksResultsInError() {
-		SearchBasePage searchPage = startPage.gotoSearchBasePage();
-		SearchSpecificPage searchSpecificPage = searchPage.gotoSpecificSearchPage();
+		SearchBasePage searchBasePage = startPage.gotoSearchBasePage();
+		SearchSpecificPage searchSpecificPage = searchBasePage.gotoSpecificSearchPage();
 
 		ErrorParametersRequiredPage errorParametersRequiredPage = searchSpecificPage.searchForBlanks();
 
@@ -74,8 +74,8 @@ public class SearchSpecificTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testSearchEmptyResultsInAlertPopup() {
-		SearchBasePage searchPage = startPage.gotoSearchBasePage();
-		SearchSpecificPage searchSpecificPage = searchPage.gotoSpecificSearchPage();
+		SearchBasePage searchBasePage = startPage.gotoSearchBasePage();
+		SearchSpecificPage searchSpecificPage = searchBasePage.gotoSpecificSearchPage();
 
 		String alertMsg = searchSpecificPage.searchForEmpty();
 

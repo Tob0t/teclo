@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 public class ReportsBasePage extends AbstractLoggedinBugzillaPage {
 
 	@FindBy(linkText = "Tabular reports")
-	private WebElement TabularReportsLink;
+	private WebElement tabularReportsLink;
 
 	public ReportsBasePage(WebDriver driver) {
 		super(driver);
@@ -20,8 +20,8 @@ public class ReportsBasePage extends AbstractLoggedinBugzillaPage {
 	}
 	
 
-	public TabularReportGeneratePage gotoTabularReportsPage() {
-		TabularReportsLink.click();
+	public TabularReportGeneratePage gotoGenerateTabularReportPage() {
+		tabularReportsLink.click();
 		return PageFactory.initElements(driver, TabularReportGeneratePage.class);
 	}
 

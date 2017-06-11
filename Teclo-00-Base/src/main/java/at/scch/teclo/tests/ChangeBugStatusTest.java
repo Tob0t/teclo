@@ -21,7 +21,7 @@ public class ChangeBugStatusTest extends AbstractBugzillaTestWithLogin {
 	@Test
 	public void testNormalStatusCycle() {
 
-		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
+		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 		assertEquals("NEW", editBugPage.getBugStatus());
 
 		editBugPage.setBugStatus("ASSIGNED");
@@ -61,7 +61,7 @@ public class ChangeBugStatusTest extends AbstractBugzillaTestWithLogin {
 	@Test
 	public void testFastStatusCycle() {
 
-		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
+		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 		assertEquals("NEW", editBugPage.getBugStatus());
 
 		editBugPage.setBugStatus("RESOLVED");
@@ -89,7 +89,7 @@ public class ChangeBugStatusTest extends AbstractBugzillaTestWithLogin {
 	
 	@Test
 	public void testResolutions() {
-		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
+		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 		assertEquals("NEW", editBugPage.getBugStatus());
 
 		editBugPage.setBugStatus("RESOLVED");
@@ -135,7 +135,7 @@ public class ChangeBugStatusTest extends AbstractBugzillaTestWithLogin {
 		// create second bug to mark as duplicate
 		int duplicateBugID = BugzillaSetup.createExampleBug();
 		
-		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
+		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 				
 		// mark the bug as duplicate of current bug
 		editBugPage.clickMarkAsDuplicate();
@@ -153,7 +153,7 @@ public class ChangeBugStatusTest extends AbstractBugzillaTestWithLogin {
 		assertEquals("*** This bug has been marked as a duplicate of bug "+duplicateBugID+" ***", editBugPage.getLastComment());
 		
 		// go to original bug
-		editBugPage = BugzillaSetup.gotoBugPage(duplicateBugID);
+		editBugPage = BugzillaSetup.gotoEditBugPage(duplicateBugID);
 		
 		// verify on current bug
 		assertEquals("*** Bug "+currentBugId+" has been marked as a duplicate of this bug. ***", editBugPage.getLastComment());

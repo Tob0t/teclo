@@ -154,7 +154,7 @@ public class BugzillaSetup {
 		return PageFactory.initElements(driver, StartPage.class);
 	}
 
-	public static EditBugPage gotoBugPage(int bugID) {
+	public static EditBugPage gotoEditBugPage(int bugID) {
 		checkDriver();
 
 		driver.get(baseUrl + "show_bug.cgi?id=" + bugID);

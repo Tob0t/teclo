@@ -80,7 +80,7 @@ public class SearchResultsPage extends AbstractLoggedinBugzillaPage {
 		return firstBugPriority.getText();
 	}
 
-	public SearchResultsPage saveSearch(String nameOfSearch) {
+	public SearchResultsPage rememberSavedSearch(String nameOfSearch) {
 		saveSearchField.clear();
 		saveSearchField.sendKeys(nameOfSearch);
 
@@ -89,7 +89,7 @@ public class SearchResultsPage extends AbstractLoggedinBugzillaPage {
 	}
 
 	public SearchResultsPage forgetSavedSearch(String savedSearchName) {
-		gotoSavedSearch(savedSearchName);
+		performSavedSearch(savedSearchName);
 		driver.findElement(By.linkText("Forget Search '" + savedSearchName + "'")).click();
 		return PageFactory.initElements(driver, SearchResultsPage.class);
 	}

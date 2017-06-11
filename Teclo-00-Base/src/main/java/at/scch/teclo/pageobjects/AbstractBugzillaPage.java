@@ -148,7 +148,7 @@ public abstract class AbstractBugzillaPage {
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}	
 	
-	public SearchResultsPage gotoSavedSearch(String savedSearchName) {
+	public SearchResultsPage performSavedSearch(String savedSearchName) {
 		WebElement linkToSavedSearch = driver
 				.findElement(By.xpath("//li[@id='links-saved']/ul/li/a[text()='" + savedSearchName + "']"));
 		linkToSavedSearch.click();
