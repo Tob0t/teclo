@@ -2,9 +2,9 @@ package at.scch.teclo.pageobjects;
 
 import org.openqa.selenium.WebDriver;
 
-public class LoginErrorPage extends AbstractErrorPage {
+public class ErrorLoginPage extends AbstractErrorPage {
 
-	public LoginErrorPage(WebDriver driver) {
+	public ErrorLoginPage(WebDriver driver) {
 		super(driver);
 	}
 

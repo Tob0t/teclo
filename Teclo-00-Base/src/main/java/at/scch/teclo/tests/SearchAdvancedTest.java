@@ -9,15 +9,15 @@ import org.junit.Test;
 
 import at.scch.teclo.AbstractBugzillaTestWithLogin;
 import at.scch.teclo.BugzillaSetup;
-import at.scch.teclo.pageobjects.AdvancedSearchPage;
-import at.scch.teclo.pageobjects.BugResultsPage;
+import at.scch.teclo.pageobjects.SearchAdvancedPage;
+import at.scch.teclo.pageobjects.SearchResultsPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 
 public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 	private int currentBugID;
 	private String currentBugSummary;
-	private BugResultsPage bugResultsPage;
+	private SearchResultsPage searchResultsPage;
 
 	private String currentBugStatus;
 	private String currentBugPriority;
@@ -40,66 +40,66 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 	@Test
 	public void testFindBugZarro() throws Exception {
 		SearchBasePage searchPage = startPage.gotoSearchBasePage();
-		AdvancedSearchPage advancedSearchPage = searchPage.gotoAdvancedSearchPage();
+		SearchAdvancedPage searchAdvancedPage = searchPage.gotoAdvancedSearchPage();
 
-		advancedSearchPage.deselectBugStatus("NEW");
-		advancedSearchPage.deselectBugStatus("ASSIGNED");
-		advancedSearchPage.deselectBugStatus("REOPENED");
+		searchAdvancedPage.deselectBugStatus("NEW");
+		searchAdvancedPage.deselectBugStatus("ASSIGNED");
+		searchAdvancedPage.deselectBugStatus("REOPENED");
 
-		advancedSearchPage.selectBugStatus("RESOLVED");
-		advancedSearchPage.fillSummary(currentBugSummary.replace("_", "-"));
-		bugResultsPage = advancedSearchPage.submitSearch();
+		searchAdvancedPage.selectBugStatus("RESOLVED");
+		searchAdvancedPage.fillSummary(currentBugSummary.replace("_", "-"));
+		searchResultsPage = searchAdvancedPage.submitSearch();
 
-		assertEquals("More than 0 bugs found!", 0, bugResultsPage.getAmountOfBugs());
+		assertEquals("More than 0 bugs found!", 0, searchResultsPage.getAmountOfBugs());
 	}
 
 	@Test
 	public void testFindBugSingle() throws Exception {
 		SearchBasePage searchPage = startPage.gotoSearchBasePage();
-		AdvancedSearchPage advancedSearchPage = searchPage.gotoAdvancedSearchPage();
+		SearchAdvancedPage searchAdvancedPage = searchPage.gotoAdvancedSearchPage();
 
-		advancedSearchPage.deselectBugStatus("NEW");
-		advancedSearchPage.deselectBugStatus("ASSIGNED");
-		advancedSearchPage.deselectBugStatus("REOPENED");
+		searchAdvancedPage.deselectBugStatus("NEW");
+		searchAdvancedPage.deselectBugStatus("ASSIGNED");
+		searchAdvancedPage.deselectBugStatus("REOPENED");
 
-		advancedSearchPage.selectBugStatus("ASSIGNED");
-		advancedSearchPage.fillSummary(currentBugSummary);
-		bugResultsPage = advancedSearchPage.submitSearch();
+		searchAdvancedPage.selectBugStatus("ASSIGNED");
+		searchAdvancedPage.fillSummary(currentBugSummary);
+		searchResultsPage = searchAdvancedPage.submitSearch();
 
-		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
-		assertEquals("ASSI", bugResultsPage.getStatusOfFirstBug());
-		assertEquals(currentBugSummary, bugResultsPage.getSummaryOfFirstBug());
+		assertEquals("Not exactly one bug found!", 1, searchResultsPage.getAmountOfBugs());
+		assertEquals("ASSI", searchResultsPage.getStatusOfFirstBug());
+		assertEquals(currentBugSummary, searchResultsPage.getSummaryOfFirstBug());
 	}
 
 	@Test
 	public void testFindBugAll() throws Exception {
 		SearchBasePage searchPage = startPage.gotoSearchBasePage();
-		AdvancedSearchPage advancedSearchPage = searchPage.gotoAdvancedSearchPage();
+		SearchAdvancedPage searchAdvancedPage = searchPage.gotoAdvancedSearchPage();
 
-		advancedSearchPage.deselectBugStatus("NEW");
-		advancedSearchPage.deselectBugStatus("ASSIGNED");
-		advancedSearchPage.deselectBugStatus("REOPENED");
+		searchAdvancedPage.deselectBugStatus("NEW");
+		searchAdvancedPage.deselectBugStatus("ASSIGNED");
+		searchAdvancedPage.deselectBugStatus("REOPENED");
 
-		advancedSearchPage.setSummarySearchType("matches regular expression");
-		advancedSearchPage.fillSummary(".*");
+		searchAdvancedPage.setSummarySearchType("matches regular expression");
+		searchAdvancedPage.fillSummary(".*");
 
-		bugResultsPage = advancedSearchPage.submitSearch();
+		searchResultsPage = searchAdvancedPage.submitSearch();
 
-		assertTrue("No bugs found", 1 < bugResultsPage.getAmountOfBugs());
+		assertTrue("No bugs found", 1 < searchResultsPage.getAmountOfBugs());
 	}
 
 	@Test
 	public void testBooleanChart() throws Exception {
 		SearchBasePage searchPage = startPage.gotoSearchBasePage();
-		AdvancedSearchPage advancedSearchPage = searchPage.gotoAdvancedSearchPage();
+		SearchAdvancedPage searchAdvancedPage = searchPage.gotoAdvancedSearchPage();
 
-		advancedSearchPage.fillBooleanChart("Priority", "is equal to", "P3");
-		advancedSearchPage.fillSummary(currentBugSummary);
-		BugResultsPage bugResultsPage = advancedSearchPage.submitSearch();
+		searchAdvancedPage.fillBooleanChart("Priority", "is equal to", "P3");
+		searchAdvancedPage.fillSummary(currentBugSummary);
+		SearchResultsPage searchResultsPage = searchAdvancedPage.submitSearch();
 
-		assertEquals("No bug found!", 1, bugResultsPage.getAmountOfBugs());
-		assertEquals("P3", bugResultsPage.getPriorityOfFirstBug());
-		assertEquals(currentBugSummary, bugResultsPage.getSummaryOfFirstBug());
+		assertEquals("No bug found!", 1, searchResultsPage.getAmountOfBugs());
+		assertEquals("P3", searchResultsPage.getPriorityOfFirstBug());
+		assertEquals(currentBugSummary, searchResultsPage.getSummaryOfFirstBug());
 	}
 
 	@After

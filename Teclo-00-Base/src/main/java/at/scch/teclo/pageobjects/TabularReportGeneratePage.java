@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-public class TabularReportsSearchPage extends AbstractLoggedinBugzillaPage {
+public class TabularReportGeneratePage extends AbstractLoggedinBugzillaPage {
 
 	@FindBy(name = "x_axis_field")
 	private WebElement horizontalAxesField;
@@ -18,7 +18,7 @@ public class TabularReportsSearchPage extends AbstractLoggedinBugzillaPage {
 	private WebElement generateReportButton;
 
 	
-	public TabularReportsSearchPage(WebDriver driver) {
+	public TabularReportGeneratePage(WebDriver driver) {
 		super(driver);
 	}
 
@@ -36,9 +36,9 @@ public class TabularReportsSearchPage extends AbstractLoggedinBugzillaPage {
 		new Select(verticalAxesField).selectByVisibleText(verticalValue);
 	}
 
-	public TabularReportsResultsPage generateReport() {
+	public TabularReportResultsPage generateReport() {
 		generateReportButton.click();
-		return PageFactory.initElements(driver, TabularReportsResultsPage.class);
+		return PageFactory.initElements(driver, TabularReportResultsPage.class);
 	}
 
 }

@@ -13,7 +13,7 @@ import at.scch.teclo.AbstractBugzillaTestWithLogin;
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.BugChangedPage;
 import at.scch.teclo.pageobjects.EditBugPage;
-import at.scch.teclo.pageobjects.SummaryNeededErrorPage;
+import at.scch.teclo.pageobjects.ErrorSummaryNeededPage;
 
 public class EditBugTest extends AbstractBugzillaTestWithLogin {
 	private int currentBugId;
@@ -49,8 +49,8 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
 
 		editBugPage.setSummary("");
-		SummaryNeededErrorPage summaryNeededErrorPage = editBugPage.commitBugWithEmptySummary();
-		assertEquals("You must enter a summary for this bug.", summaryNeededErrorPage.getErrorMsg());
+		ErrorSummaryNeededPage errorSummaryNeededPage = editBugPage.commitBugWithEmptySummary();
+		assertEquals("You must enter a summary for this bug.", errorSummaryNeededPage.getErrorMsg());
 
 		// verify no changes were made
 		editBugPage = BugzillaSetup.gotoBugPage(currentBugId);

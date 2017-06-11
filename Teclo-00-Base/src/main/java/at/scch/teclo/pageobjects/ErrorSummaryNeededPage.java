@@ -2,9 +2,9 @@ package at.scch.teclo.pageobjects;
 
 import org.openqa.selenium.WebDriver;
 
-public class SummaryNeededErrorPage extends AbstractErrorPage {
+public class ErrorSummaryNeededPage extends AbstractErrorPage {
 
-	public SummaryNeededErrorPage(WebDriver driver) {
+	public ErrorSummaryNeededPage(WebDriver driver) {
 		super(driver);
 	}
 

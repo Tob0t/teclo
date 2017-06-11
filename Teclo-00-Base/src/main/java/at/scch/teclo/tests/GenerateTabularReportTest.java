@@ -8,8 +8,8 @@ import org.junit.Test;
 import at.scch.teclo.AbstractBugzillaTestWithLogin;
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.ReportsBasePage;
-import at.scch.teclo.pageobjects.TabularReportsResultsPage;
-import at.scch.teclo.pageobjects.TabularReportsSearchPage;
+import at.scch.teclo.pageobjects.TabularReportResultsPage;
+import at.scch.teclo.pageobjects.TabularReportGeneratePage;
 
 public class GenerateTabularReportTest extends AbstractBugzillaTestWithLogin {
 	@Before
@@ -21,13 +21,13 @@ public class GenerateTabularReportTest extends AbstractBugzillaTestWithLogin {
 	@Test
 	public void testGenerateTabularReport() throws Exception {
 		ReportsBasePage reportsBasePage = startPage.gotoReportsBasePage();
-		TabularReportsSearchPage tabularReportsPage = reportsBasePage.gotoTabularReportsPage();
+		TabularReportGeneratePage tabularReportsPage = reportsBasePage.gotoTabularReportsPage();
 		tabularReportsPage.selectHorizontalAxes("Status");
 		tabularReportsPage.selectVeritcalAxes("Assignee");
 
-		TabularReportsResultsPage tabularReportsResultsPage = tabularReportsPage.generateReport();
+		TabularReportResultsPage tabularReportResultsPage = tabularReportsPage.generateReport();
 
-		assertEquals("Status", tabularReportsResultsPage.getXAxesDescription());
-		assertEquals("Assignee", tabularReportsResultsPage.getYAxesDescription());
+		assertEquals("Status", tabularReportResultsPage.getXAxesDescription());
+		assertEquals("Assignee", tabularReportResultsPage.getYAxesDescription());
 	}
 }

@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-public class SpecificSearchPage extends SearchBasePage {
+public class SearchSpecificPage extends SearchBasePage {
 
 	@FindBy(id = "bug_status")
 	private WebElement bugStatus;
@@ -19,7 +19,7 @@ public class SpecificSearchPage extends SearchBasePage {
 	private WebElement searchButton;
 
 	
-	public SpecificSearchPage(WebDriver driver) {
+	public SearchSpecificPage(WebDriver driver) {
 		super(driver);
 	}
 
@@ -33,24 +33,24 @@ public class SpecificSearchPage extends SearchBasePage {
 		new Select(bugStatus).selectByVisibleText(bugStatusString);
 	}
 
-	public BugResultsPage searchFor(String searchTerm) {
+	public SearchResultsPage searchFor(String searchTerm) {
 		searchField.clear();
 		searchField.sendKeys(searchTerm);
 		searchButton.click();
 
-		return PageFactory.initElements(driver, BugResultsPage.class);
+		return PageFactory.initElements(driver, SearchResultsPage.class);
 	}
 
 	/**
 	 * Search term contains only blank chars, results in parameter required
 	 * error.
 	 */
-	public ParametersRequiredErrorPage searchForBlanks() {
+	public ErrorParametersRequiredPage searchForBlanks() {
 		searchField.clear();
 		searchField.sendKeys(" ");
 		searchButton.click();
 
-		return PageFactory.initElements(driver, ParametersRequiredErrorPage.class);
+		return PageFactory.initElements(driver, ErrorParametersRequiredPage.class);
 	}
 
 	/** Search term is empty, results in alert popup. */

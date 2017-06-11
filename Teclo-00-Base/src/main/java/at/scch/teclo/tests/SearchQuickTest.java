@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import at.scch.teclo.AbstractBugzillaTestWithLogin;
 import at.scch.teclo.BugzillaSetup;
-import at.scch.teclo.pageobjects.BugResultsPage;
+import at.scch.teclo.pageobjects.SearchResultsPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 
 public class SearchQuickTest extends AbstractBugzillaTestWithLogin {
@@ -23,16 +23,16 @@ public class SearchQuickTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testFindBugZarro() throws Exception {
-		BugResultsPage bugResultsPage = startPage.searchFor(currentBugSummary.replace("_", "-"));
-		assertEquals("More than 0 bugs found!", 0, bugResultsPage.getAmountOfBugs());
+		SearchResultsPage searchResultsPage = startPage.searchFor(currentBugSummary.replace("_", "-"));
+		assertEquals("More than 0 bugs found!", 0, searchResultsPage.getAmountOfBugs());
 	}
 
 	@Test
 	public void testFindBugSingleByName() throws Exception {
-		BugResultsPage bugResultsPage = startPage.searchFor(currentBugSummary);
+		SearchResultsPage searchResultsPage = startPage.searchFor(currentBugSummary);
 
-		assertEquals("No bug found!", 1, bugResultsPage.getAmountOfBugs());
-		assertEquals(currentBugSummary, bugResultsPage.getSummaryOfFirstBug());
+		assertEquals("No bug found!", 1, searchResultsPage.getAmountOfBugs());
+		assertEquals(currentBugSummary, searchResultsPage.getSummaryOfFirstBug());
 	}
 
 	@Test
@@ -47,26 +47,26 @@ public class SearchQuickTest extends AbstractBugzillaTestWithLogin {
 		// in the database
 		BugzillaSetup.createExampleBug();
 
-		BugResultsPage bugResultsPage = startPage.searchFor("Bug");
-		assertTrue("No multiple bugs found", 1 < bugResultsPage.getAmountOfBugs());
+		SearchResultsPage searchResultsPage = startPage.searchFor("Bug");
+		assertTrue("No multiple bugs found", 1 < searchResultsPage.getAmountOfBugs());
 	}
 
 	@Test
 	public void testSaveSearch() throws Exception {
-		BugResultsPage bugResultsPage = startPage.searchFor(currentBugSummary);
+		SearchResultsPage searchResultsPage = startPage.searchFor(currentBugSummary);
 
-		int numberFoundBugs = bugResultsPage.getAmountOfBugs();
-		String firstBugSummary = bugResultsPage.getSummaryOfFirstBug();
+		int numberFoundBugs = searchResultsPage.getAmountOfBugs();
+		String firstBugSummary = searchResultsPage.getSummaryOfFirstBug();
 
-		bugResultsPage = bugResultsPage.saveSearch("SearchFor_" + currentBugSummary);
-		bugResultsPage.gotoStartPage();
-		bugResultsPage = startPage.gotoSavedSearch("SearchFor_" + currentBugSummary);
+		searchResultsPage = searchResultsPage.saveSearch("SearchFor_" + currentBugSummary);
+		searchResultsPage.gotoStartPage();
+		searchResultsPage = startPage.gotoSavedSearch("SearchFor_" + currentBugSummary);
 
-		assertEquals(numberFoundBugs, bugResultsPage.getAmountOfBugs());
-		assertEquals(firstBugSummary, bugResultsPage.getSummaryOfFirstBug());
+		assertEquals(numberFoundBugs, searchResultsPage.getAmountOfBugs());
+		assertEquals(firstBugSummary, searchResultsPage.getSummaryOfFirstBug());
 
 		// forget saved search
-		bugResultsPage.forgetSavedSearch("SearchFor_" + currentBugSummary);
+		searchResultsPage.forgetSavedSearch("SearchFor_" + currentBugSummary);
 	}
 
 }

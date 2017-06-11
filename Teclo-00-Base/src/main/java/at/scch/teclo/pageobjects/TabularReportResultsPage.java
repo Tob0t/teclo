@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class TabularReportsResultsPage extends AbstractLoggedinBugzillaPage {
+public class TabularReportResultsPage extends AbstractLoggedinBugzillaPage {
 	
 	@FindBy(xpath = "//div[@id='bugzilla-body']/div/table/tbody/tr/td[2]/strong")
 	private WebElement xAxesDescription;
@@ -13,7 +13,7 @@ public class TabularReportsResultsPage extends AbstractLoggedinBugzillaPage {
 	private WebElement yAxesDescription;
 
 	
-	public TabularReportsResultsPage(WebDriver driver) {
+	public TabularReportResultsPage(WebDriver driver) {
 		super(driver);
 	}
 	

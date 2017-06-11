@@ -329,9 +329,9 @@ public class EditBugPage extends AbstractLoggedinBugzillaPage {
 		return PageFactory.initElements(driver, BugChangedPage.class);
 	}
 
-	public SummaryNeededErrorPage commitBugWithEmptySummary() {
+	public ErrorSummaryNeededPage commitBugWithEmptySummary() {
 		commitButton.click();
-		return PageFactory.initElements(driver, SummaryNeededErrorPage.class);
+		return PageFactory.initElements(driver, ErrorSummaryNeededPage.class);
 	}
 	
 	

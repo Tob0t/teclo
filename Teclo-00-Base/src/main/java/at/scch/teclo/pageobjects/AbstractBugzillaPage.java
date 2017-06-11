@@ -132,12 +132,12 @@ public abstract class AbstractBugzillaPage {
 		return PageFactory.initElements(driver, LoginPage.class);
 	}
 
-	public BugResultsPage searchFor(String searchTerm) {
+	public SearchResultsPage searchFor(String searchTerm) {
 		quickSearch.clear();
 		quickSearch.sendKeys(searchTerm);
 		quickFindButton.click();
 
-		return PageFactory.initElements(driver, BugResultsPage.class);
+		return PageFactory.initElements(driver, SearchResultsPage.class);
 	}
 
 	public EditBugPage searchFor(int bugId) {
@@ -148,11 +148,11 @@ public abstract class AbstractBugzillaPage {
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}	
 	
-	public BugResultsPage gotoSavedSearch(String savedSearchName) {
+	public SearchResultsPage gotoSavedSearch(String savedSearchName) {
 		WebElement linkToSavedSearch = driver
 				.findElement(By.xpath("//li[@id='links-saved']/ul/li/a[text()='" + savedSearchName + "']"));
 		linkToSavedSearch.click();
-		return PageFactory.initElements(driver, BugResultsPage.class);
+		return PageFactory.initElements(driver, SearchResultsPage.class);
 	}
 
 }

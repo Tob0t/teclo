@@ -37,13 +37,13 @@ public class LoginPage extends AbstractBugzillaPage {
 		return PageFactory.initElements(driver, CreateBugPage.class); 
 	}
 	
-	public LoginErrorPage loginFailing(String username, String password) {
+	public ErrorLoginPage loginFailing(String username, String password) {
 		bugzillaLogin.clear();
 		bugzillaLogin.sendKeys(username);
 		bugzillaPassword.clear();
 		bugzillaPassword.sendKeys(password);
 		loginButton.click();
 		
-		return PageFactory.initElements(driver, LoginErrorPage.class); 
+		return PageFactory.initElements(driver, ErrorLoginPage.class); 
 	}
 }

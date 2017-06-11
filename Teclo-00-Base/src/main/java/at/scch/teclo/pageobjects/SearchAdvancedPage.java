@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-public class AdvancedSearchPage extends SearchBasePage {
+public class SearchAdvancedPage extends SearchBasePage {
 
 	@FindBy(id = "bug_status")
 	private WebElement bugStatus;
@@ -33,7 +33,7 @@ public class AdvancedSearchPage extends SearchBasePage {
 	private WebElement booleanChartValue;
 
 	
-	public AdvancedSearchPage(WebDriver driver) {
+	public SearchAdvancedPage(WebDriver driver) {
 		super(driver);
 	}
 	
@@ -43,7 +43,7 @@ public class AdvancedSearchPage extends SearchBasePage {
 	}
 	
 
-	public BugResultsPage searchFor(String summaryString, String commentString) {
+	public SearchResultsPage searchFor(String summaryString, String commentString) {
 		summaryTextBox.clear();
 		summaryTextBox.sendKeys(summaryString);
 		commentTextBox.clear();
@@ -80,9 +80,9 @@ public class AdvancedSearchPage extends SearchBasePage {
 		booleanChartValue.sendKeys(chartValue);
 	}
 
-	public BugResultsPage submitSearch() {
+	public SearchResultsPage submitSearch() {
 		searchButton.click();
-		return PageFactory.initElements(driver, BugResultsPage.class);
+		return PageFactory.initElements(driver, SearchResultsPage.class);
 	}
 
 }

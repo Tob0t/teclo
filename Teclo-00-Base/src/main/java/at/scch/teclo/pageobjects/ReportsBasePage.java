@@ -20,9 +20,9 @@ public class ReportsBasePage extends AbstractLoggedinBugzillaPage {
 	}
 	
 
-	public TabularReportsSearchPage gotoTabularReportsPage() {
+	public TabularReportGeneratePage gotoTabularReportsPage() {
 		TabularReportsLink.click();
-		return PageFactory.initElements(driver, TabularReportsSearchPage.class);
+		return PageFactory.initElements(driver, TabularReportGeneratePage.class);
 	}
 
 }

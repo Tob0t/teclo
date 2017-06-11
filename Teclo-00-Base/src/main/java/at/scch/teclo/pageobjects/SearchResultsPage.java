@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class BugResultsPage extends AbstractLoggedinBugzillaPage {
+public class SearchResultsPage extends AbstractLoggedinBugzillaPage {
 
 	@FindBy(css = "span.bz_result_count")
 	private WebElement amountOfBugs;
@@ -33,7 +33,7 @@ public class BugResultsPage extends AbstractLoggedinBugzillaPage {
 	private WebElement homeLink;
 
 	
-	public BugResultsPage(WebDriver driver) {
+	public SearchResultsPage(WebDriver driver) {
 		super(driver);
 	}
 
@@ -80,18 +80,18 @@ public class BugResultsPage extends AbstractLoggedinBugzillaPage {
 		return firstBugPriority.getText();
 	}
 
-	public BugResultsPage saveSearch(String nameOfSearch) {
+	public SearchResultsPage saveSearch(String nameOfSearch) {
 		saveSearchField.clear();
 		saveSearchField.sendKeys(nameOfSearch);
 
 		saveSearchButton.click();
-		return PageFactory.initElements(driver, BugResultsPage.class);
+		return PageFactory.initElements(driver, SearchResultsPage.class);
 	}
 
-	public BugResultsPage forgetSavedSearch(String savedSearchName) {
+	public SearchResultsPage forgetSavedSearch(String savedSearchName) {
 		gotoSavedSearch(savedSearchName);
 		driver.findElement(By.linkText("Forget Search '" + savedSearchName + "'")).click();
-		return PageFactory.initElements(driver, BugResultsPage.class);
+		return PageFactory.initElements(driver, SearchResultsPage.class);
 	}
 
 }

@@ -24,19 +24,19 @@ public class SearchBasePage extends AbstractLoggedinBugzillaPage {
 	}
 	
 
-	public SpecificSearchPage gotoSpecificSearchPage() {
+	public SearchSpecificPage gotoSpecificSearchPage() {
 		// change tab if the wrong search is pre-selected
 		if (currentActiveTab.getText().equals("Advanced Search")) {
 			clickableTab.click();
 		}
-		return PageFactory.initElements(driver, SpecificSearchPage.class);
+		return PageFactory.initElements(driver, SearchSpecificPage.class);
 	}
 
-	public AdvancedSearchPage gotoAdvancedSearchPage() {
+	public SearchAdvancedPage gotoAdvancedSearchPage() {
 		// change tab if the wrong search is pre-selected
 		if (currentActiveTab.getText().equals("Find a Specific Bug")) {
 			clickableTab.click();
 		}
-		return PageFactory.initElements(driver, AdvancedSearchPage.class);
+		return PageFactory.initElements(driver, SearchAdvancedPage.class);
 	}
 }

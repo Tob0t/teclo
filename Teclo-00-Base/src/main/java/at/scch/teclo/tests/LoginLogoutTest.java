@@ -9,7 +9,7 @@ import org.junit.Test;
 import at.scch.teclo.AbstractBugzillaTest;
 import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.CreateBugPage;
-import at.scch.teclo.pageobjects.LoginErrorPage;
+import at.scch.teclo.pageobjects.ErrorLoginPage;
 import at.scch.teclo.pageobjects.LoginPage;
 import at.scch.teclo.pageobjects.StartPage;
 
@@ -52,10 +52,10 @@ public class LoginLogoutTest extends AbstractBugzillaTest {
 		assertFalse(startPage.isLoggedin());
 		
 		LoginPage loginPage = startPage.gotoLoginPage();
-		LoginErrorPage loginErrorPage = loginPage.loginFailing("wrongUsername", "wrongPassword");
+		ErrorLoginPage errorLoginPage = loginPage.loginFailing("wrongUsername", "wrongPassword");
 		
-		assertEquals("The username or password you entered is not valid.", loginErrorPage.getErrorMsg());
-		assertFalse(loginErrorPage.isLoggedin());
+		assertEquals("The username or password you entered is not valid.", errorLoginPage.getErrorMsg());
+		assertFalse(errorLoginPage.isLoggedin());
 	}
 	
 }
