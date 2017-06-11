@@ -28,7 +28,7 @@ public class SearchSpecificTest extends AbstractBugzillaTestWithLogin {
 		SearchBasePage searchPage = startPage.gotoSearchBasePage();
 		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 
-		specificSearchPage.selectBugState("Closed");
+		specificSearchPage.selectBugStatus("Closed");
 		BugResultsPage bugResultsPage = specificSearchPage.searchFor(currentBugSummary.replace("_", "-"));
 
 		assertEquals("More than 0 bugs found!", 0, bugResultsPage.getAmountOfBugs());
@@ -39,7 +39,7 @@ public class SearchSpecificTest extends AbstractBugzillaTestWithLogin {
 		SearchBasePage searchPage = startPage.gotoSearchBasePage();
 		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 
-		specificSearchPage.selectBugState("All");
+		specificSearchPage.selectBugStatus("All");
 		BugResultsPage bugResultsPage = specificSearchPage.searchFor(currentBugSummary);
 
 		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
@@ -55,7 +55,7 @@ public class SearchSpecificTest extends AbstractBugzillaTestWithLogin {
 		SearchBasePage searchPage = startPage.gotoSearchBasePage();
 		SpecificSearchPage specificSearchPage = searchPage.navigateToSpecificSearchPage();
 
-		specificSearchPage.selectBugState("All");
+		specificSearchPage.selectBugStatus("All");
 		BugResultsPage bugResultsPage = specificSearchPage.searchFor("Bug*");
 
 		assertTrue("No multiple bugs found", 1 < bugResultsPage.getAmountOfBugs());

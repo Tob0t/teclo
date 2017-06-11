@@ -18,7 +18,7 @@ public class BugResultsPage extends AbstractLoggedinBugzillaPage {
 	private WebElement firstBugSummary;
 
 	@FindBy(xpath = "//div[@id='bugzilla-body']/table/tbody/tr[2]/td[6]")
-	private WebElement firstBugState;
+	private WebElement firstBugStatus;
 
 	@FindBy(xpath = "//div[@id='bugzilla-body']/table/tbody/tr[2]/td[3]")
 	private WebElement firstBugPriority;
@@ -72,8 +72,8 @@ public class BugResultsPage extends AbstractLoggedinBugzillaPage {
 		return firstBugSummary.getText();
 	}
 
-	public String getStateOfFirstBug() {
-		return firstBugState.getText();
+	public String getStatusOfFirstBug() {
+		return firstBugStatus.getText();
 	}
 
 	public String getPriorityOfFirstBug() {

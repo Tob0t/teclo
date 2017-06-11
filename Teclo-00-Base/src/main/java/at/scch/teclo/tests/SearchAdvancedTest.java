@@ -19,7 +19,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 	private String currentBugSummary;
 	private BugResultsPage bugResultsPage;
 
-	private String currentBugState;
+	private String currentBugStatus;
 	private String currentBugPriority;
 
 	@Before
@@ -30,7 +30,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 
 		// precondition: bug changed
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
-		currentBugState = editBugPage.getBugStatus();
+		currentBugStatus = editBugPage.getBugStatus();
 		editBugPage.setBugStatus("ASSIGNED");
 		currentBugPriority = editBugPage.getPriority();
 		editBugPage.setPriority("P3");
@@ -42,11 +42,11 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		SearchBasePage searchPage = startPage.gotoSearchBasePage();
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 
-		advancedSearchPage.deselectBugState("NEW");
-		advancedSearchPage.deselectBugState("ASSIGNED");
-		advancedSearchPage.deselectBugState("REOPENED");
+		advancedSearchPage.deselectBugStatus("NEW");
+		advancedSearchPage.deselectBugStatus("ASSIGNED");
+		advancedSearchPage.deselectBugStatus("REOPENED");
 
-		advancedSearchPage.selectBugState("RESOLVED");
+		advancedSearchPage.selectBugStatus("RESOLVED");
 		advancedSearchPage.fillSummary(currentBugSummary.replace("_", "-"));
 		bugResultsPage = advancedSearchPage.submitSearch();
 
@@ -58,16 +58,16 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		SearchBasePage searchPage = startPage.gotoSearchBasePage();
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 
-		advancedSearchPage.deselectBugState("NEW");
-		advancedSearchPage.deselectBugState("ASSIGNED");
-		advancedSearchPage.deselectBugState("REOPENED");
+		advancedSearchPage.deselectBugStatus("NEW");
+		advancedSearchPage.deselectBugStatus("ASSIGNED");
+		advancedSearchPage.deselectBugStatus("REOPENED");
 
-		advancedSearchPage.selectBugState("ASSIGNED");
+		advancedSearchPage.selectBugStatus("ASSIGNED");
 		advancedSearchPage.fillSummary(currentBugSummary);
 		bugResultsPage = advancedSearchPage.submitSearch();
 
 		assertEquals("Not exactly one bug found!", 1, bugResultsPage.getAmountOfBugs());
-		assertEquals("ASSI", bugResultsPage.getStateOfFirstBug());
+		assertEquals("ASSI", bugResultsPage.getStatusOfFirstBug());
 		assertEquals(currentBugSummary, bugResultsPage.getSummaryOfFirstBug());
 	}
 
@@ -76,9 +76,9 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		SearchBasePage searchPage = startPage.gotoSearchBasePage();
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 
-		advancedSearchPage.deselectBugState("NEW");
-		advancedSearchPage.deselectBugState("ASSIGNED");
-		advancedSearchPage.deselectBugState("REOPENED");
+		advancedSearchPage.deselectBugStatus("NEW");
+		advancedSearchPage.deselectBugStatus("ASSIGNED");
+		advancedSearchPage.deselectBugStatus("REOPENED");
 
 		advancedSearchPage.setSummarySearchType("matches regular expression");
 		advancedSearchPage.fillSummary(".*");
@@ -107,7 +107,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 
 		// postcondition: change bug back
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugID);
-		editBugPage.setBugStatus(currentBugState);
+		editBugPage.setBugStatus(currentBugStatus);
 		editBugPage.setPriority(currentBugPriority);
 		editBugPage.commitBug();
 	}

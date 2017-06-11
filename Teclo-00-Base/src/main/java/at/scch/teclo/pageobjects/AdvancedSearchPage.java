@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.Select;
 public class AdvancedSearchPage extends SearchBasePage {
 
 	@FindBy(id = "bug_status")
-	private WebElement bugState;
+	private WebElement bugStatus;
 
 	@FindBy(name = "short_desc_type")
 	private WebElement summarySearchType;
@@ -65,12 +65,12 @@ public class AdvancedSearchPage extends SearchBasePage {
 		new Select(summarySearchType).selectByVisibleText(searchType);
 	}
 
-	public void deselectBugState(String bugStateString) {
-		new Select(bugState).deselectByVisibleText(bugStateString);
+	public void deselectBugStatus(String bugStatusString) {
+		new Select(bugStatus).deselectByVisibleText(bugStatusString);
 	}
 
-	public void selectBugState(String bugStateString) {
-		new Select(bugState).selectByVisibleText(bugStateString);
+	public void selectBugStatus(String bugStatusString) {
+		new Select(bugStatus).selectByVisibleText(bugStatusString);
 	}
 
 	public void fillBooleanChart(String chartField, String chartType, String chartValue) {

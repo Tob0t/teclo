@@ -25,7 +25,7 @@ public class CreateBugPage extends AbstractLoggedinBugzillaPage {
 	private WebElement bugPriority;
 	
 	@FindBy(id = "bug_status")
-	private WebElement bugState;
+	private WebElement bugStatus;
 	
 	@FindBy(name = "cc")
 	private WebElement bugCC;
@@ -109,8 +109,8 @@ public class CreateBugPage extends AbstractLoggedinBugzillaPage {
 		bugComment.sendKeys(comment);
 	}
 
-	public void changeBugState(String bugStateString) {
-		new Select(bugState).selectByVisibleText(bugStateString);
+	public void changeBugStatus(String bugStatusString) {
+		new Select(bugStatus).selectByVisibleText(bugStatusString);
 	}
 
 	public BugCreatedPage commitBug() {

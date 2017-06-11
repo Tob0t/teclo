@@ -124,7 +124,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		createBugPage.fillOpSys("All");
 		createBugPage.fillPriority("P1");
 		
-		createBugPage.changeBugState("ASSIGNED");
+		createBugPage.changeBugStatus("ASSIGNED");
 		createBugPage.fillCC("admin");
 		
 		createBugPage.fillTimeEstimatedTime(100);

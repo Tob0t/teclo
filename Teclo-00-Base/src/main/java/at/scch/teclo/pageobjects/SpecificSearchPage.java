@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.Select;
 public class SpecificSearchPage extends SearchBasePage {
 
 	@FindBy(id = "bug_status")
-	private WebElement bugState;
+	private WebElement bugStatus;
 
 	@FindBy(id = "content")
 	private WebElement searchField;
@@ -29,8 +29,8 @@ public class SpecificSearchPage extends SearchBasePage {
 	}
 	
 	
-	public void selectBugState(String bugStateString) {
-		new Select(bugState).selectByVisibleText(bugStateString);
+	public void selectBugStatus(String bugStatusString) {
+		new Select(bugStatus).selectByVisibleText(bugStatusString);
 	}
 
 	public BugResultsPage searchFor(String searchTerm) {

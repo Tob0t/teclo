@@ -10,145 +10,121 @@ import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.pageobjects.BugChangedPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 
-public class ChangeBugStateTest extends AbstractBugzillaTestWithLogin {
+public class ChangeBugStatusTest extends AbstractBugzillaTestWithLogin {
 	private int currentBugId;
 
 	@Before
 	public void setUp() throws Exception {
-		// precondition: bug inserted
 		currentBugId = BugzillaSetup.getExampleBugID();
 	}
 
 	@Test
-	public void testNormalStateCycle() throws Exception {
+	public void testNormalStatusCycle() {
 
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
-
 		assertEquals("NEW", editBugPage.getBugStatus());
+
 		editBugPage.setBugStatus("ASSIGNED");
 		BugChangedPage bugChangedPage = editBugPage.commitBug();
-
 		editBugPage = bugChangedPage.gotoChangedBug();
 		assertEquals("ASSIGNED", editBugPage.getBugStatus());
+		
 		editBugPage.setBugStatus("RESOLVED");
 		bugChangedPage = editBugPage.commitBug();
-
 		editBugPage = bugChangedPage.gotoChangedBug();
 		assertEquals("RESOLVED", editBugPage.getBugStatus());
+		assertEquals("FIXED", editBugPage.getBugResolution());
+		
 		editBugPage.setBugStatus("VERIFIED");
 		bugChangedPage = editBugPage.commitBug();
-
 		editBugPage = bugChangedPage.gotoChangedBug();
 		assertEquals("VERIFIED", editBugPage.getBugStatus());
+		assertEquals("FIXED", editBugPage.getBugResolution());
+		
 		editBugPage.setBugStatus("CLOSED");
 		bugChangedPage = editBugPage.commitBug();
-
 		editBugPage = bugChangedPage.gotoChangedBug();
 		assertEquals("CLOSED", editBugPage.getBugStatus());
+		assertEquals("FIXED", editBugPage.getBugResolution());
+		
 		editBugPage.setBugStatus("REOPENED");
 		bugChangedPage = editBugPage.commitBug();
-
 		editBugPage = bugChangedPage.gotoChangedBug();
 		assertEquals("REOPENED", editBugPage.getBugStatus());
+		
 		editBugPage.setBugStatus("NEW");
 		bugChangedPage = editBugPage.commitBug();
-
 		editBugPage = bugChangedPage.gotoChangedBug();
 		assertEquals("NEW", editBugPage.getBugStatus());
 	}
 
 	@Test
-	public void testFastStateCycle() throws Exception {
+	public void testFastStatusCycle() {
 
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
-
 		assertEquals("NEW", editBugPage.getBugStatus());
+
 		editBugPage.setBugStatus("RESOLVED");
 		BugChangedPage bugChangedPage = editBugPage.commitBug();
-
 		editBugPage = bugChangedPage.gotoChangedBug();
 		assertEquals("RESOLVED", editBugPage.getBugStatus());
-		editBugPage.setBugStatus("RESOLVED");
-		bugChangedPage = editBugPage.commitBug();
+		assertEquals("FIXED", editBugPage.getBugResolution());
 
-		editBugPage = bugChangedPage.gotoChangedBug();
-		assertEquals("RESOLVED", editBugPage.getBugStatus());
 		editBugPage.setBugStatus("CLOSED");
 		bugChangedPage = editBugPage.commitBug();
-
 		editBugPage = bugChangedPage.gotoChangedBug();
 		assertEquals("CLOSED", editBugPage.getBugStatus());
+		assertEquals("FIXED", editBugPage.getBugResolution());
+		
 		editBugPage.setBugStatus("REOPENED");
 		bugChangedPage = editBugPage.commitBug();
-
 		editBugPage = bugChangedPage.gotoChangedBug();
 		assertEquals("REOPENED", editBugPage.getBugStatus());
+		
 		editBugPage.setBugStatus("NEW");
 		bugChangedPage = editBugPage.commitBug();
-
 		editBugPage = bugChangedPage.gotoChangedBug();
 		assertEquals("NEW", editBugPage.getBugStatus());
 	}
-
+	
 	@Test
-	public void testLongStateCycle() throws Exception {
-
+	public void testResolutions() {
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
-
 		assertEquals("NEW", editBugPage.getBugStatus());
-		editBugPage.setBugStatus("ASSIGNED");
+
+		editBugPage.setBugStatus("RESOLVED");
+		editBugPage.setBugResolution("WORKSFORME");
 		BugChangedPage bugChangedPage = editBugPage.commitBug();
-
-		editBugPage = bugChangedPage.gotoChangedBug();
-		assertEquals("ASSIGNED", editBugPage.getBugStatus());
-		editBugPage.setBugStatus("NEW");
-		bugChangedPage = editBugPage.commitBug();
-
-		editBugPage = bugChangedPage.gotoChangedBug();
-		assertEquals("NEW", editBugPage.getBugStatus());
-		editBugPage.setBugStatus("ASSIGNED");
-		bugChangedPage = editBugPage.commitBug();
-
-		editBugPage = bugChangedPage.gotoChangedBug();
-		assertEquals("ASSIGNED", editBugPage.getBugStatus());
-		editBugPage.setBugStatus("RESOLVED");
-		bugChangedPage = editBugPage.commitBug();
-
 		editBugPage = bugChangedPage.gotoChangedBug();
 		assertEquals("RESOLVED", editBugPage.getBugStatus());
-		editBugPage.setBugStatus("REOPENED");
-		bugChangedPage = editBugPage.commitBug();
+		assertEquals("WORKSFORME", editBugPage.getBugResolution());
 
-		editBugPage = bugChangedPage.gotoChangedBug();
-		assertEquals("REOPENED", editBugPage.getBugStatus());
-		editBugPage.setBugStatus("ASSIGNED");
+		editBugPage.setBugResolution("FIXED");
 		bugChangedPage = editBugPage.commitBug();
-
-		editBugPage = bugChangedPage.gotoChangedBug();
-		assertEquals("ASSIGNED", editBugPage.getBugStatus());
-		editBugPage.setBugStatus("RESOLVED");
-		bugChangedPage = editBugPage.commitBug();
-
 		editBugPage = bugChangedPage.gotoChangedBug();
 		assertEquals("RESOLVED", editBugPage.getBugStatus());
-		editBugPage.setBugStatus("VERIFIED");
-		bugChangedPage = editBugPage.commitBug();
+		assertEquals("FIXED", editBugPage.getBugResolution());	
 
-		editBugPage = bugChangedPage.gotoChangedBug();
-		assertEquals("VERIFIED", editBugPage.getBugStatus());
 		editBugPage.setBugStatus("CLOSED");
+		editBugPage.setBugResolution("WONTFIX");
 		bugChangedPage = editBugPage.commitBug();
-
 		editBugPage = bugChangedPage.gotoChangedBug();
 		assertEquals("CLOSED", editBugPage.getBugStatus());
+		assertEquals("WONTFIX", editBugPage.getBugResolution());	
+		
+		editBugPage.setBugResolution("INVALID");
+		bugChangedPage = editBugPage.commitBug();
+		editBugPage = bugChangedPage.gotoChangedBug();
+		assertEquals("CLOSED", editBugPage.getBugStatus());
+		assertEquals("INVALID", editBugPage.getBugResolution());
+		
 		editBugPage.setBugStatus("REOPENED");
 		bugChangedPage = editBugPage.commitBug();
-
 		editBugPage = bugChangedPage.gotoChangedBug();
 		assertEquals("REOPENED", editBugPage.getBugStatus());
+		
 		editBugPage.setBugStatus("NEW");
 		bugChangedPage = editBugPage.commitBug();
-
 		editBugPage = bugChangedPage.gotoChangedBug();
 		assertEquals("NEW", editBugPage.getBugStatus());
 	}
