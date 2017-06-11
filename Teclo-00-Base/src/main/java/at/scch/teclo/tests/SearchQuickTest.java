@@ -12,12 +12,12 @@ import at.scch.teclo.pageobjects.SearchResultsPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 
 public class SearchQuickTest extends AbstractBugzillaTestWithLogin {
-	private int currentBugID;
+	private int currentBugId;
 	private String currentBugSummary;
 
 	@Before
 	public void setUp() throws Exception {
-		currentBugID = BugzillaSetup.getExampleBugID();
+		currentBugId = BugzillaSetup.getExampleBugId();
 		currentBugSummary = BugzillaSetup.getExampleBugSummary();
 	}
 
@@ -36,8 +36,8 @@ public class SearchQuickTest extends AbstractBugzillaTestWithLogin {
 	}
 
 	@Test
-	public void testFindBugSingleByID() throws Exception {
-		EditBugPage editBugPage = startPage.searchFor(currentBugID);
+	public void testFindBugSingleById() throws Exception {
+		EditBugPage editBugPage = startPage.searchFor(currentBugId);
 		assertEquals("Bug not found by ID", currentBugSummary, editBugPage.getSummary());
 	}
 

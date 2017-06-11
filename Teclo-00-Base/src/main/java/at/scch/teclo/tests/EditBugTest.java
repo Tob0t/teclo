@@ -23,7 +23,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 	@Before
 	public void setUp() throws Exception {
 		// precondition: bug inserted
-		currentBugId = BugzillaSetup.getExampleBugID();
+		currentBugId = BugzillaSetup.getExampleBugId();
 		currentBugSummary = BugzillaSetup.getExampleBugSummary();
 	}
 

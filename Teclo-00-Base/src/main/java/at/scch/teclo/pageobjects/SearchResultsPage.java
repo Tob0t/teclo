@@ -12,7 +12,7 @@ public class SearchResultsPage extends AbstractLoggedinBugzillaPage {
 	private WebElement amountOfBugs;
 
 	@FindBy(xpath = "//div[@id='bugzilla-body']/table/tbody/tr[2]/td[1]")
-	private WebElement firstBugID;
+	private WebElement firstBugId;
 
 	@FindBy(xpath = "//div[@id='bugzilla-body']/table/tbody/tr[2]/td[8]")
 	private WebElement firstBugSummary;
@@ -43,8 +43,8 @@ public class SearchResultsPage extends AbstractLoggedinBugzillaPage {
 	}
 	
 	
-	public EditBugPage goToEditBugPage(int currentBugID) {
-		driver.findElement(By.linkText(String.valueOf(currentBugID))).click();
+	public EditBugPage goToEditBugPage(int currentBugId) {
+		driver.findElement(By.linkText(String.valueOf(currentBugId))).click();
 
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
@@ -64,8 +64,8 @@ public class SearchResultsPage extends AbstractLoggedinBugzillaPage {
 		return amountOfBugs.getText();
 	}
 
-	public int getIDOfFirstBug() {
-		return Integer.parseInt(firstBugID.getText());
+	public int getIdOfFirstBug() {
+		return Integer.parseInt(firstBugId.getText());
 	}
 
 	public String getSummaryOfFirstBug() {

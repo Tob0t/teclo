@@ -15,7 +15,7 @@ import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
 
 public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
-	private int currentBugID;
+	private int currentBugId;
 	private String currentBugSummary;
 	private SearchResultsPage searchResultsPage;
 
@@ -25,11 +25,11 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 	@Before
 	public void setUp() throws Exception {
 		// precondition: bug inserted
-		currentBugID = BugzillaSetup.getExampleBugID();
+		currentBugId = BugzillaSetup.getExampleBugId();
 		currentBugSummary = BugzillaSetup.getExampleBugSummary();
 
 		// precondition: bug changed
-		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugID);
+		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 		currentBugStatus = editBugPage.getBugStatus();
 		editBugPage.setBugStatus("ASSIGNED");
 		currentBugPriority = editBugPage.getPriority();
@@ -105,7 +105,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 	@After
 	public void tearDown() throws Exception {
 		// postcondition: change bug back
-		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugID);
+		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 		editBugPage.setBugStatus(currentBugStatus);
 		editBugPage.setPriority(currentBugPriority);
 		editBugPage.commitBug();

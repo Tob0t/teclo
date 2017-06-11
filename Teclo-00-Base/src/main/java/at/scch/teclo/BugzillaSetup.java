@@ -27,7 +27,7 @@ public class BugzillaSetup {
 	private static int driverUsageCounter;
 
 	private static StartPage startPage;
-	private static int currentbugID;
+	private static int currentbugId;
 	private static String exampleBugSummary;
 
 	/***
@@ -125,23 +125,23 @@ public class BugzillaSetup {
 		BugCreatedPage bugCreatedPage = createBugPage.createNewBug(exampleBugSummary, "test data");
 
 		// save the id of the bug
-		currentbugID = bugCreatedPage.getCreatedBugId();
-		Logger.info("Created new example bug with summary {} and ID {}.", exampleBugSummary, currentbugID);
+		currentbugId = bugCreatedPage.getCreatedBugId();
+		Logger.info("Created new example bug with summary {} and ID {}.", exampleBugSummary, currentbugId);
 		
-		return currentbugID;
+		return currentbugId;
 	}
 
-	public static int getExampleBugID() {
+	public static int getExampleBugId() {
 		// if there is no bug created yet do it now
-		if (currentbugID == 0) {
+		if (currentbugId == 0) {
 			createExampleBug();
 		}
-		return currentbugID;
+		return currentbugId;
 	}
 
 	public static String getExampleBugSummary() {
 		// if there is no bug created yet do it now
-		if (currentbugID == 0) {
+		if (currentbugId == 0) {
 			createExampleBug();
 		}
 		return exampleBugSummary;
@@ -154,10 +154,10 @@ public class BugzillaSetup {
 		return PageFactory.initElements(driver, StartPage.class);
 	}
 
-	public static EditBugPage gotoEditBugPage(int bugID) {
+	public static EditBugPage gotoEditBugPage(int bugId) {
 		checkDriver();
 
-		driver.get(baseUrl + "show_bug.cgi?id=" + bugID);
+		driver.get(baseUrl + "show_bug.cgi?id=" + bugId);
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
 

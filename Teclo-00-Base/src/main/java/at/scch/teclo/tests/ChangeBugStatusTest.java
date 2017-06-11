@@ -15,7 +15,7 @@ public class ChangeBugStatusTest extends AbstractBugzillaTestWithLogin {
 
 	@Before
 	public void setUp() throws Exception {
-		currentBugId = BugzillaSetup.getExampleBugID();
+		currentBugId = BugzillaSetup.getExampleBugId();
 	}
 
 	@Test
@@ -133,13 +133,13 @@ public class ChangeBugStatusTest extends AbstractBugzillaTestWithLogin {
 	public void testMarkAsDuplicate() {
 		
 		// create second bug to mark as duplicate
-		int duplicateBugID = BugzillaSetup.createExampleBug();
+		int duplicateBugId = BugzillaSetup.createExampleBug();
 		
 		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 				
 		// mark the bug as duplicate of current bug
 		editBugPage.clickMarkAsDuplicate();
-		editBugPage.setBugDuplicateOf(duplicateBugID);
+		editBugPage.setBugDuplicateOf(duplicateBugId);
 		
 		// commit
 		BugChangedPage bugChangedPage = editBugPage.commitBug();
@@ -150,10 +150,10 @@ public class ChangeBugStatusTest extends AbstractBugzillaTestWithLogin {
 		// verify on duplicated bug
 		assertEquals("RESOLVED", editBugPage.getBugStatus());
 		assertEquals("DUPLICATE", editBugPage.getBugResolution());
-		assertEquals("*** This bug has been marked as a duplicate of bug "+duplicateBugID+" ***", editBugPage.getLastComment());
+		assertEquals("*** This bug has been marked as a duplicate of bug "+duplicateBugId+" ***", editBugPage.getLastComment());
 		
 		// go to original bug
-		editBugPage = BugzillaSetup.gotoEditBugPage(duplicateBugID);
+		editBugPage = BugzillaSetup.gotoEditBugPage(duplicateBugId);
 		
 		// verify on current bug
 		assertEquals("*** Bug "+currentBugId+" has been marked as a duplicate of this bug. ***", editBugPage.getLastComment());

@@ -42,9 +42,6 @@ public class EditBugPage extends AbstractLoggedinBugzillaPage {
 	
 	@FindBy(id = "bug_severity")
 	private WebElement bugSeverity;
-
-	 // TODO bugAssignedTo
-
 	
 	@FindBy(id = "bug_file_loc")
 	private WebElement bugUrl;
@@ -104,7 +101,7 @@ public class EditBugPage extends AbstractLoggedinBugzillaPage {
 	private WebElement markAsDuplicateLink;
 	
 	@FindBy(id = "dup_id")
-	private WebElement bugDuplicateID;
+	private WebElement bugDuplicateId;
 
 	
 	@FindBy(id = "commit")
@@ -311,12 +308,12 @@ public class EditBugPage extends AbstractLoggedinBugzillaPage {
 	}
 
 	public String getBugDuplicateOf(){
-		return bugDuplicateID.getAttribute("value");
+		return bugDuplicateId.getAttribute("value");
 	}
 	
-	public void setBugDuplicateOf(int bugID){
-		bugDuplicateID.clear();
-		bugDuplicateID.sendKeys(String.valueOf(bugID));
+	public void setBugDuplicateOf(int bugId){
+		bugDuplicateId.clear();
+		bugDuplicateId.sendKeys(String.valueOf(bugId));
 	}
 
 	public void clickMarkAsDuplicate(){
@@ -356,8 +353,8 @@ public class EditBugPage extends AbstractLoggedinBugzillaPage {
 	 * @return content of the last comment
 	 */
 	public String getLastComment(){
-		int lastCommentID = driver.findElements(By.xpath("//div[contains(concat(' ', @class, ' '), ' bz_comment ')]")).size()-1;
-		return driver.findElement(By.id("comment_text_"+lastCommentID)).getText().replace("\n", " ");
+		int lastCommentId = driver.findElements(By.xpath("//div[contains(concat(' ', @class, ' '), ' bz_comment ')]")).size()-1;
+		return driver.findElement(By.id("comment_text_"+lastCommentId)).getText().replace("\n", " ");
 	}
 	
 }

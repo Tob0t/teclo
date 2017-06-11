@@ -15,7 +15,7 @@ public class GenerateTabularReportTest extends AbstractBugzillaTestWithLogin {
 	@Before
 	public void setUp() throws Exception {
 		// precondition: bug inserted
-		BugzillaSetup.getExampleBugID();
+		BugzillaSetup.getExampleBugId();
 	}
 
 	@Test
