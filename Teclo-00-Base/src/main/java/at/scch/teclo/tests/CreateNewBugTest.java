@@ -23,7 +23,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		String summary = "ExampleBugDefault_" + LocalDateTime.now().format(formatter);
 
 		CreateBugPage createBugPage = startPage.gotoCreateBugPage();
-		createBugPage.fillSummary(summary);
+		createBugPage.setSummary(summary);
 		
 		BugCreatedPage bugCreatedPage = createBugPage.commitBug();
 
@@ -71,7 +71,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 	@Test
 	public void testCreateEmptySummaryResultsInAlertPopup() throws Exception {
 		CreateBugPage createBugPage = startPage.gotoCreateBugPage();
-		createBugPage.fillSummary("");
+		createBugPage.setSummary("");
 
 		String alertMsg = createBugPage.commitBugWithEmptySummary();
 
@@ -85,12 +85,12 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		String comment = "This is an example description for ExampleBugStandard created at " + nowText;
 
 		CreateBugPage createBugPage = startPage.gotoCreateBugPage();
-		createBugPage.fillSummary(summary);
-		createBugPage.fillComment(comment);
+		createBugPage.setSummary(summary);
+		createBugPage.setComment(comment);
 
-		createBugPage.fillPlatform("Other");
-		createBugPage.fillOpSys("Linux");
-		createBugPage.fillSeverity("major");
+		createBugPage.setPlatform("Other");
+		createBugPage.setOpSys("Linux");
+		createBugPage.setSeverity("major");
 
 		BugCreatedPage bugCreatedPage = createBugPage.commitBug();
 
@@ -119,20 +119,20 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		CreateBugPage createBugPage = startPage.gotoCreateBugPage();
 		createBugPage.toggleAdvancedFields();
 		
-		createBugPage.fillSeverity("blocker");
-		createBugPage.fillPlatform("All");
-		createBugPage.fillOpSys("All");
-		createBugPage.fillPriority("P1");
+		createBugPage.setSeverity("blocker");
+		createBugPage.setPlatform("All");
+		createBugPage.setOpSys("All");
+		createBugPage.setPriority("P1");
 		
-		createBugPage.changeBugStatus("ASSIGNED");
-		createBugPage.fillCC("admin");
+		createBugPage.setBugStatus("ASSIGNED");
+		createBugPage.setCc("admin");
 		
-		createBugPage.fillTimeEstimatedTime(100);
-		createBugPage.fillTimeDeadline("2016-06-12");
-		createBugPage.fillURL("http://www.test-bugzilla.org");
+		createBugPage.setTimeEstimated(100);
+		createBugPage.setTimeDeadline("2016-06-12");
+		createBugPage.setUrl("http://www.test-bugzilla.org");
 		
-		createBugPage.fillSummary(summary);
-		createBugPage.fillComment(comment);
+		createBugPage.setSummary(summary);
+		createBugPage.setComment(comment);
 		
 		BugCreatedPage bugCreatedPage = createBugPage.commitBug();
 

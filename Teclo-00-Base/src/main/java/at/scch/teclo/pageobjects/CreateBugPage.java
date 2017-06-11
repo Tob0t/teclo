@@ -63,54 +63,54 @@ public class CreateBugPage extends AbstractLoggedinBugzillaPage {
 		linkToggleAdvancedFields.click();
 	}
 
-	public void fillSummary(String summary) {
+	public void setSummary(String summary) {
 		bugSummary.clear();
 		bugSummary.sendKeys(summary);
 	}
 
-	public void fillPlatform(String platform) {
+	public void setPlatform(String platform) {
 		new Select(bugPlatform).selectByVisibleText(platform);
 	}
 
-	public void fillOpSys(String opSys) {
+	public void setOpSys(String opSys) {
 		new Select(bugOpSys).selectByVisibleText(opSys);
 	}
 
-	public void fillSeverity(String severity) {
+	public void setSeverity(String severity) {
 		new Select(bugSeverity).selectByVisibleText(severity);
 	}
 	
-	public void fillPriority(String priority) {
+	public void setPriority(String priority) {
 		new Select(bugPriority).selectByVisibleText(priority);
 	}
 	
-	public void fillCC(String cc) {
+	public void setCc(String cc) {
 		bugCC.clear();
 		bugCC.sendKeys(cc);
 	}
 
-	public void fillTimeEstimatedTime(double estimatedTime) {
+	public void setTimeEstimated(double estimatedTime) {
 		timeEstimatedTime.clear();
 		timeEstimatedTime.sendKeys(String.valueOf(estimatedTime));
 	}
 
-	public void fillTimeDeadline(String deadline) {
+	public void setTimeDeadline(String deadline) {
 		timeDeadline.clear();
 		timeDeadline.sendKeys(String.valueOf(deadline));
 	}
 	
-	public void fillURL(String url) {
+	public void setUrl(String url) {
 		bugURL.clear();
 		bugURL.sendKeys(url);
 	}
 
-	public void fillComment(String comment) {
+	public void setComment(String comment) {
 		bugComment.clear();
 		bugComment.sendKeys(comment);
 	}
 
-	public void changeBugStatus(String bugStatusString) {
-		new Select(bugStatus).selectByVisibleText(bugStatusString);
+	public void setBugStatus(String bugStatusName) {
+		new Select(bugStatus).selectByVisibleText(bugStatusName);
 	}
 
 	public BugCreatedPage commitBug() {
@@ -135,8 +135,8 @@ public class CreateBugPage extends AbstractLoggedinBugzillaPage {
 
 	
 	public BugCreatedPage createNewBug(String summary, String description) {
-		fillSummary(summary);
-		fillComment(description);
+		setSummary(summary);
+		setComment(description);
 		commitBug();
 
 		return PageFactory.initElements(driver, BugCreatedPage.class);
