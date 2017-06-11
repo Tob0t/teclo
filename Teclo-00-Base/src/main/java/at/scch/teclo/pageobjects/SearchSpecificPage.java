@@ -13,7 +13,7 @@ public class SearchSpecificPage extends SearchBasePage {
 	private WebElement bugStatus;
 
 	@FindBy(id = "content")
-	private WebElement searchField;
+	private WebElement searchText;
 
 	@FindBy(id = "search")
 	private WebElement searchButton;
@@ -34,8 +34,8 @@ public class SearchSpecificPage extends SearchBasePage {
 	}
 
 	public SearchResultsPage searchFor(String searchTerm) {
-		searchField.clear();
-		searchField.sendKeys(searchTerm);
+		searchText.clear();
+		searchText.sendKeys(searchTerm);
 		searchButton.click();
 
 		return PageFactory.initElements(driver, SearchResultsPage.class);
@@ -46,8 +46,8 @@ public class SearchSpecificPage extends SearchBasePage {
 	 * error.
 	 */
 	public ErrorParametersRequiredPage searchForBlanks() {
-		searchField.clear();
-		searchField.sendKeys(" ");
+		searchText.clear();
+		searchText.sendKeys(" ");
 		searchButton.click();
 
 		return PageFactory.initElements(driver, ErrorParametersRequiredPage.class);
@@ -57,7 +57,7 @@ public class SearchSpecificPage extends SearchBasePage {
 	public String searchForEmpty() {
 		String alertText;
 
-		searchField.clear();
+		searchText.clear();
 		searchButton.click();
 
 		Alert alert = driver.switchTo().alert();

@@ -15,10 +15,10 @@ public class SearchAdvancedPage extends SearchBasePage {
 	private WebElement summarySearchType;
 
 	@FindBy(id = "short_desc")
-	private WebElement summaryTextBox;
+	private WebElement summaryText;
 
 	@FindBy(id = "longdesc")
-	private WebElement commentTextBox;
+	private WebElement commentText;
 
 	@FindBy(id = "Search")
 	private WebElement searchButton;
@@ -44,43 +44,43 @@ public class SearchAdvancedPage extends SearchBasePage {
 	
 
 	public SearchResultsPage searchFor(String summaryString, String commentString) {
-		summaryTextBox.clear();
-		summaryTextBox.sendKeys(summaryString);
-		commentTextBox.clear();
-		commentTextBox.sendKeys(commentString);
-		return submit();
+		summaryText.clear();
+		summaryText.sendKeys(summaryString);
+		commentText.clear();
+		commentText.sendKeys(commentString);
+		return submitSearch();
 	}
 
-	public void fillSummary(String summaryString) {
-		summaryTextBox.clear();
-		summaryTextBox.sendKeys(summaryString);
+	public void setSummary(String summaryString) {
+		summaryText.clear();
+		summaryText.sendKeys(summaryString);
 	}
 
-	public void fillComment(String commentString) {
-		commentTextBox.clear();
-		commentTextBox.sendKeys(commentString);
+	public void setComment(String commentString) {
+		commentText.clear();
+		commentText.sendKeys(commentString);
 	}
 
 	public void setSummarySearchType(String searchType) {
 		new Select(summarySearchType).selectByVisibleText(searchType);
 	}
 
-	public void deselectBugStatus(String bugStatusString) {
+	public void unsetBugStatus(String bugStatusString) {
 		new Select(bugStatus).deselectByVisibleText(bugStatusString);
 	}
 
-	public void selectBugStatus(String bugStatusString) {
+	public void setBugStatus(String bugStatusString) {
 		new Select(bugStatus).selectByVisibleText(bugStatusString);
 	}
 
-	public void fillBooleanChart(String chartField, String chartType, String chartValue) {
+	public void setBooleanChart(String chartField, String chartType, String chartValue) {
 		new Select(booleanChartField).selectByVisibleText(chartField);
 		new Select(booleanChartType).selectByVisibleText(chartType);
 		booleanChartValue.clear();
 		booleanChartValue.sendKeys(chartValue);
 	}
 
-	public SearchResultsPage submit() {
+	public SearchResultsPage submitSearch() {
 		searchButton.click();
 		return PageFactory.initElements(driver, SearchResultsPage.class);
 	}

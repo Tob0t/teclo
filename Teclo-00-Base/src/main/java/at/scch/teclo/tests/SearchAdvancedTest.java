@@ -42,13 +42,13 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		SearchBasePage searchBasePage = startPage.gotoSearchBasePage();
 		SearchAdvancedPage searchAdvancedPage = searchBasePage.gotoAdvancedSearchPage();
 
-		searchAdvancedPage.deselectBugStatus("NEW");
-		searchAdvancedPage.deselectBugStatus("ASSIGNED");
-		searchAdvancedPage.deselectBugStatus("REOPENED");
+		searchAdvancedPage.unsetBugStatus("NEW");
+		searchAdvancedPage.unsetBugStatus("ASSIGNED");
+		searchAdvancedPage.unsetBugStatus("REOPENED");
 
-		searchAdvancedPage.selectBugStatus("RESOLVED");
-		searchAdvancedPage.fillSummary(currentBugSummary.replace("_", "-"));
-		searchResultsPage = searchAdvancedPage.submit();
+		searchAdvancedPage.setBugStatus("RESOLVED");
+		searchAdvancedPage.setSummary(currentBugSummary.replace("_", "-"));
+		searchResultsPage = searchAdvancedPage.submitSearch();
 
 		assertEquals("More than 0 bugs found!", 0, searchResultsPage.getAmountOfBugs());
 	}
@@ -58,13 +58,13 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		SearchBasePage searchBasePage = startPage.gotoSearchBasePage();
 		SearchAdvancedPage searchAdvancedPage = searchBasePage.gotoAdvancedSearchPage();
 
-		searchAdvancedPage.deselectBugStatus("NEW");
-		searchAdvancedPage.deselectBugStatus("ASSIGNED");
-		searchAdvancedPage.deselectBugStatus("REOPENED");
+		searchAdvancedPage.unsetBugStatus("NEW");
+		searchAdvancedPage.unsetBugStatus("ASSIGNED");
+		searchAdvancedPage.unsetBugStatus("REOPENED");
 
-		searchAdvancedPage.selectBugStatus("ASSIGNED");
-		searchAdvancedPage.fillSummary(currentBugSummary);
-		searchResultsPage = searchAdvancedPage.submit();
+		searchAdvancedPage.setBugStatus("ASSIGNED");
+		searchAdvancedPage.setSummary(currentBugSummary);
+		searchResultsPage = searchAdvancedPage.submitSearch();
 
 		assertEquals("Not exactly one bug found!", 1, searchResultsPage.getAmountOfBugs());
 		assertEquals("ASSI", searchResultsPage.getStatusOfFirstBug());
@@ -76,14 +76,14 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		SearchBasePage searchBasePage = startPage.gotoSearchBasePage();
 		SearchAdvancedPage searchAdvancedPage = searchBasePage.gotoAdvancedSearchPage();
 
-		searchAdvancedPage.deselectBugStatus("NEW");
-		searchAdvancedPage.deselectBugStatus("ASSIGNED");
-		searchAdvancedPage.deselectBugStatus("REOPENED");
+		searchAdvancedPage.unsetBugStatus("NEW");
+		searchAdvancedPage.unsetBugStatus("ASSIGNED");
+		searchAdvancedPage.unsetBugStatus("REOPENED");
 
 		searchAdvancedPage.setSummarySearchType("matches regular expression");
-		searchAdvancedPage.fillSummary(".*");
+		searchAdvancedPage.setSummary(".*");
 
-		searchResultsPage = searchAdvancedPage.submit();
+		searchResultsPage = searchAdvancedPage.submitSearch();
 
 		assertTrue("No bugs found", 1 < searchResultsPage.getAmountOfBugs());
 	}
@@ -93,9 +93,9 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		SearchBasePage searchBasePage = startPage.gotoSearchBasePage();
 		SearchAdvancedPage searchAdvancedPage = searchBasePage.gotoAdvancedSearchPage();
 
-		searchAdvancedPage.fillBooleanChart("Priority", "is equal to", "P3");
-		searchAdvancedPage.fillSummary(currentBugSummary);
-		SearchResultsPage searchResultsPage = searchAdvancedPage.submit();
+		searchAdvancedPage.setBooleanChart("Priority", "is equal to", "P3");
+		searchAdvancedPage.setSummary(currentBugSummary);
+		SearchResultsPage searchResultsPage = searchAdvancedPage.submitSearch();
 
 		assertEquals("No bug found!", 1, searchResultsPage.getAmountOfBugs());
 		assertEquals("P3", searchResultsPage.getPriorityOfFirstBug());
