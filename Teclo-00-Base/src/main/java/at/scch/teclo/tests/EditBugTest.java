@@ -34,13 +34,13 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		editBugPage.setSummary("Test Summary !\"�$%&/(=?\\#*1234567890\'.:;,");
 		BugChangedPage bugChangedPage = editBugPage.commitBug();
 		assertEquals("Changes submitted for bug " + currentBugId, bugChangedPage.getSuccessMsg());
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("Test Summary !\"�$%&/(=?\\#*1234567890\'.:;,", editBugPage.getSummary());
 
 		editBugPage.setSummary(currentBugSummary);
 		bugChangedPage = editBugPage.commitBug();
 		assertEquals("Changes submitted for bug " + currentBugId, bugChangedPage.getSuccessMsg());
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals(currentBugSummary, editBugPage.getSummary());
 	}
 
@@ -71,7 +71,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		// commit bug
 		BugChangedPage bugChangedPage = editBugPage.commitBug();
 		assertEquals("Changes submitted for bug " + currentBugId, bugChangedPage.getSuccessMsg());
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 
 		// verify changes
 		assertEquals("Other", editBugPage.getPlatform());
@@ -92,7 +92,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		
 		BugChangedPage bugChangedPage = editBugPage.commitBug();
 		assertEquals("Changes submitted for bug " + currentBugId, bugChangedPage.getSuccessMsg());
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		
 		assertEquals(currentAmountOfComments+1, editBugPage.getNumberOfComments());
 		assertEquals(comment, editBugPage.getLastComment());
@@ -105,7 +105,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		// set time
 		editBugPage.setTimeEstimated(100);
 		editBugPage.setTimeHoursLeft(100);
-		editBugPage = editBugPage.commitBug().gotoChangedBug();
+		editBugPage = editBugPage.commitBug().gotoChangedBugPage();
 		
 		// verify
 		assertEquals("100.0", editBugPage.getTimeEstimated());
@@ -115,7 +115,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		// change time
 		editBugPage.setTimeWorked(50.0);
 		editBugPage.setComment("Edited hours left to 50.0!");
-		editBugPage = editBugPage.commitBug().gotoChangedBug();
+		editBugPage = editBugPage.commitBug().gotoChangedBugPage();
 		
 		// verify
 		assertEquals("50.0 +", editBugPage.getTimeWorkCompleted());
@@ -124,7 +124,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		
 		// change time
 		editBugPage.setTimeHoursLeft(40.0);
-		editBugPage = editBugPage.commitBug().gotoChangedBug();
+		editBugPage = editBugPage.commitBug().gotoChangedBugPage();
 		
 		// verify
 		assertEquals("90.0", editBugPage.getTimeCurrentEstimation());
@@ -138,11 +138,11 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
 
 		editBugPage.setTimeDeadline("1901-12-17");
-		editBugPage = editBugPage.commitBug().gotoChangedBug();
+		editBugPage = editBugPage.commitBug().gotoChangedBugPage();
 		assertEquals("1901-12-17", editBugPage.getTimeDeadline());
 
 		editBugPage.setTimeDeadline("2038-01-16");
-		editBugPage = editBugPage.commitBug().gotoChangedBug();
+		editBugPage = editBugPage.commitBug().gotoChangedBugPage();
 		assertEquals("2038-01-16", editBugPage.getTimeDeadline());
 	}
 
@@ -151,11 +151,11 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
 		
 		editBugPage.setUrl("http://www.test-bugzilla.org");
-		editBugPage = editBugPage.commitBug().gotoChangedBug();
+		editBugPage = editBugPage.commitBug().gotoChangedBugPage();
 		assertEquals("http://www.test-bugzilla.org", editBugPage.getUrl());
 		
 		editBugPage.setUrl("");
-		editBugPage = editBugPage.commitBug().gotoChangedBug();
+		editBugPage = editBugPage.commitBug().gotoChangedBugPage();
 		assertEquals("", editBugPage.getUrl());
 	}
 
@@ -165,7 +165,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		EditBugPage editBugPage = BugzillaSetup.gotoBugPage(currentBugId);
 		
 		editBugPage.setDependsOn(dependingOnBugId);
-		editBugPage = editBugPage.commitBug().gotoChangedBug();
+		editBugPage = editBugPage.commitBug().gotoChangedBugPage();
 		assertEquals("edited page (currentBugId) should show dependsOnId as depending on", 
 				dependingOnBugId, Integer.parseInt(editBugPage.getDependsOn()));
 
@@ -174,7 +174,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 				currentBugId, Integer.parseInt(editBugPage.getBlocks()));
 		
 		editBugPage.setBlocks("");
-		editBugPage = editBugPage.commitBug().gotoChangedBug();
+		editBugPage = editBugPage.commitBug().gotoChangedBugPage();
 		assertEquals("dependingOn page should have cleared blocks", 
 				"", editBugPage.getBlocks());
 		

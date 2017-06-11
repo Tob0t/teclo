@@ -37,7 +37,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		// don't verify default values for operating system and platform, which
 		// are client values retrieved from browser by default
 
-		EditBugPage editBugPage = bugCreatedPage.gotoCreatedBug();
+		EditBugPage editBugPage = bugCreatedPage.gotoCreatedBugPage();
 		
 		assertEquals(summary, editBugPage.getSummary());
 		
@@ -102,7 +102,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 
 		// verify values of set fields
 		
-		EditBugPage editBugPage = bugCreatedPage.gotoCreatedBug();
+		EditBugPage editBugPage = bugCreatedPage.gotoCreatedBugPage();
 		
 		assertEquals(summary, editBugPage.getSummary());
 		assertEquals("Other", editBugPage.getPlatform());
@@ -144,7 +144,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		
 		// verify values including default values
 		
-		EditBugPage editBugPage = bugCreatedPage.gotoCreatedBug();
+		EditBugPage editBugPage = bugCreatedPage.gotoCreatedBugPage();
 		
 		assertEquals(summary, editBugPage.getSummary());
 		

@@ -25,7 +25,7 @@ public class BugChangedPage extends AbstractLoggedinBugzillaPage {
 		return Integer.parseInt(bugTitle.getText().replaceAll("[^0-9]", ""));
 	}
 
-	public EditBugPage gotoChangedBug() {
+	public EditBugPage gotoChangedBugPage() {
 		driver.findElement(By.linkText("bug " + getChangedBugId())).click();
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}

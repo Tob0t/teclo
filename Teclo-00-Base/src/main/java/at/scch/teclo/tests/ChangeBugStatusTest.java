@@ -26,35 +26,35 @@ public class ChangeBugStatusTest extends AbstractBugzillaTestWithLogin {
 
 		editBugPage.setBugStatus("ASSIGNED");
 		BugChangedPage bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("ASSIGNED", editBugPage.getBugStatus());
 		
 		editBugPage.setBugStatus("RESOLVED");
 		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("RESOLVED", editBugPage.getBugStatus());
 		assertEquals("FIXED", editBugPage.getBugResolution());
 		
 		editBugPage.setBugStatus("VERIFIED");
 		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("VERIFIED", editBugPage.getBugStatus());
 		assertEquals("FIXED", editBugPage.getBugResolution());
 		
 		editBugPage.setBugStatus("CLOSED");
 		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("CLOSED", editBugPage.getBugStatus());
 		assertEquals("FIXED", editBugPage.getBugResolution());
 		
 		editBugPage.setBugStatus("REOPENED");
 		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("REOPENED", editBugPage.getBugStatus());
 		
 		editBugPage.setBugStatus("NEW");
 		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("NEW", editBugPage.getBugStatus());
 	}
 
@@ -66,24 +66,24 @@ public class ChangeBugStatusTest extends AbstractBugzillaTestWithLogin {
 
 		editBugPage.setBugStatus("RESOLVED");
 		BugChangedPage bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("RESOLVED", editBugPage.getBugStatus());
 		assertEquals("FIXED", editBugPage.getBugResolution());
 
 		editBugPage.setBugStatus("CLOSED");
 		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("CLOSED", editBugPage.getBugStatus());
 		assertEquals("FIXED", editBugPage.getBugResolution());
 		
 		editBugPage.setBugStatus("REOPENED");
 		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("REOPENED", editBugPage.getBugStatus());
 		
 		editBugPage.setBugStatus("NEW");
 		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("NEW", editBugPage.getBugStatus());
 	}
 	
@@ -95,37 +95,37 @@ public class ChangeBugStatusTest extends AbstractBugzillaTestWithLogin {
 		editBugPage.setBugStatus("RESOLVED");
 		editBugPage.setBugResolution("WORKSFORME");
 		BugChangedPage bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("RESOLVED", editBugPage.getBugStatus());
 		assertEquals("WORKSFORME", editBugPage.getBugResolution());
 
 		editBugPage.setBugResolution("FIXED");
 		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("RESOLVED", editBugPage.getBugStatus());
 		assertEquals("FIXED", editBugPage.getBugResolution());	
 
 		editBugPage.setBugStatus("CLOSED");
 		editBugPage.setBugResolution("WONTFIX");
 		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("CLOSED", editBugPage.getBugStatus());
 		assertEquals("WONTFIX", editBugPage.getBugResolution());	
 		
 		editBugPage.setBugResolution("INVALID");
 		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("CLOSED", editBugPage.getBugStatus());
 		assertEquals("INVALID", editBugPage.getBugResolution());
 		
 		editBugPage.setBugStatus("REOPENED");
 		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("REOPENED", editBugPage.getBugStatus());
 		
 		editBugPage.setBugStatus("NEW");
 		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("NEW", editBugPage.getBugStatus());
 	}
 
@@ -144,7 +144,7 @@ public class ChangeBugStatusTest extends AbstractBugzillaTestWithLogin {
 		// commit
 		BugChangedPage bugChangedPage = editBugPage.commitBug();
 		assertEquals("Changes submitted for bug " + currentBugId, bugChangedPage.getSuccessMsg());
-		editBugPage = bugChangedPage.gotoChangedBug();
+		editBugPage = bugChangedPage.gotoChangedBugPage();
 
 		
 		// verify on duplicated bug
