@@ -23,7 +23,7 @@ public class TabularReportsSearchPage extends AbstractLoggedinBugzillaPage {
 	}
 
 	@Override
-	protected boolean matchingPageIsDisplayed() {
+	protected boolean isMatchingPage() {
 		return "Generate Tabular Report".equals(getTitle());
 	}
 	

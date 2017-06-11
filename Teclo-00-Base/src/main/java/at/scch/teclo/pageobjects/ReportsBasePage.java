@@ -15,7 +15,7 @@ public class ReportsBasePage extends AbstractLoggedinBugzillaPage {
 	}
 	
 	@Override
-	protected boolean matchingPageIsDisplayed() {
+	protected boolean isMatchingPage() {
 		return "Reporting and Charting Kitchen".equals(getTitle());
 	}
 	

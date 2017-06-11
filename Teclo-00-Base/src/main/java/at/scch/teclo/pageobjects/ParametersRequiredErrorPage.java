@@ -9,7 +9,7 @@ public class ParametersRequiredErrorPage extends AbstractErrorPage {
 	}
 
 	@Override
-	protected boolean matchingPageIsDisplayed() {
+	protected boolean isMatchingPage() {
 		return "Parameters Required".equals(getTitle());
 	}
 

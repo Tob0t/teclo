@@ -9,7 +9,7 @@ public class SummaryNeededErrorPage extends AbstractErrorPage {
 	}
 
 	@Override
-	protected boolean matchingPageIsDisplayed() {
+	protected boolean isMatchingPage() {
 		return "Summary Needed".equals(getTitle());
 	}
 

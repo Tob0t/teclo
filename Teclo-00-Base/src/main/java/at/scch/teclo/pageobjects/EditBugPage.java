@@ -127,7 +127,7 @@ public class EditBugPage extends AbstractLoggedinBugzillaPage {
 	}
 
 	@Override
-	protected boolean matchingPageIsDisplayed() {
+	protected boolean isMatchingPage() {
 		return getTitle().matches("Bug \\d+ .*");
 	}
 	

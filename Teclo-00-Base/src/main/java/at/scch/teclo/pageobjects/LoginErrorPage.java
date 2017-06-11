@@ -9,7 +9,7 @@ public class LoginErrorPage extends AbstractErrorPage {
 	}
 
 	@Override
-	protected boolean matchingPageIsDisplayed() {
+	protected boolean isMatchingPage() {
 		return "Invalid Username Or Password".equals(getTitle());
 	}
 

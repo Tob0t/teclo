@@ -38,7 +38,7 @@ public class BugResultsPage extends AbstractLoggedinBugzillaPage {
 	}
 
 	@Override
-	protected boolean matchingPageIsDisplayed() {
+	protected boolean isMatchingPage() {
 		return getTitle().matches("Bug List.*|Search created|Search is gone");
 	}
 	

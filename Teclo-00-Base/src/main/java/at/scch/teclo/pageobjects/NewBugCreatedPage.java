@@ -15,7 +15,7 @@ public class NewBugCreatedPage extends AbstractLoggedinBugzillaPage {
 	}
 	
 	@Override
-	protected boolean matchingPageIsDisplayed() {
+	protected boolean isMatchingPage() {
 		return getTitle().matches("Bug \\d+ Submitted.*");
 	}
 	

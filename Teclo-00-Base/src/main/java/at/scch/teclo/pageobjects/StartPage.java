@@ -19,7 +19,7 @@ public class StartPage extends AbstractBugzillaPage {
 	}
 
 	@Override
-	protected boolean matchingPageIsDisplayed() {
+	protected boolean isMatchingPage() {
 		String expectedPageTitleRegex = ".*"; 
 		
 		return driver.getTitle().matches(expectedPageTitleRegex);

@@ -24,7 +24,7 @@ public class SpecificSearchPage extends SearchBasePage {
 	}
 
 	@Override
-	protected boolean matchingPageIsDisplayed() {
+	protected boolean isMatchingPage() {
 		return "Find a Specific Bug".equals(driver.getTitle());
 	}
 	

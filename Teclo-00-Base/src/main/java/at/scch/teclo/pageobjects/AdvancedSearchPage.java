@@ -38,7 +38,7 @@ public class AdvancedSearchPage extends SearchBasePage {
 	}
 	
 	@Override
-	protected boolean matchingPageIsDisplayed() {
+	protected boolean isMatchingPage() {
 		return "Search for bugs".equals(driver.getTitle());
 	}
 	

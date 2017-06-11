@@ -39,7 +39,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testFindBugZarro() throws Exception {
-		SearchBasePage searchPage = startPage.navigateToSearchBasePage();
+		SearchBasePage searchPage = startPage.gotoSearchBasePage();
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 
 		advancedSearchPage.deselectBugState("NEW");
@@ -55,7 +55,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testFindBugSingle() throws Exception {
-		SearchBasePage searchPage = startPage.navigateToSearchBasePage();
+		SearchBasePage searchPage = startPage.gotoSearchBasePage();
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 
 		advancedSearchPage.deselectBugState("NEW");
@@ -73,7 +73,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testFindBugAll() throws Exception {
-		SearchBasePage searchPage = startPage.navigateToSearchBasePage();
+		SearchBasePage searchPage = startPage.gotoSearchBasePage();
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 
 		advancedSearchPage.deselectBugState("NEW");
@@ -90,7 +90,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 
 	@Test
 	public void testBooleanChart() throws Exception {
-		SearchBasePage searchPage = startPage.navigateToSearchBasePage();
+		SearchBasePage searchPage = startPage.gotoSearchBasePage();
 		AdvancedSearchPage advancedSearchPage = searchPage.navigateToAdvancedSearchPage();
 
 		advancedSearchPage.fillBooleanChart("Priority", "is equal to", "P3");

@@ -54,7 +54,7 @@ public class CreateBugPage extends AbstractLoggedinBugzillaPage {
 	}
 	
 	@Override
-	protected boolean matchingPageIsDisplayed() {
+	protected boolean isMatchingPage() {
 		return getTitle().matches("Enter Bug: .*");
 	}
 	

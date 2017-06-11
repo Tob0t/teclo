@@ -31,7 +31,7 @@ public abstract class AbstractBugzillaPage {
 	public AbstractBugzillaPage(WebDriver driver) {
 		this.driver = driver;
 
-		if (!matchingPageIsDisplayed()) {
+		if (!isMatchingPage()) {
 			throw new IllegalStateException("Page object " + this.getClass().getName()
 					+ " does not match the displayed page (title: " + driver.getTitle() + ")!");
 		}
@@ -43,9 +43,9 @@ public abstract class AbstractBugzillaPage {
 	 * implementation is checking the title of the page matching a given regular
 	 * expression.
 	 * 
-	 * @return true if the displayed page fits to this page object.
+	 * @return true if the displayed page matches this page object.
 	 */
-	abstract protected boolean matchingPageIsDisplayed();
+	abstract protected boolean isMatchingPage();
 	// String expectedPageTitleRegex = ".*";
 	// return driver.getTitle().matches(expectedPageTitleRegex);
 	// }
@@ -66,6 +66,7 @@ public abstract class AbstractBugzillaPage {
 		return elementFound;
 	}
 
+	
 	public String getTitle() {
 		return driver.getTitle();
 	}
@@ -126,12 +127,12 @@ public abstract class AbstractBugzillaPage {
 		return PageFactory.initElements(driver, CreateBugPage.class);
 	}
 
-	public SearchBasePage navigateToSearchBasePage() {
+	public SearchBasePage gotoSearchBasePage() {
 		searchLink.click();
 		return PageFactory.initElements(driver, SearchBasePage.class);
 	}
 
-	public ReportsBasePage navigateToReportsBasePage() {
+	public ReportsBasePage gotoReportsBasePage() {
 		reportsLink.click();
 		return PageFactory.initElements(driver, ReportsBasePage.class);
 	}

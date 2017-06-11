@@ -22,7 +22,7 @@ public class LoginPage extends AbstractBugzillaPage {
 	}
 	
 	@Override
-	protected boolean matchingPageIsDisplayed() {
+	protected boolean isMatchingPage() {
 		return "Log in to Bugzilla".equals(getTitle());
 	}
 

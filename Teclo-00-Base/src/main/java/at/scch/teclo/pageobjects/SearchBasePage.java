@@ -19,7 +19,7 @@ public class SearchBasePage extends AbstractLoggedinBugzillaPage {
 	}
 	
 	@Override
-	protected boolean matchingPageIsDisplayed() {
+	protected boolean isMatchingPage() {
 		return getTitle().matches("Find a Specific Bug|Search for bugs");
 	}
 	
