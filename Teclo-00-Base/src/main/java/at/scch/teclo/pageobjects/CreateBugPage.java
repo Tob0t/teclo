@@ -43,7 +43,7 @@ public class CreateBugPage extends AbstractLoggedinBugzillaPage {
 	private WebElement timeDeadline;
 	
 	@FindBy(name = "bug_file_loc")
-	private WebElement bugURL;
+	private WebElement bugUrl;
 
 	@FindBy(id = "commit")
 	private WebElement commitButton;
@@ -100,8 +100,8 @@ public class CreateBugPage extends AbstractLoggedinBugzillaPage {
 	}
 	
 	public void setUrl(String url) {
-		bugURL.clear();
-		bugURL.sendKeys(url);
+		bugUrl.clear();
+		bugUrl.sendKeys(url);
 	}
 
 	public void setComment(String comment) {
