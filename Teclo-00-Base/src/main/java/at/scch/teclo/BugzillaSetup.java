@@ -18,9 +18,6 @@ import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.BugCreatedPage;
 import at.scch.teclo.pageobjects.StartPage;
 
-/**
- * @author fabianbouchal
- */
 public class BugzillaSetup {
 	private static final Logger Logger = LoggerFactory.getLogger(BugzillaSetup.class);
 
@@ -29,7 +26,6 @@ public class BugzillaSetup {
 	private static WebDriver driver;
 	private static int driverUsageCounter;
 
-	private static int loginUsageCounter;
 	private static StartPage startPage;
 	private static int currentbugID;
 	private static String exampleBugSummary;
@@ -164,7 +160,9 @@ public class BugzillaSetup {
 
 	public static StartPage login() {
 		startPage = gotoStartPage();
-		startPage.login("admin", "admin");
+		if (!startPage.isLoggedin()) {
+			startPage.login("admin", "admin");
+		}
 		return startPage;
 	}
 	
@@ -173,33 +171,6 @@ public class BugzillaSetup {
 		return startPage.logout();
 	}
 	
-	
-//	public static LoggedInBasePage login() {
-//		checkDriver();
-//
-//		// if not logged in, do it now
-//		if (loggedInBasePage == null) {
-//			HomeBasePage homeBasePage = gotoHomeBasePage();
-//			loggedInBasePage = homeBasePage.login("admin", "admin");
-//		}
-//		loginUsageCounter++;
-//		return loggedInBasePage;
-//	}
-
-//	public static void logout() {
-//		checkDriver();
-//
-//		loginUsageCounter--;
-//		if (loginUsageCounter > 0)
-//			return;
-//
-//		// if logged in, do logout
-//		if (loggedInBasePage != null) {
-//			loggedInBasePage.logout();
-//			loggedInBasePage = null;
-//		}
-//	}
-
 	private static void checkLogin() {
 		if (startPage == null) {
 			throw new IllegalStateException("User not logged in!");
