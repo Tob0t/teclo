@@ -31,6 +31,7 @@
 
 	<modules>
 		<module>Teclo-00-Base</module>
+		<module>Teclo-01-Usestatuswhiteboard</module>
 	</modules>
 
 	<properties>
