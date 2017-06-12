@@ -52,7 +52,7 @@ public class BugzillaSetup {
 			} else {
 				// assuming OS is UNIX based (OSX, Linux, etc.) or at least is
 				// able to execute shell scripts
-				System.setProperty(CHROME_DRIVER_PROPERTY, "./chromdriver/chromedriver");
+				System.setProperty(CHROME_DRIVER_PROPERTY, "./../chromdriver/chromedriver");
 			}
 		}
 	}
