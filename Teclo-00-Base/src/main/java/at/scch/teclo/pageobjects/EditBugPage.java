@@ -110,13 +110,6 @@ public class EditBugPage extends AbstractLoggedinBugzillaPage {
 	
 	@FindBy(id = "comment_text_0")
 	private WebElement bugFirstComment;
-	
-	
-	@FindBy(linkText = "Home")
-	private WebElement homeLink;
-
-	@FindBy(linkText = "My Bugs")
-	private WebElement myBugsLink;
 
 	
 	public EditBugPage(WebDriver driver) {

@@ -7,12 +7,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import at.scch.teclo.BugzillaSetup;
 import at.scch.teclo.Helper;
 
 public abstract class AbstractBugzillaPage {
 
 	protected final WebDriver driver;
+
+	@FindBy(linkText = "Home")
+	private WebElement homeLink;
 
 	@FindBy(linkText = "New")
 	private WebElement newLink;
@@ -108,7 +110,8 @@ public abstract class AbstractBugzillaPage {
 	}
 
 	public StartPage gotoStartPage() {
-		return BugzillaSetup.gotoStartPage();
+		homeLink.click();
+		return PageFactory.initElements(driver, StartPage.class);
 	}
 
 	public CreateBugPage gotoCreateBugPage() {
