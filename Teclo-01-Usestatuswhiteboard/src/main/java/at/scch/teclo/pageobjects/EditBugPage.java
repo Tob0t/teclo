@@ -48,6 +48,9 @@ public class EditBugPage extends AbstractLoggedinBugzillaPage {
 	
 	@FindBy(id = "bz_url_edit_action")
 	private WebElement bugEditUrlLink;
+	
+	@FindBy(id = "status_whiteboard")
+	private WebElement bugStatusWhiteboard;
 
 	
 	@FindBy(id = "dependson")
@@ -110,15 +113,6 @@ public class EditBugPage extends AbstractLoggedinBugzillaPage {
 	
 	@FindBy(id = "comment_text_0")
 	private WebElement bugFirstComment;
-	
-	@FindBy(id = "status_whiteboard")
-	private WebElement whiteboardField;
-	
-	@FindBy(linkText = "Home")
-	private WebElement homeLink;
-
-	@FindBy(linkText = "My Bugs")
-	private WebElement myBugsLink;
 
 	
 	public EditBugPage(WebDriver driver) {
@@ -202,6 +196,15 @@ public class EditBugPage extends AbstractLoggedinBugzillaPage {
 		}
 		bugUrl.clear();
 		bugUrl.sendKeys(url);
+	}
+	
+	public String getStatusWhiteboard(){
+		return bugStatusWhiteboard.getAttribute("value");
+	}
+	
+	public void setStatusWhiteboard(String statusMessage){
+		bugStatusWhiteboard.clear();
+		bugStatusWhiteboard.sendKeys(statusMessage);
 	}
 	
 	
@@ -316,16 +319,6 @@ public class EditBugPage extends AbstractLoggedinBugzillaPage {
 	public void setBugDuplicateOf(int bugId){
 		bugDuplicateId.clear();
 		bugDuplicateId.sendKeys(String.valueOf(bugId));
-	}
-	
-	public String getWhiteboardStatus(){
-		return whiteboardField.getAttribute("value");
-	}
-	
-	public void setWhiteboardStatus(String whiteboardmessage){
-		whiteboardField.click();
-		whiteboardField.clear();
-		whiteboardField.sendKeys(whiteboardmessage);
 	}
 
 	public void clickMarkAsDuplicate(){

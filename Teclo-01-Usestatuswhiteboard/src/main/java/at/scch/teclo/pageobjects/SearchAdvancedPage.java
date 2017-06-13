@@ -1,6 +1,5 @@
 package at.scch.teclo.pageobjects;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,6 +19,9 @@ public class SearchAdvancedPage extends SearchBasePage {
 
 	@FindBy(id = "longdesc")
 	private WebElement commentText;
+	
+	@FindBy(id = "status_whiteboard")
+	private WebElement statusWhiteboardText;
 
 	@FindBy(id = "Search")
 	private WebElement searchButton;
@@ -56,14 +58,19 @@ public class SearchAdvancedPage extends SearchBasePage {
 		summaryText.clear();
 		summaryText.sendKeys(summaryString);
 	}
+	
+	public void setSummarySearchType(String searchType) {
+		new Select(summarySearchType).selectByVisibleText(searchType);
+	}
 
 	public void setComment(String commentString) {
 		commentText.clear();
 		commentText.sendKeys(commentString);
 	}
-
-	public void setSummarySearchType(String searchType) {
-		new Select(summarySearchType).selectByVisibleText(searchType);
+	
+	public void setStatusWhiteboard(String statusMessage){
+		statusWhiteboardText.clear();
+		statusWhiteboardText.sendKeys(statusMessage);
 	}
 
 	public void unsetBugStatus(String bugStatusString) {
@@ -72,12 +79,6 @@ public class SearchAdvancedPage extends SearchBasePage {
 
 	public void setBugStatus(String bugStatusString) {
 		new Select(bugStatus).selectByVisibleText(bugStatusString);
-	}
-	
-	public void setWhiteboard(String whiteboardStatusMsg){
-		WebElement whiteboardStatus = driver.findElement(By.id("status_whiteboard"));
-		whiteboardStatus.clear();
-		whiteboardStatus.sendKeys(whiteboardStatusMsg);
 	}
 
 	public void setBooleanChart(String chartField, String chartType, String chartValue) {

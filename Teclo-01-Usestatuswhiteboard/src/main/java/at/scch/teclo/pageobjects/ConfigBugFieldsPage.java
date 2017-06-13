@@ -1,34 +1,39 @@
 package at.scch.teclo.pageobjects;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class ConfigBugFieldsPage {
-	private StringBuffer verificationErrors = new StringBuffer();
-	private final WebDriver driver;
+public class ConfigBugFieldsPage extends AbstractLoggedinBugzillaPage {
+
+	@FindBy(id = "usetargetmilestone-on")
+	private WebElement usetargetmilestoneOnRadiobutton;
+
+	@FindBy(id = "usetargetmilestone-off")
+	private WebElement usetargetmilestoneOffRadiobutton;
+	
+	@FindBy(xpath = "//input[@name='action' and @type='submit']")
+	private WebElement saveChangesButton;
 	
 	public ConfigBugFieldsPage(WebDriver driver){
-		this.driver = driver;
-	}
-	
-	public ConfigBugFieldsPage setWhiteBoardStatusOn(){
-		
-		driver.findElement(By.id("usestatuswhiteboard-on")).click();
-		
-		driver.findElement(By.xpath("//form/input[5]")).click();
-		
-		return PageFactory.initElements(driver, ConfigBugFieldsPage.class);
-	}
-	
-	public ConfigBugFieldsPage setWhiteBoardStatusOff(){
-		driver.findElement(By.id("usestatuswhiteboard-off")).click();
-		
-		driver.findElement(By.xpath("//form/input[5]")).click();
-		
-		return PageFactory.initElements(driver, ConfigBugFieldsPage.class);
+		super(driver);
 	}
 
+	@Override
+	protected boolean isMatchingPage() {
+		return ("Configuration: Bug Fields".equals(getTitle()) 
+				|| "Parameters Updated".equals(getTitle())); 
+	}	
+	
+	
+	public ConfigBugFieldsPage setUseStatusWhiteboard(boolean usestatuswhiteboard){
+		if (usestatuswhiteboard) {
+			usetargetmilestoneOnRadiobutton.click();
+		} else {
+			usetargetmilestoneOffRadiobutton.click();
+		}
+		saveChangesButton.click();		
+		return PageFactory.initElements(driver, ConfigBugFieldsPage.class);
+	}
 }

@@ -13,8 +13,6 @@ import at.scch.teclo.AbstractBugzillaTestWithLogin;
 import at.scch.teclo.pageobjects.BugCreatedPage;
 import at.scch.teclo.pageobjects.CreateBugPage;
 import at.scch.teclo.pageobjects.EditBugPage;
-import at.scch.teclo.pageobjects.ConfigBugFieldsPage;
-import at.scch.teclo.BugzillaSetup;
 
 public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 	private static final Logger Logger = LoggerFactory.getLogger(CreateNewBugTest.class);
@@ -23,9 +21,6 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 	@Test
 	public void testCreateBugDefaultValues() throws Exception {
 		String summary = "ExampleBugDefault_" + LocalDateTime.now().format(formatter);
-		
-		ConfigBugFieldsPage configBugFieldsPage = BugzillaSetup.gotoConfigBugFieldsPage();
-		configBugFieldsPage.setWhiteBoardStatusOn();
 
 		CreateBugPage createBugPage = startPage.gotoCreateBugPage();
 		createBugPage.setSummary(summary);
@@ -53,6 +48,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		assertEquals("P5", editBugPage.getPriority());
 		assertEquals("enhancement", editBugPage.getSeverity());
 		assertEquals("", editBugPage.getUrl());
+		assertEquals("", editBugPage.getStatusWhiteboard());
 		assertEquals("", editBugPage.getDependsOn());
 		assertEquals("", editBugPage.getBlocks());
 
@@ -71,8 +67,6 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		assertEquals("", editBugPage.getFirstComment());
 		assertEquals("", editBugPage.getLastComment());
 		assertEquals(1, editBugPage.getNumberOfComments());
-		
-		assertEquals("", editBugPage.getWhiteboardStatus());
 	}
 
 	@Test

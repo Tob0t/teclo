@@ -158,6 +158,19 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		editBugPage = editBugPage.commitBug().gotoChangedBugPage();
 		assertEquals("", editBugPage.getUrl());
 	}
+	
+	@Test
+	public void testEditStatusWhiteboard(){
+		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
+		
+		editBugPage.setStatusWhiteboard("testing edit of status whiteboard field");
+		editBugPage = editBugPage.commitBug().gotoChangedBugPage();		
+		assertEquals("testing edit of status whiteboard field", editBugPage.getStatusWhiteboard());
+		
+		editBugPage.setStatusWhiteboard("");
+		editBugPage = editBugPage.commitBug().gotoChangedBugPage();		
+		assertEquals("", editBugPage.getStatusWhiteboard());
+	}
 
 	@Test
 	public void testEditDependsOn() {
@@ -181,16 +194,6 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 		editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 		assertEquals("edited page (currentBugId) should have cleared depending on", 
 				"", editBugPage.getDependsOn());
-	}
-	
-	@Test
-	public void testEditBug(){
-		int currentBugId = BugzillaSetup.createExampleBug();
-		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
-		
-		editBugPage.setWhiteboardStatus("edit status whiteboard field");
-		assertEquals("edit status whiteboard field", editBugPage.getWhiteboardStatus());
-		editBugPage.setWhiteboardStatus("");
 	}
 	
 	@After

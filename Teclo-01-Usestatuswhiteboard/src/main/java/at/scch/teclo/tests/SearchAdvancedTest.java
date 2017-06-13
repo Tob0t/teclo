@@ -9,18 +9,15 @@ import org.junit.Test;
 
 import at.scch.teclo.AbstractBugzillaTestWithLogin;
 import at.scch.teclo.BugzillaSetup;
-import at.scch.teclo.pageobjects.SearchAdvancedPage;
-import at.scch.teclo.pageobjects.SearchResultsPage;
 import at.scch.teclo.pageobjects.EditBugPage;
+import at.scch.teclo.pageobjects.SearchAdvancedPage;
 import at.scch.teclo.pageobjects.SearchBasePage;
-import at.scch.teclo.pageobjects.ConfigBugFieldsPage;
+import at.scch.teclo.pageobjects.SearchResultsPage;
 
 public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 	private int currentBugId;
 	private String currentBugSummary;
 	private SearchResultsPage searchResultsPage;
-	private ConfigBugFieldsPage configBugFieldsPage;
-
 	private String currentBugStatus;
 	private String currentBugPriority;
 	private String currentWhiteboardStatus;
@@ -28,10 +25,6 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 
 	@Before
 	public void setUp() throws Exception {
-		//precondition: whiteboardstatus enabled
-		configBugFieldsPage = BugzillaSetup.gotoConfigBugFieldsPage();
-		configBugFieldsPage.setWhiteBoardStatusOn();
-		
 		// precondition: bug inserted
 		currentBugId = BugzillaSetup.getExampleBugId();
 		currentBugSummary = BugzillaSetup.getExampleBugSummary();
@@ -42,9 +35,9 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		editBugPage.setBugStatus("ASSIGNED");
 		currentBugPriority = editBugPage.getPriority();
 		editBugPage.setPriority("P3");
-		currentWhiteboardStatus = editBugPage.getWhiteboardStatus();
-		whiteboardSearchTestMessage = "text";
-		editBugPage.setWhiteboardStatus(whiteboardSearchTestMessage);
+		currentWhiteboardStatus = editBugPage.getStatusWhiteboard();
+		whiteboardSearchTestMessage = "status whiteboard message set at " + System.currentTimeMillis();
+		editBugPage.setStatusWhiteboard(whiteboardSearchTestMessage);
 		editBugPage.commitBug();
 	}
 
@@ -118,13 +111,14 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		SearchBasePage searchBasePage = startPage.gotoSearchBasePage();
 		SearchAdvancedPage searchAdvancedPage = searchBasePage.gotoAdvancedSearchPage();
 		
-		searchAdvancedPage.setWhiteboard(whiteboardSearchTestMessage);
+		searchAdvancedPage.setStatusWhiteboard(whiteboardSearchTestMessage);
 		SearchResultsPage searchResultsPage = searchAdvancedPage.submitSearch();
 		
-		assertTrue(searchResultsPage.getAmountOfBugs() > 0);
+		assertEquals(1, searchResultsPage.getAmountOfBugs());
+		assertEquals(currentBugId, searchResultsPage.getIdOfFirstBug());
 		
 		EditBugPage editBugPage = searchResultsPage.goToEditBugPage(currentBugId);
-		assertEquals(whiteboardSearchTestMessage, editBugPage.getWhiteboardStatus());	
+		assertEquals(whiteboardSearchTestMessage, editBugPage.getStatusWhiteboard());	
 	}
 
 	@After
@@ -133,7 +127,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 		editBugPage.setBugStatus(currentBugStatus);
 		editBugPage.setPriority(currentBugPriority);
-		editBugPage.setWhiteboardStatus(currentWhiteboardStatus);
+		editBugPage.setStatusWhiteboard(currentWhiteboardStatus);
 		editBugPage.commitBug();
 	}
 
