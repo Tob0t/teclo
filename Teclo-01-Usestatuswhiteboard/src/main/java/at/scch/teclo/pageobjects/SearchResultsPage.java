@@ -43,7 +43,7 @@ public class SearchResultsPage extends AbstractLoggedinBugzillaPage {
 	}
 	
 	
-	public EditBugPage goToEditBugPage(int currentBugId) {
+	public EditBugPage gotoEditBugPage(int currentBugId) {
 		driver.findElement(By.linkText(String.valueOf(currentBugId))).click();
 
 		return PageFactory.initElements(driver, EditBugPage.class);

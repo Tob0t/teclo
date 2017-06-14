@@ -117,7 +117,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		assertEquals(1, searchResultsPage.getAmountOfBugs());
 		assertEquals(currentBugId, searchResultsPage.getIdOfFirstBug());
 		
-		EditBugPage editBugPage = searchResultsPage.goToEditBugPage(currentBugId);
+		EditBugPage editBugPage = searchResultsPage.gotoEditBugPage(currentBugId);
 		assertEquals(whiteboardSearchTestMessage, editBugPage.getStatusWhiteboard());	
 	}
 
