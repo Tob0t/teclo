@@ -243,18 +243,26 @@ public class BugzillaSetup {
 		ConfigBugFieldsPage configBugFieldsPage = gotoConfigBugFieldsPage();
 		configBugFieldsPage.setUseStatusWhiteboard(true);
 
-		Logger.info("Resets test configuration: {}.", getTestConfigName());
+		Logger.info("Reset of test configuration: {}.", getTestConfigName());
 	}
 	
 	public static boolean isTestSetup() {
+		WebElement testConfigMessage = null; 
 		checkDriver();
-		WebElement testConfigMessage = driver.findElement(By.id("test_config"));
-		return testConfigMessage.getText().contains(getTestConfigName());
+		if (Helper.isElementPresent(driver, By.id("test_config"))) {
+			testConfigMessage = driver.findElement(By.id("test_config"));
+		}
+		return testConfigMessage != null 
+			&& testConfigMessage.getText().contains(getTestConfigName());
 	}
 	
 	public static void main(String[] args) {
 		openWebDriver();
-		setTestConfig();
+		if (args.length > 0 && "-reset".equals(args[0])) {
+			resetTestConfig();
+		} else {
+			setTestConfig();
+		}
 		closeWebDriver();
 	}
 }
