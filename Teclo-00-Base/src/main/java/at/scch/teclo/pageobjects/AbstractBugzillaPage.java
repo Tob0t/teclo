@@ -6,10 +6,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import at.scch.teclo.Helper;
 
 public abstract class AbstractBugzillaPage {
+	private static final Logger Logger = LoggerFactory.getLogger(AbstractBugzillaPage.class);
 
 	protected final WebDriver driver;
 
@@ -37,10 +40,12 @@ public abstract class AbstractBugzillaPage {
 	
 	public AbstractBugzillaPage(WebDriver driver) {
 		this.driver = driver;
-
+		
 		if (!isMatchingPage()) {
-			throw new IllegalStateException("Page object " + this.getClass().getName()
-					+ " does not match the displayed page (title: " + driver.getTitle() + ")!");
+			String errorMsg = "Page object " + this.getClass().getName()
+					+ " does not match the displayed page (title: " + driver.getTitle() + ")!";
+			Logger.error(errorMsg);
+			throw new IllegalStateException(errorMsg);
 		}
 	}
 
