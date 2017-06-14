@@ -137,9 +137,7 @@ public class CreateBugPage extends AbstractLoggedinBugzillaPage {
 	public BugCreatedPage createNewBug(String summary, String description) {
 		setSummary(summary);
 		setComment(description);
-		commitBug();
-
-		return PageFactory.initElements(driver, BugCreatedPage.class);
+		return commitBug();
 	}
 
 	
