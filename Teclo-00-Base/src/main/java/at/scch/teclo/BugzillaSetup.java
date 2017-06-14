@@ -7,15 +7,18 @@ import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import at.scch.teclo.pageobjects.BugCreatedPage;
+import at.scch.teclo.pageobjects.ConfigRequiredSettingsPage;
 import at.scch.teclo.pageobjects.CreateBugPage;
 import at.scch.teclo.pageobjects.EditBugPage;
-import at.scch.teclo.pageobjects.BugCreatedPage;
 import at.scch.teclo.pageobjects.StartPage;
 
 public class BugzillaSetup {
@@ -30,6 +33,8 @@ public class BugzillaSetup {
 	private static int currentbugId;
 	private static String exampleBugSummary;
 
+	private static String testConfigName = "";
+
 	/***
 	 * singleton pattern static constructor for first call
 	 */
@@ -41,6 +46,9 @@ public class BugzillaSetup {
 		if (!baseUrl.endsWith("/")) {
 			baseUrl = baseUrl + "/";
 		}
+		
+		// set test config name
+		testConfigName  = System.getProperty("TEST_CONFIG");
 
 		String webDriver = System.getProperty(CHROME_DRIVER_PROPERTY);
 		if (webDriver == null) {
@@ -161,6 +169,14 @@ public class BugzillaSetup {
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
 
+	public static ConfigRequiredSettingsPage gotoConfigRequiredSettingsPage(){
+		checkDriver();
+		checkLogin();
+		
+		driver.get(baseUrl + "/editparams.cgi?section=core");
+		return PageFactory.initElements(driver, ConfigRequiredSettingsPage.class);
+	}	
+	
 	public static StartPage login() {
 		startPage = gotoStartPage();
 		if (!startPage.isLoggedin()) {
@@ -184,5 +200,41 @@ public class BugzillaSetup {
 		if (driver == null) {
 			throw new IllegalStateException("Driver not initialized!");
 		}
+	}
+	
+
+	/** Returns the name of the test configuration stored in the confg.properties file. */
+	public static String getTestConfigName() {
+		return testConfigName;
+	}
+	
+	/** Setup the test configuraton in Bugzilla. */
+	public static void setTestConfig() {
+		checkDriver();
+		login();
+		ConfigRequiredSettingsPage configRequiredSettingsPage = gotoConfigRequiredSettingsPage();
+		configRequiredSettingsPage.setAnnounceHtml("<div id=\"test_config\" class=bz_private>" 
+			+ getTestConfigName() + "</div>");
+	}
+	
+	/** Puts the test configuration back in its initial state. */
+	public static void resetTestConfig() {
+		// throw new UnsupportedOperationException("Reset not implemented.");
+		checkDriver();
+		login();
+		ConfigRequiredSettingsPage configRequiredSettingsPage = gotoConfigRequiredSettingsPage();
+		configRequiredSettingsPage.setAnnounceHtml("");
+	}
+	
+	public static boolean isTestSetup() {
+		gotoStartPage();
+		WebElement testConfigMessage = driver.findElement(By.id("test_config"));
+		return testConfigMessage.getText().contains(getTestConfigName());
+	}
+	
+	public static void main(String[] args) {
+		openWebDriver();
+		setTestConfig();
+		closeWebDriver();
 	}
 }
