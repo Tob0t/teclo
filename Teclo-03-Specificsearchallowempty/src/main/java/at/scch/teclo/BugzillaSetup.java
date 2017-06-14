@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import at.scch.teclo.pageobjects.BugCreatedPage;
 import at.scch.teclo.pageobjects.ConfigBugChangePoliciesPage;
+import at.scch.teclo.pageobjects.ConfigQueryDefaultsPage;
 import at.scch.teclo.pageobjects.ConfigRequiredSettingsPage;
 import at.scch.teclo.pageobjects.CreateBugPage;
 import at.scch.teclo.pageobjects.EditBugPage;
@@ -186,6 +187,14 @@ public class BugzillaSetup {
 		return PageFactory.initElements(driver, ConfigBugChangePoliciesPage.class);
 	}
 	
+	public static ConfigQueryDefaultsPage gotoConfigQueryDefaultsPage (){
+		checkDriver();
+		checkLogin();
+		
+		driver.get(baseUrl + "/editparams.cgi?section=query");
+		return PageFactory.initElements(driver, ConfigQueryDefaultsPage.class);
+	}
+	
 	public static StartPage login() {
 		startPage = gotoStartPage();
 		if (!startPage.isLoggedin()) {
@@ -225,9 +234,9 @@ public class BugzillaSetup {
 		configRequiredSettingsPage.setAnnounceHtml("<div id=\"test_config\" class=bz_private>" 
 			+ getTestConfigName() + "</div>");
 		
-		// Teclo-02-Letsubmitterchoosepriority
-		ConfigBugChangePoliciesPage configBugChangePoliciesPage = gotoConfigBugChangePoliciesPage();
-		configBugChangePoliciesPage.setLetSubmitterChoosePriority(false);
+		// Teclo-03-SpecificSearchAllowEmptyWords
+		ConfigQueryDefaultsPage configQueryDefaultsPage = gotoConfigQueryDefaultsPage();
+		configQueryDefaultsPage.setSpecificSearchAllowEmptyWords(true);
 
 		Logger.info("Setup test configuration: {}.", getTestConfigName());
 	}
@@ -240,9 +249,9 @@ public class BugzillaSetup {
 		ConfigRequiredSettingsPage configRequiredSettingsPage = gotoConfigRequiredSettingsPage();
 		configRequiredSettingsPage.setAnnounceHtml("");
 		
-		// Teclo-02-Letsubmitterchoosepriority
-		ConfigBugChangePoliciesPage configBugChangePoliciesPage = gotoConfigBugChangePoliciesPage();
-		configBugChangePoliciesPage.setLetSubmitterChoosePriority(true);
+		//Teclo-03-SpecificSearchAllowEmptyWords
+		ConfigQueryDefaultsPage configQueryDefaultsPage = gotoConfigQueryDefaultsPage();
+		configQueryDefaultsPage.setSpecificSearchAllowEmptyWords(false);
 
 		Logger.info("Reset of test configuration: {}.", getTestConfigName());
 	}
