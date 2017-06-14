@@ -184,7 +184,7 @@ public class EditBugTest extends AbstractBugzillaTestWithLogin {
 	}
 	
 	@After
-	public void tearDownEditedBug() throws Exception {
+	public void tearDown() throws Exception {
 		// postcondition: leave changes as they are as long as there is no interference
 	}
 }
