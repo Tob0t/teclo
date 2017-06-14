@@ -34,6 +34,7 @@
 		<module>Teclo-01-Usestatuswhiteboard</module>
 		<module>Teclo-02-Letsubmitterchoosepriority</module>
 		<module>Teclo-03-Specificsearchallowempty</module>
+		<module>Teclo-04-Addproduct</module>
 	</modules>
 
 	<properties>
