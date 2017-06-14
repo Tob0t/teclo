@@ -175,7 +175,7 @@ public class BugzillaSetup {
 		
 		driver.get(baseUrl + "/editparams.cgi?section=core");
 		return PageFactory.initElements(driver, ConfigRequiredSettingsPage.class);
-	}	
+	}
 	
 	public static StartPage login() {
 		startPage = gotoStartPage();
