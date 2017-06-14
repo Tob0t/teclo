@@ -227,6 +227,8 @@ public class BugzillaSetup {
 		// Teclo-01-Usestatuswhiteboard
 		ConfigBugFieldsPage configBugFieldsPage = gotoConfigBugFieldsPage();
 		configBugFieldsPage.setUseStatusWhiteboard(true);
+		
+		Logger.info("Setup test configuration: {}.", getTestConfigName());
 	}
 	
 	/** Puts the test configuration back in its initial state. */
@@ -240,10 +242,12 @@ public class BugzillaSetup {
 		// Teclo-01-Usestatuswhiteboard
 		ConfigBugFieldsPage configBugFieldsPage = gotoConfigBugFieldsPage();
 		configBugFieldsPage.setUseStatusWhiteboard(true);
+
+		Logger.info("Resets test configuration: {}.", getTestConfigName());
 	}
 	
 	public static boolean isTestSetup() {
-		gotoStartPage();
+		checkDriver();
 		WebElement testConfigMessage = driver.findElement(By.id("test_config"));
 		return testConfigMessage.getText().contains(getTestConfigName());
 	}

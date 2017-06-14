@@ -215,6 +215,8 @@ public class BugzillaSetup {
 		ConfigRequiredSettingsPage configRequiredSettingsPage = gotoConfigRequiredSettingsPage();
 		configRequiredSettingsPage.setAnnounceHtml("<div id=\"test_config\" class=bz_private>" 
 			+ getTestConfigName() + "</div>");
+
+		Logger.info("Setup test configuration: {}.", getTestConfigName());
 	}
 	
 	/** Puts the test configuration back in its initial state. */
@@ -224,10 +226,12 @@ public class BugzillaSetup {
 		login();
 		ConfigRequiredSettingsPage configRequiredSettingsPage = gotoConfigRequiredSettingsPage();
 		configRequiredSettingsPage.setAnnounceHtml("");
+
+		Logger.info("Resets test configuration: {}.", getTestConfigName());
 	}
 	
 	public static boolean isTestSetup() {
-		gotoStartPage();
+		checkDriver();
 		WebElement testConfigMessage = driver.findElement(By.id("test_config"));
 		return testConfigMessage.getText().contains(getTestConfigName());
 	}
