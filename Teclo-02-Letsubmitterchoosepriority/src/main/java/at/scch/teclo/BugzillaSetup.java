@@ -239,6 +239,10 @@ public class BugzillaSetup {
 		login();
 		ConfigRequiredSettingsPage configRequiredSettingsPage = gotoConfigRequiredSettingsPage();
 		configRequiredSettingsPage.setAnnounceHtml("");
+		
+		// Teclo-02-Letsubmitterchoosepriority
+		ConfigBugChangePoliciesPage configBugChangePoliciesPage = gotoConfigBugChangePoliciesPage();
+		configBugChangePoliciesPage.setLetSubmitterChoosePriority(true);
 
 		Logger.info("Reset of test configuration: {}.", getTestConfigName());
 	}
