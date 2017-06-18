@@ -173,7 +173,7 @@ public class BugzillaSetup {
 		driver.get(baseUrl + "show_bug.cgi?id=" + bugId);
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
-	
+
 	public static ConfigRequiredSettingsPage gotoConfigRequiredSettingsPage(){
 		checkDriver();
 		checkLogin();
