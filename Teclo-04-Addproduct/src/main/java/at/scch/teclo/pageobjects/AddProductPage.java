@@ -3,7 +3,6 @@ package at.scch.teclo.pageobjects;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 public class AddProductPage extends AbstractBugzillaPage {
 	
@@ -22,11 +21,10 @@ public class AddProductPage extends AbstractBugzillaPage {
 
 	@Override
 	protected boolean isMatchingPage() {
-		return ("Add Product".equals(getTitle()) 
-				|| "Product Created".equals(getTitle())); 
+		return "Add Product".equals(getTitle()); 
 	}
 	
-	public AddProductPage addProduct(String name, String description){
+	public void addProduct(String name, String description){
 		productNameInputField.click();
 		productNameInputField.clear();
 		productNameInputField.sendKeys(name);
@@ -36,8 +34,6 @@ public class AddProductPage extends AbstractBugzillaPage {
 		productDescriptionTextArea.sendKeys(description);
 		
 		addProductButton.click();
-		
-		return PageFactory.initElements(driver, AddProductPage.class);
 	}
 
 }

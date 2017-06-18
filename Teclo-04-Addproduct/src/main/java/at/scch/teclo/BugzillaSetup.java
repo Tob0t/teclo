@@ -21,6 +21,7 @@ import at.scch.teclo.pageobjects.BugCreatedPage;
 import at.scch.teclo.pageobjects.ConfigRequiredSettingsPage;
 import at.scch.teclo.pageobjects.CreateBugPage;
 import at.scch.teclo.pageobjects.CreateBugSelectProductPage;
+import at.scch.teclo.pageobjects.DeleteProductPage;
 import at.scch.teclo.pageobjects.EditBugPage;
 import at.scch.teclo.pageobjects.StartPage;
 
@@ -172,7 +173,7 @@ public class BugzillaSetup {
 		driver.get(baseUrl + "show_bug.cgi?id=" + bugId);
 		return PageFactory.initElements(driver, EditBugPage.class);
 	}
-
+	
 	public static ConfigRequiredSettingsPage gotoConfigRequiredSettingsPage(){
 		checkDriver();
 		checkLogin();
@@ -189,6 +190,14 @@ public class BugzillaSetup {
 		return PageFactory.initElements(driver, AddProductPage.class);
 	}
 	
+	public static DeleteProductPage gotoDeleteProductPage(String productName) {
+		checkDriver();
+		checkLogin();
+		
+		driver.get(baseUrl + "/editproducts.cgi?action=del&product=" + productName);
+		return PageFactory.initElements(driver, DeleteProductPage.class);
+	}
+	
 	public static AddComponentPage gotoAddComponentPage(String productName){
 		checkDriver();
 		checkLogin();
@@ -196,6 +205,7 @@ public class BugzillaSetup {
 		driver.get(baseUrl + "/editcomponents.cgi?action=add&product=" + productName);
 		return PageFactory.initElements(driver, AddComponentPage.class);
 	}
+
 	
 	public static StartPage login() {
 		startPage = gotoStartPage();
@@ -248,7 +258,18 @@ public class BugzillaSetup {
 	
 	/** Puts the test configuration back in its initial state. */
 	public static void resetTestConfig() {
-		 throw new UnsupportedOperationException("Reset not implemented.");
+		 // throw new UnsupportedOperationException("Reset not implemented.");
+		checkDriver();
+		login();
+		ConfigRequiredSettingsPage configRequiredSettingsPage = gotoConfigRequiredSettingsPage();
+		configRequiredSettingsPage.setAnnounceHtml("");
+
+		// Teclo-04-Addproduct
+		DeleteProductPage deleteProductPage = gotoDeleteProductPage("Foo");
+		assert "Foo".equals(deleteProductPage.getProductName());
+		deleteProductPage.commitDeleteBug();		
+		
+		Logger.info("Reset of test configuration: {}.", getTestConfigName());
 	}
 	
 	public static boolean isTestSetup() {

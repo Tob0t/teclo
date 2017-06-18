@@ -3,7 +3,6 @@ package at.scch.teclo.pageobjects;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 public class AddComponentPage extends AbstractBugzillaPage {
 	
@@ -25,11 +24,10 @@ public class AddComponentPage extends AbstractBugzillaPage {
 
 	@Override
 	protected boolean isMatchingPage() {
-		return ("Add component to the Foo product".equals(getTitle()) 
-				|| "Component Created".equals(getTitle())); 
+		return "Add component to the Foo product".equals(getTitle()); 
 	}
 	
-	public AddComponentPage addComponent(String name, String description, String defaultAssignee){
+	public void addComponent(String name, String description, String defaultAssignee){
 		componentInputField.click();
 		componentInputField.clear();
 		componentInputField.sendKeys(name);
@@ -43,8 +41,6 @@ public class AddComponentPage extends AbstractBugzillaPage {
 		componentDefaultAssigneeInputField.sendKeys(defaultAssignee);
 		
 		addComponentButton.click();
-		
-		return PageFactory.initElements(driver, AddComponentPage.class);
 	}
 
 }
