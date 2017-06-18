@@ -32,11 +32,11 @@ public class SearchSpecificPage extends SearchBasePage {
 	}
 	
 	
-	public void selectBugStatus(String bugStatusString) {
+	public void setBugStatus(String bugStatusString) {
 		new Select(bugStatus).selectByVisibleText(bugStatusString);
 	}
 	
-	public void selectProduct(String product) {
+	public void setProduct(String product) {
 		new Select(productName).selectByVisibleText(product);
 	}
 

@@ -28,7 +28,7 @@ public class SearchSpecificPage extends SearchBasePage {
 	}
 	
 	
-	public void selectBugStatus(String bugStatusString) {
+	public void setBugStatus(String bugStatusString) {
 		new Select(bugStatus).selectByVisibleText(bugStatusString);
 	}
 
