@@ -61,16 +61,16 @@ public class SearchSpecificTest extends AbstractBugzillaTestWithLogin {
 		assertTrue("No multiple bugs found", 1 < searchResultsPage.getAmountOfBugs());
 	}
 
-	@Test
-	public void testSearchBlanksResultsInError() {
-		SearchBasePage searchBasePage = startPage.gotoSearchBasePage();
-		SearchSpecificPage searchSpecificPage = searchBasePage.gotoSpecificSearchPage();
-
-		ErrorParametersRequiredPage errorParametersRequiredPage = searchSpecificPage.searchForBlanks();
-
-		assertEquals("You may not search, or create saved searches, without any search terms.",
-				errorParametersRequiredPage.getErrorMsg());
-	}
+//	@Test
+//	public void testSearchBlanksResultsInError() {
+//		SearchBasePage searchBasePage = startPage.gotoSearchBasePage();
+//		SearchSpecificPage searchSpecificPage = searchBasePage.gotoSpecificSearchPage();
+//
+//		ErrorParametersRequiredPage errorParametersRequiredPage = searchSpecificPage.searchForBlanks();
+//
+//		assertEquals("You may not search, or create saved searches, without any search terms.",
+//				errorParametersRequiredPage.getErrorMsg());
+//	}
 
 	@Test
 	public void testSearchEmptyResultsInMatchingAll() {
