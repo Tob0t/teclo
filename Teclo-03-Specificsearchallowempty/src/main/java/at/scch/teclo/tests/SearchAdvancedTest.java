@@ -85,7 +85,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 
 		searchResultsPage = searchAdvancedPage.submitSearch();
 
-		assertTrue("No bugs found", 1 < searchResultsPage.getAmountOfBugs());
+		assertTrue("No bugs found", searchResultsPage.getAmountOfBugs() >= 1);
 	}
 
 	@Test

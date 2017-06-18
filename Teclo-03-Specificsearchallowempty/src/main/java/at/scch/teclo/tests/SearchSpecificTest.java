@@ -79,6 +79,6 @@ public class SearchSpecificTest extends AbstractBugzillaTestWithLogin {
 
 		SearchResultsPage searchResultsPage = searchSpecificPage.searchForEmpty();
 
-		assertTrue("No multiple bugs found", 1 < searchResultsPage.getAmountOfBugs());
+		assertTrue("No multiple bugs found", searchResultsPage.getAmountOfBugs() >= 1);
 	}
 }
