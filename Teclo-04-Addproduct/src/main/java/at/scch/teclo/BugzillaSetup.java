@@ -258,7 +258,6 @@ public class BugzillaSetup {
 	
 	/** Puts the test configuration back in its initial state. */
 	public static void resetTestConfig() {
-		 // throw new UnsupportedOperationException("Reset not implemented.");
 		checkDriver();
 		login();
 		ConfigRequiredSettingsPage configRequiredSettingsPage = gotoConfigRequiredSettingsPage();
