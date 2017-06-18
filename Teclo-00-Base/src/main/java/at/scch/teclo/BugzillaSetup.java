@@ -212,6 +212,12 @@ public class BugzillaSetup {
 	public static void setTestConfig() {
 		checkDriver();
 		login();
+		
+		if (isTestSetup()) {
+			Logger.error("Setup aborted: {} already set up?", getTestConfigName());
+			return;
+		}
+		
 		ConfigRequiredSettingsPage configRequiredSettingsPage = gotoConfigRequiredSettingsPage();
 		configRequiredSettingsPage.setAnnounceHtml("<div id=\"test_config\" class=bz_private>" 
 			+ getTestConfigName() + "</div>");
@@ -223,6 +229,12 @@ public class BugzillaSetup {
 	public static void resetTestConfig() {
 		checkDriver();
 		login();
+		
+		if (!isTestSetup()) {
+			Logger.error("Reset aborted: {} not set up?", getTestConfigName());
+			return;
+		}
+		
 		ConfigRequiredSettingsPage configRequiredSettingsPage = gotoConfigRequiredSettingsPage();
 		configRequiredSettingsPage.setAnnounceHtml("");
 
