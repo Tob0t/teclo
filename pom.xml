@@ -33,6 +33,7 @@
 		<module>Teclo-00-Base</module>
 		<module>Teclo-01-Usestatuswhiteboard</module>
 		<module>Teclo-02-Letsubmitterchoosepriority</module>
+		<module>Teclo-03-Specificsearchallowempty</module>
 	</modules>
 
 	<properties>
