@@ -35,6 +35,7 @@
 		<module>Teclo-02-Letsubmitterchoosepriority</module>
 		<module>Teclo-03-Specificsearchallowempty</module>
 		<module>Teclo-04-Addproduct</module>
+        <module>Telco-07-Simplebugworkflow</module>
 	</modules>
 
 	<properties>
