@@ -38,6 +38,7 @@
         <module>Teclo-07-Simplebugworkflow</module>
 		<module>Teclo-11-CommentonchangeResolution</module>
 		<module>Teclo-12-Commentonduplicate</module>
+		<module>Teclo-13-Noresolveonopenblockers</module>
 	</modules>
 
 	<properties>
