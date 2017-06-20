@@ -7,11 +7,11 @@ import org.openqa.selenium.support.PageFactory;
 
 public class ConfigBugFieldsPage extends AbstractLoggedinBugzillaPage {
 
-	@FindBy(id = "usetargetmilestone-on")
-	private WebElement usetargetmilestoneOnRadiobutton;
+	@FindBy(id = "usestatuswhiteboard-on")
+	private WebElement usestatuswhiteboardOnRadiobutton;
 
-	@FindBy(id = "usetargetmilestone-off")
-	private WebElement usetargetmilestoneOffRadiobutton;
+	@FindBy(id = "usestatuswhiteboard-off")
+	private WebElement usestatuswhiteboardOffRadiobutton;
 	
 	@FindBy(xpath = "//input[@name='action' and @type='submit']")
 	private WebElement saveChangesButton;
@@ -29,9 +29,9 @@ public class ConfigBugFieldsPage extends AbstractLoggedinBugzillaPage {
 	
 	public ConfigBugFieldsPage setUseStatusWhiteboard(boolean usestatuswhiteboard){
 		if (usestatuswhiteboard) {
-			usetargetmilestoneOnRadiobutton.click();
+			usestatuswhiteboardOnRadiobutton.click();
 		} else {
-			usetargetmilestoneOffRadiobutton.click();
+			usestatuswhiteboardOffRadiobutton.click();
 		}
 		saveChangesButton.click();		
 		return PageFactory.initElements(driver, ConfigBugFieldsPage.class);
