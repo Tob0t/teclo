@@ -252,7 +252,7 @@ public class BugzillaSetup {
 		
 		// Teclo-01-Usestatuswhiteboard
 		ConfigBugFieldsPage configBugFieldsPage = gotoConfigBugFieldsPage();
-		configBugFieldsPage.setUseStatusWhiteboard(true);
+		configBugFieldsPage.setUseStatusWhiteboard(false);
 
 		Logger.info("Reset of test configuration: {}.", getTestConfigName());
 	}
