@@ -36,6 +36,7 @@
 		<module>Teclo-03-Specificsearchallowempty</module>
 		<module>Teclo-04-Addproduct</module>
         <module>Teclo-07-Simplebugworkflow</module>
+		<module>Teclo-11-CommentonchangeResolution</module>
 	</modules>
 
 	<properties>
