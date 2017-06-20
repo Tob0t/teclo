@@ -31,7 +31,7 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		// precondition: bug changed
 		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 		currentBugStatus = editBugPage.getBugStatus();
-		editBugPage.setBugStatus("ASSIGNED");
+		editBugPage.setBugStatus("RESOLVED");
 		currentBugPriority = editBugPage.getPriority();
 		editBugPage.setPriority("P3");
 		editBugPage.commitBug();
@@ -62,12 +62,12 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 		searchAdvancedPage.unsetBugStatus("ASSIGNED");
 		searchAdvancedPage.unsetBugStatus("REOPENED");
 
-		searchAdvancedPage.setBugStatus("ASSIGNED");
+		searchAdvancedPage.setBugStatus("RESOLVED");
 		searchAdvancedPage.setSummary(currentBugSummary);
 		searchResultsPage = searchAdvancedPage.submitSearch();
 
 		assertEquals("Not exactly one bug found!", 1, searchResultsPage.getAmountOfBugs());
-		assertEquals("ASSI", searchResultsPage.getStatusOfFirstBug());
+		assertEquals("RESO", searchResultsPage.getStatusOfFirstBug());
 		assertEquals(currentBugSummary, searchResultsPage.getSummaryOfFirstBug());
 	}
 
@@ -92,6 +92,12 @@ public class SearchAdvancedTest extends AbstractBugzillaTestWithLogin {
 	public void testBooleanChart() throws Exception {
 		SearchBasePage searchBasePage = startPage.gotoSearchBasePage();
 		SearchAdvancedPage searchAdvancedPage = searchBasePage.gotoAdvancedSearchPage();
+		
+		searchAdvancedPage.unsetBugStatus("NEW");
+		searchAdvancedPage.unsetBugStatus("ASSIGNED");
+		searchAdvancedPage.unsetBugStatus("REOPENED");
+
+		searchAdvancedPage.setBugStatus("RESOLVED");
 
 		searchAdvancedPage.setBooleanChart("Priority", "is equal to", "P3");
 		searchAdvancedPage.setSummary(currentBugSummary);

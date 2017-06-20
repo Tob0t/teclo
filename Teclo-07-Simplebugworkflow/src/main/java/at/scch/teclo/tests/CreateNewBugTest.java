@@ -124,7 +124,6 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		createBugPage.setOpSys("All");
 		createBugPage.setPriority("P1");
 		
-		createBugPage.setBugStatus("ASSIGNED");
 		createBugPage.setCc("admin");
 		
 		createBugPage.setTimeEstimated(100);
@@ -168,7 +167,7 @@ public class CreateNewBugTest extends AbstractBugzillaTestWithLogin {
 		assertEquals("2016-06-12", editBugPage.getTimeDeadline());
 		
 		assertEquals("", editBugPage.getComment());
-		assertEquals("ASSIGNED", editBugPage.getBugStatus());
+		assertEquals("NEW", editBugPage.getBugStatus());
 		assertEquals(comment, editBugPage.getFirstComment());
 		assertEquals(comment, editBugPage.getLastComment());
 		assertEquals(1, editBugPage.getNumberOfComments());
