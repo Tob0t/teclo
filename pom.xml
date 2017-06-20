@@ -41,6 +41,7 @@
 		<module>Teclo-12-Commentonduplicate</module>
 		<module>Teclo-13-Noresolveonopenblockers</module>
 		<module>Teclo-14-DuplicateormovebugstatusVerified</module>
+		<module>Teclo-15-DuplicateormovebugstatusClosed</module>
 	</modules>
 
 	<properties>
