@@ -37,6 +37,7 @@
 		<module>Teclo-04-Addproduct</module>
         <module>Teclo-07-Simplebugworkflow</module>
 		<module>Teclo-11-CommentonchangeResolution</module>
+		<module>Teclo-12-Commentonduplicate</module>
 	</modules>
 
 	<properties>
