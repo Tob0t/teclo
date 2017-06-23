@@ -35,7 +35,11 @@
 		<module>Teclo-02-Letsubmitterchoosepriority</module>
 		<module>Teclo-03-Specificsearchallowempty</module>
 		<module>Teclo-04-Addproduct</module>
+		<module>Teclo-05-Addcomponent</module>
+		<module>Teclo-06-Addversion</module>
+		<module>Teclo-07-Simplebugworkflow</module>		
         <module>Teclo-08-Unconfirmedstate</module>
+		<module>Teclo-09-CommentonBugcreation</module>
 		<module>Teclo-10-CommentonAlltransitions</module>
 		<module>Teclo-11-CommentonchangeResolution</module>
 		<module>Teclo-12-Commentonduplicate</module>
