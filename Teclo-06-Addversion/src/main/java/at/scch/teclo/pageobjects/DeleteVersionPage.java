@@ -18,7 +18,7 @@ public class DeleteVersionPage extends AbstractBugzillaPage {
 
 	@Override
 	protected boolean isMatchingPage() {
-		return getTitle().contains("DeleteVersion");
+		return getTitle().matches("Delete Version of Product .*");
 	}
 	
 	public String getVersionName(){
