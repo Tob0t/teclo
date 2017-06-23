@@ -183,7 +183,7 @@ public class BugzillaSetup {
 		checkDriver();
 		checkLogin();
 		
-		driver.get(baseUrl + "/editproducts.cgi?action=del&product=" + productName + "&component=" + componentName);
+		driver.get(baseUrl + "/editcomponents.cgi?action=del&product=" + productName + "&component=" + componentName);
 		return PageFactory.initElements(driver, DeleteComponentPage.class);
 	}
 

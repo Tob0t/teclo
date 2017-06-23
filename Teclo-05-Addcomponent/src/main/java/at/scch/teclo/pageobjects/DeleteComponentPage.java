@@ -18,7 +18,7 @@ public class DeleteComponentPage extends AbstractBugzillaPage {
 
 	@Override
 	protected boolean isMatchingPage() {
-		return getTitle().matches("Delete Component '.*'");
+		return getTitle().matches("Delete component '.*");
 	}
 	
 	public String getComponentName() {
