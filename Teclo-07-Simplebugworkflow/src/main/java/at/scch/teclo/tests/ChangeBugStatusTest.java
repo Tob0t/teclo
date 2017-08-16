@@ -24,21 +24,10 @@ public class ChangeBugStatusTest extends AbstractBugzillaTestWithLogin {
 		EditBugPage editBugPage = BugzillaSetup.gotoEditBugPage(currentBugId);
 		assertEquals("NEW", editBugPage.getBugStatus());
 
-		editBugPage.setBugStatus("ASSIGNED");
+		editBugPage.setBugStatus("RESOLVED");
 		BugChangedPage bugChangedPage = editBugPage.commitBug();
 		editBugPage = bugChangedPage.gotoChangedBugPage();
-		assertEquals("ASSIGNED", editBugPage.getBugStatus());
-		
-		editBugPage.setBugStatus("RESOLVED");
-		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("RESOLVED", editBugPage.getBugStatus());
-		assertEquals("FIXED", editBugPage.getBugResolution());
-		
-		editBugPage.setBugStatus("VERIFIED");
-		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBugPage();
-		assertEquals("VERIFIED", editBugPage.getBugStatus());
 		assertEquals("FIXED", editBugPage.getBugResolution());
 		
 		editBugPage.setBugStatus("CLOSED");
@@ -47,17 +36,13 @@ public class ChangeBugStatusTest extends AbstractBugzillaTestWithLogin {
 		assertEquals("CLOSED", editBugPage.getBugStatus());
 		assertEquals("FIXED", editBugPage.getBugResolution());
 		
-		editBugPage.setBugStatus("REOPENED");
-		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBugPage();
-		assertEquals("REOPENED", editBugPage.getBugStatus());
-		
 		editBugPage.setBugStatus("NEW");
 		bugChangedPage = editBugPage.commitBug();
 		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("NEW", editBugPage.getBugStatus());
 	}
 
+	/*** identical to testNormalStatusCycle() ***/
 	@Test
 	public void testFastStatusCycle() {
 
@@ -75,11 +60,6 @@ public class ChangeBugStatusTest extends AbstractBugzillaTestWithLogin {
 		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("CLOSED", editBugPage.getBugStatus());
 		assertEquals("FIXED", editBugPage.getBugResolution());
-		
-		editBugPage.setBugStatus("REOPENED");
-		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBugPage();
-		assertEquals("REOPENED", editBugPage.getBugStatus());
 		
 		editBugPage.setBugStatus("NEW");
 		bugChangedPage = editBugPage.commitBug();
@@ -117,11 +97,6 @@ public class ChangeBugStatusTest extends AbstractBugzillaTestWithLogin {
 		editBugPage = bugChangedPage.gotoChangedBugPage();
 		assertEquals("CLOSED", editBugPage.getBugStatus());
 		assertEquals("INVALID", editBugPage.getBugResolution());
-		
-		editBugPage.setBugStatus("REOPENED");
-		bugChangedPage = editBugPage.commitBug();
-		editBugPage = bugChangedPage.gotoChangedBugPage();
-		assertEquals("REOPENED", editBugPage.getBugStatus());
 		
 		editBugPage.setBugStatus("NEW");
 		bugChangedPage = editBugPage.commitBug();

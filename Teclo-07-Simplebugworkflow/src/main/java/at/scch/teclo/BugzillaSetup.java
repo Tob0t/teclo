@@ -209,7 +209,7 @@ public class BugzillaSetup {
 		return testConfigName;
 	}
 	
-	/** Setup the test configuraton in Bugzilla. */
+	/** Setup the test configuration in Bugzilla. */
 	public static void setTestConfig() {
 		checkDriver();
 		login();
